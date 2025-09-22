@@ -88,19 +88,33 @@
 
 ## Phase 4: 고급 백테스팅 및 검증 (2주)
 
-### 4.1 금융 특화 검증 전략 ⚠️ **강화**
+### 4.1 금융 특화 검증 전략 (수치 파라미터 명시)
 - **Purged Cross-Validation**: 금융 시계열 특화, 정보 누수 방지
+  - 폴드 수: 5개 (TimeSeriesSplit n_splits=5)
+  - 학습/검증 비율: 80%/20%
 - **Embargo Period**: 예측-실제 사이 시간 간격으로 누수 방지
+  - 엠바고 길이: 20일 (시장 마이크로스트럭처 고려)
+  - 퍼지 간격: 5일 (오버랩 데이터 제거)
 - **Walk-Forward 분석**:
-  - **Expanding Window**: 점진적 데이터 확장 검증
-  - **Rolling Window**: 고정 길이 rolling 검증
-  - **Anchored Walk-Forward**: 기준점 고정 전진 분석
+  - **Expanding Window**: 500일 초기 윈도 → 점진적 확장
+  - **Rolling Window**: 1000일 고정 윈도
+  - **Anchored Walk-Forward**: date_id 4000 기준점 고정
+  - **예측 주기**: 50일별 업데이트 및 재평가
 
-### 4.2 모델 안정성 검증
+### 4.2 모델 안정성 검증 (수용 기준 수치화)
 - **Bootstrap Validation**: 리샘플링 기반 신뢰구간
-- **Stress Testing**: 극단 시장 상황 시뮬레이션 (2008, 2020 등)
+  - 부트스트랩 횟수: 1000회
+  - 신뢰구간: 95% (2.5~97.5 분위수)
+- **Stress Testing**: 극단 시장 상황 시뮬레이션
+  - 2008 금융위기: date_id 6000~6250 구간
+  - 2020 코로나 충격: date_id 8500~8600 구간
+  - 스트레스 테스트 통과 기준: Modified Sharpe Ratio > -0.5
 - **Out-of-Sample Decay**: 시간 경과에 따른 성능 감소 분석
+  - 성능 감소 허용 한계: 6개월당 10% 이내
+  - 재학습 트리거: 성능 20% 감소 시
 - **Transaction Cost Impact**: 실제 거래비용 고려한 성능 평가
+  - 거래비용: 0.1% per trade (포지션 변경 시)
+  - 수용 기준: 거래비용 차감 후 Modified Sharpe Ratio > 0.3
 
 ## Phase 5: 메타 모델링 및 최종 최적화 (1-2주)
 
@@ -144,3 +158,36 @@
 - [x] **EMH 도전**: 효율적 시장 가설 반박 목표 확인
 
 이 계획은 단순한 예측 정확도가 아닌 **120% 변동성 제약 하에서 실제 투자 성과**를 극대화하는 것에 초점을 맞춘 전략입니다.
+
+## 부록: 엔드투엔드 실행 가이드
+
+### 로컬 개발 환경 설정
+```bash
+# 1. 의존성 설치
+uv sync
+
+# 2. 데이터 검증
+uv run python -c "import pandas as pd; print(pd.read_csv('data/train.csv').shape)"
+
+# 3. 베이스라인 모델 테스트
+uv run python kaggle_baseline_model.py
+```
+
+### Kaggle 제출 환경
+```python
+# Notebook 실행 제약
+# - CPU/GPU: 8시간 (학습 단계), 9시간 (예측 단계)
+# - 인터넷: 비활성화
+# - 데이터 경로: /kaggle/input/hull-tactical-market-prediction/
+
+# 데이터 경로 폴백
+import os
+data_path = '/kaggle/input' if os.path.exists('/kaggle') else './data'
+train_df = pd.read_csv(f'{data_path}/train.csv')
+```
+
+### 성능 검증 기준
+- **로컬 ↔ 호스트 메트릭 허용 오차**: ±1e-6
+- **변동성 제약 준수**: 전략 변동성 / 시장 변동성 ≤ 1.2
+- **언더퍼폼 기간 비율**: ≤ 40% (전체 기간 대비)
+- **최대 드로우다운**: ≤ 15% (연간 기준)

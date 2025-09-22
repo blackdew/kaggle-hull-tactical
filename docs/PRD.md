@@ -22,16 +22,19 @@
 4. **라이브 운용**: 실제 시장에서 운용 가능한 전략 개발
 
 ### 성공 지표
-- **주요 지표**: Modified Sharpe Ratio (Sharpe 비율 변형)
-- **제약 조건**: 120% 변동성 제약 (시장 변동성 대비 1.2배 상한)
-- **벌점 시스템**: 과도한 변동성 또는 시장 대비 저성과에 벌점
+- **주요 지표**: Modified Sharpe Ratio (공식 코드: [Kaggle 노트북 참조](https://www.kaggle.com/code/metric/hull-competition-sharpe))
+- **제약 조건**: 120% 변동성 제약 (전략 변동성 ≤ 1.2 × 시장 변동성)
+- **벌점 시스템**:
+  - 변동성 초과 시: 지수적 페널티 적용
+  - 언더퍼폼 시: 음수 Sharpe Ratio로 처리
 - **벤치마크**: S&P 500 지수 대비 초과 성과
 
 ## 데이터 명세
 
 ### 훈련 데이터
-- **크기**: 8,990개 샘플, 98개 피처
-- **기간**: 일별 시계열 데이터 (date_id 0~8989)
+- **크기**: 8,980개 샘플, 98개 피처
+- **기간**: 일별 시계열 데이터 (date_id 0~8979)
+- **타겟 변수**: `market_forward_excess_returns` (시장 초과 수익률)
 - **타겟**:
   - `forward_returns`: 미래 수익률
   - `market_forward_excess_returns`: 시장 초과 수익률 (예측 대상)
@@ -49,7 +52,7 @@
 ### 테스트 데이터
 - **크기**: 10개 샘플, 99개 피처 (date_id 8980~8989)
 - **추가 피처**: `is_scored` (평가 대상 구분), `lagged_forward_returns`, `lagged_risk_free_rate`, `lagged_market_forward_excess_returns`
-- **제출 형식**: `prediction` 칼럼에 S&P 500 자금 배분 비율 (0~2) 예측
+- **제출 대상**: `prediction` 칼럼에 S&P 500 자금 배분 비율 (0~2 범위)
 
 ## 기술 요구사항
 
@@ -123,12 +126,20 @@
 
 ### 제출 형식
 - **API 기반 제출**: kaggle_evaluation.core.templates.InferenceServer 상속
-- **예측 형태**: `prediction` 칼럼에 S&P 500 자금 배분 비율 (0~2)
 - **배치 처리**: date_id별 순차 배치 처리 (DefaultGateway.generate_data_batches)
 - **검증**: competition_specific_validation 통과 필요
-- **런타임 제약**: 노트북 8시간 (학습 단계), 9시간 (예측 단계)
+- **런타임 제약**: 노트북 8시간 (학습 단계), 9시간 (예측 단계), 인터넷 비활성화
+
+#### 신호-포지션 매핑 정책
+- **모델 출력**: 시장 초과 수익률 예측 (`market_forward_excess_returns`)
+- **변환 공식**: `position = max(0, min(2, 1 + excess_return_pred × leverage_factor))`
+- **변동성 조정**: `leverage_factor = min(2.0, target_volatility / predicted_volatility)`
+- **제출 값**: `prediction` 칼럼에 최종 포지션 (0~2 범위, 소수점 허용)
+- **예시**: 예측 초과수익률 +0.01 → 포지션 1.5 (150% 익스포저)
+
+#### 평가 및 제약
 - **평가 방식**: Modified Sharpe Ratio 기준, 120% 변동성 제약 하에서 평가
-- **예측 단계**: 2025년 12월 15일 이후 실제 시장에서 6개월간 운용 평가
+- **예측 단계**: 2025년 12월 15일 이후 실제 시장에서 6개월간 라이브 운용 평가
 
 ## ✅ 핵심 요구사항 확인 완료
 
