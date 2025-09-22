@@ -34,8 +34,7 @@
 ### 훈련 데이터
 - **크기**: 8,980개 샘플, 98개 피처
 - **기간**: 일별 시계열 데이터 (date_id 0~8979)
-- **타겟 변수**: `market_forward_excess_returns` (시장 초과 수익률)
-- **타겟**:
+- **타깃(내부 예측/참고)**:
   - `forward_returns`: 미래 수익률
   - `market_forward_excess_returns`: 시장 초과 수익률 (예측 대상)
   - `risk_free_rate`: 무위험 수익률
@@ -51,8 +50,8 @@
 
 ### 테스트 데이터
 - **크기**: 10개 샘플, 99개 피처 (date_id 8980~8989)
-- **추가 피처**: `is_scored` (평가 대상 구분), `lagged_forward_returns`, `lagged_risk_free_rate`, `lagged_market_forward_excess_returns`
-- **제출 대상**: `prediction` 칼럼에 S&P 500 자금 배분 비율 (0~2 범위)
+- **추가 피처**: `is_scored`, `lagged_forward_returns`, `lagged_risk_free_rate`, `lagged_market_forward_excess_returns`
+- **제출 대상**: `prediction` 칼럼에 S&P 500 자금 배분 비율 (0~2)
 
 ## 기술 요구사항
 
@@ -133,13 +132,14 @@
 #### 신호-포지션 매핑 정책
 - **모델 출력**: 시장 초과 수익률 예측 (`market_forward_excess_returns`)
 - **변환 공식**: `position = max(0, min(2, 1 + excess_return_pred × leverage_factor))`
-- **변동성 조정**: `leverage_factor = min(2.0, target_volatility / predicted_volatility)`
+- **변동성 조정(기본값)**: `leverage_factor = min(2.0, target_volatility / predicted_volatility)` (20D 롤링 표준편차 기준)
 - **제출 값**: `prediction` 칼럼에 최종 포지션 (0~2 범위, 소수점 허용)
 - **예시**: 예측 초과수익률 +0.01 → 포지션 1.5 (150% 익스포저)
 
 #### 평가 및 제약
 - **평가 방식**: Modified Sharpe Ratio 기준, 120% 변동성 제약 하에서 평가
 - **예측 단계**: 2025년 12월 15일 이후 실제 시장에서 6개월간 라이브 운용 평가
+※ 정확한 구현은 공식 평가 코드(링크) 기준을 따른다.
 
 ## ✅ 핵심 요구사항 확인 완료
 

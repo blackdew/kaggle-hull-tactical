@@ -159,35 +159,10 @@
 
 이 계획은 단순한 예측 정확도가 아닌 **120% 변동성 제약 하에서 실제 투자 성과**를 극대화하는 것에 초점을 맞춘 전략입니다.
 
-## 부록: 엔드투엔드 실행 가이드
-
-### 로컬 개발 환경 설정
-```bash
-# 1. 의존성 설치
-uv sync
-
-# 2. 데이터 검증
-uv run python -c "import pandas as pd; print(pd.read_csv('data/train.csv').shape)"
-
-# 3. 베이스라인 모델 테스트
-uv run python kaggle_baseline_model.py
-```
-
-### Kaggle 제출 환경
-```python
-# Notebook 실행 제약
-# - CPU/GPU: 8시간 (학습 단계), 9시간 (예측 단계)
-# - 인터넷: 비활성화
-# - 데이터 경로: /kaggle/input/hull-tactical-market-prediction/
-
-# 데이터 경로 폴백
-import os
-data_path = '/kaggle/input' if os.path.exists('/kaggle') else './data'
-train_df = pd.read_csv(f'{data_path}/train.csv')
-```
-
-### 성능 검증 기준
-- **로컬 ↔ 호스트 메트릭 허용 오차**: ±1e-6
-- **변동성 제약 준수**: 전략 변동성 / 시장 변동성 ≤ 1.2
-- **언더퍼폼 기간 비율**: ≤ 40% (전체 기간 대비)
-- **최대 드로우다운**: ≤ 15% (연간 기준)
+## 부록: 간단 실행/검증 가이드
+- 설치: `uv sync`
+- 실행: `uv run jupyter lab` 또는 `uv run python <script>.py`
+- 데이터 경로: `/kaggle/input/...` 없으면 `./data` 사용
+- 제출 노트북 제약: 8h(예측 9h), 인터넷 비활성, 공개 외부데이터만
+- 검증 파라미터(고정): Walk-Forward 5폴드, 검증≈20%, 엠바고 5D, Δ≤1e-6, vol≤1.2×시장
+- 고급 검증(옵션): 부트스트랩 1000회, 신뢰구간 95%
