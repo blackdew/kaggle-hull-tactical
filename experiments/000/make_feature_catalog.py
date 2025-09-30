@@ -109,27 +109,33 @@ def main() -> None:
     cat.to_csv(out_csv, index=False)
 
     # Markdown summary grouped by group letter
-    md = ["# Feature Catalog (EXP-000)", ""]
-    md.append(f"Total features: {len(features)} (excluding date_id + targets)")
-    md.append("")
+    # Build combined markdown: numeric catalog + insights
+    md_numeric: list[str] = []
+    md_numeric.append("# Feature Catalog & Insights (EXP-000)")
+    md_numeric.append("")
+    md_numeric.append(f"Total features: {len(features)} (excluding date_id + targets)")
+    md_numeric.append("")
+    md_numeric.append("How to read")
+    md_numeric.append("- missing: 결측 비율(0~1). 0.30 이상 주의, 0.50 이상 제외/대치 검토")
+    md_numeric.append("- mean/std: 분포 중심·스케일. 극단값은 min/max·분위수로 교차 확인")
+    md_numeric.append("- corr_mkt_excess/corr_fwd: 타깃과 피어슨 상관(참고용). |0.05| 내외는 약한 연관")
+    md_numeric.append("")
+    md_numeric.append("## Numeric Catalog")
     for g in sorted(cat["group"].unique()):
         sub = cat[cat["group"] == g]
-        md.append(f"## Group {g}")
-        md.append("- Columns: " + ", ".join(sub["feature"].tolist()))
-        md.append("")
-        md.append("feature, missing, mean, std, corr_mkt_excess, corr_fwd — note")
+        md_numeric.append(f"### Group {g}")
+        md_numeric.append("- Columns: " + ", ".join(sub["feature"].tolist()))
+        md_numeric.append("")
+        md_numeric.append("feature, missing, mean, std, corr_mkt_excess, corr_fwd — note")
         for _, r in sub.iterrows():
-            md.append(
+            md_numeric.append(
                 f"- {r['feature']}, {r['missing_rate']:.3f}, {r['mean']:.3f}, {r['std']:.3f}, "
                 f"{(r['corr_market_forward_excess_returns'] if not pd.isna(r['corr_market_forward_excess_returns']) else 0):+.3f}, "
                 f"{(r['corr_forward_returns'] if not pd.isna(r['corr_forward_returns']) else 0):+.3f} — {r['note']}"
             )
-        md.append("")
+        md_numeric.append("")
 
-    features_md_path = ROOT / "FEATURES.md"
-    features_md_path.write_text("\n".join(md))
-
-    # Build insights markdown (per-feature utilization potential)
+    # Build insights table
     def pot_for_row(r: pd.Series) -> str:
         mr = r.get("missing_rate", 0.0)
         ac = abs(r.get("corr_market_forward_excess_returns", 0.0) or 0.0)
@@ -168,10 +174,10 @@ def main() -> None:
     cat["potential"] = cat.apply(pot_for_row, axis=1)
     cat["actions"] = cat.apply(actions_for_row, axis=1)
 
-    lines = ["# Feature Insights (EXP-000)", "", "각 피처별 결측/상관/스케일 기반 활용 가능성 요약.", ""]
+    lines = ["## Per-Feature Insights", "", "각 피처별 결측/상관/스케일 기반 활용 가능성 요약.", ""]
     for g in sorted(cat["group"].unique()):
         sub = cat[cat["group"] == g]
-        lines.append(f"## Group {g}")
+        lines.append(f"### Group {g}")
         lines.append("feature | potential | note | actions")
         lines.append("--- | --- | --- | ---")
         for _, r in sub.iterrows():
@@ -180,12 +186,11 @@ def main() -> None:
             )
         lines.append("")
 
-    insights_path = ROOT / "FEATURES-INSIGHTS.md"
-    insights_path.write_text("\n".join(lines))
+    features_md_path = ROOT / "FEATURES.md"
+    features_md_path.write_text("\n".join(md_numeric + lines))
 
     print(f"Wrote {out_csv}")
     print(f"Wrote {features_md_path}")
-    print(f"Wrote {insights_path}")
 
 
 if __name__ == "__main__":
