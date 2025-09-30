@@ -12,9 +12,17 @@
 - 후보 B 제출 생성: `python experiments/003/run_candidates.py --candidate B`
 - 출력: `experiments/003/submissions/candidate_*.csv`
 
+운영/서빙(검증/로그/제약 포함)
+- 후보 A 서빙: `python experiments/003/serve.py --candidate A` → `submissions/candidate_A_served.csv`
+- 후보 B 서빙: `python experiments/003/serve.py --candidate B` → `submissions/candidate_B_served.csv`
+- 로그: `experiments/003/logs/serve_*.json` (피처/스케일/검증 통계 기록)
+
 유의사항
 - vol-aware(제약 안정화)는 제출 단계에서 테스트 데이터의 시장 변동성이 불명이라 사전 스케일링 적용이 제한적입니다. k-매핑(클립)으로 보수적 포지션을 사용합니다.
 - Top-20 선택은 훈련 구간 상관 기반으로 fold마다 약간 변동할 수 있습니다. 운영 시 고정 목록 또는 롤링 기준을 채택하세요.
+
+검증 항목(자동)
+- 필수 컬럼 존재 여부, NaN/Inf 비율, 예측치 [0,2] 범위 클립, train 기반 vol-aware 스케일 산출 및 적용
 
 근거
 - EXP-002/HYPOTHESES.md, REPORT.md 참조(Sharpe/vol/안정성 결과).
