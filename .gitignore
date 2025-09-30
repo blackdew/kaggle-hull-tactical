@@ -80,7 +80,8 @@ logs/
 *.log
 
 # Submissions
-submissions/
+submissions/*
+!submissions/.gitkeep
 output/
 
 # API keys and secrets
