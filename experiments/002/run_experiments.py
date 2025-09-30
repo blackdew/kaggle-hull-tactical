@@ -9,6 +9,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.preprocessing import StandardScaler
 
@@ -141,6 +142,12 @@ def run_experiment(df: pd.DataFrame, expid: str, config: Dict) -> pd.DataFrame:
             model = Lasso(alpha=config.get("alpha", 0.001), max_iter=10000)
         else:
             model = LinearRegression()
+        if model_type == "gbr":
+            model = GradientBoostingRegressor(n_estimators=config.get("n_estimators", 200),
+                                              max_depth=config.get("max_depth", 3),
+                                              learning_rate=config.get("learning_rate", 0.05),
+                                              subsample=config.get("subsample", 0.8),
+                                              random_state=42)
         model.fit(Xs, y)
 
         Xv = va_df[fold_feats].copy().fillna(va_df[fold_feats].median(numeric_only=True)).replace([np.inf, -np.inf], np.nan).fillna(0)
@@ -224,6 +231,9 @@ def main() -> None:
         "H8_top40": {"model": "ols", "top_corr_n": 40},
         # Combined lasso + top20 + vol-aware
         "H7_lasso_lo_top20_volaware": {"model": "lasso", "alpha": 1e-4, "top_corr_n": 20, "vol_cap": 1.2},
+        # H11: small non-linear (GBR)
+        "H11_gbr_top20": {"model": "gbr", "top_corr_n": 20, "n_estimators": 200, "max_depth": 3, "learning_rate": 0.05, "subsample": 0.8},
+        "H11_gbr_top20_volaware": {"model": "gbr", "top_corr_n": 20, "n_estimators": 200, "max_depth": 3, "learning_rate": 0.05, "subsample": 0.8, "vol_cap": 1.2},
     }
 
     run_list = list(exps.keys()) if args.all else (args.only or [

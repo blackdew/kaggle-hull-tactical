@@ -48,7 +48,9 @@
   - 결과: H6mask_ridge 0.4039(↑), H6mask_lasso 0.5589(↑, vol ≈1.000)
   - 링크: results/H6mask_ridge_folds.csv, H6mask_lasso_folds.csv
 - [ ] (보류) LightGBM 소규모: Top‑N 피처, 얕은 트리로 비선형 확인(환경 의존)
-  - 설치 필요 시 후순위로 진행, 대안으로 트리기반 sklearn 모델 검토
+  - 대안(실행): H11 GBR(sklearn) Top‑20 → [x] 완료
+    - 결과: H11_gbr_top20 0.5655, vol 1.201 → vol‑aware 적용 시 0.5655, vol 1.165
+    - 링크: results/H11_gbr_top20_folds.csv, H11_gbr_top20_volaware_folds.csv
 
 신규 가설(추가)
 - [x] H8 Top‑N(상관 절댓값) 특성 선택: N=20/40
