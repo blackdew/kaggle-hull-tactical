@@ -28,6 +28,19 @@
 - 추천 배포 후보
   - 1안: Lasso(α=1e‑4)+Top‑20+k=50 (필요 시 vol‑aware 조합)
   - 2안: OLS k=18 (보수적 제약 안정)
-- 다음(운영 파이프라인)
-  - 서빙 함수에 데이터 검증/안전장치, 로그/메타 기록, 제약 사전 보정(vol≤1.2) 추가.
-  - Top‑N/α 롤링 기준 확정(고정/동적), 재현성 문서화.
+
+## 운영/서빙 파이프라인 요약
+- 파일: experiments/003/serve.py
+- 기능: 컬럼/값 검증, NaN/Inf 점검, [0,2] 클리핑, train 기반 vol‑aware 스케일 산출/적용, 로그 JSON 기록
+- 기본 운영 기준(고정): Top‑N=20, α=1e‑4 고정(serve.py 기본값). 재현성·안정성 유리
+- 동적 롤링은 보고/연구 목적에 한해 권장(운영 복잡도↑)
+
+## CI 스모크
+- 파일: experiments/003/ci_smoke.sh
+- 검사: served 제출 2종(A/B) 생성→예측 범위 확인→로그 필수 키 존재 확인
+- 실행 결과: All checks passed.
+
+## 제출 준비
+- 후보 A 생성: `python experiments/003/serve.py --candidate A`
+- 후보 B 생성: `python experiments/003/serve.py --candidate B`
+- 제출: `bash scripts/submit.sh -f experiments/003/submissions/candidate_A_served.csv -m "003 A served"`
