@@ -57,9 +57,10 @@
 
 안정성 가설
 - [x] H9 모델 안정성(샤프 표준편차): Lasso vs k=20@cap 비교
-  - 결과(상위): R_lasso_lo Sharpe 0.6040, sharpe_std 0.209; H8_top20 0.5848, std 0.235; H7_k20@cap 0.4362, std 0.350
-  - 해석: Lasso/Top‑N이 Sharpe와 안정성 모두 우수. k=20@cap은 Sharpe<지만 vol_ratio가 가장 안정(≈1.05)
-  - 링크: results/*_folds.csv (요약은 계산 스크립트 참조)
+  - 결과(상위): R_lasso_lo 0.6040(std 0.209); H8_top20 0.5848(std 0.235); H7_k20@cap 0.4362(std 0.350)
+  - 롤링 안정성(H10): H7_lasso_lo_top20@cap 블록별 Sharpe [0.09, 0.08, 1.06, 0.80], vol≈1.00~1.14; H7_k20@cap [0.09, 0.06, 1.06, 0.82], vol≈1.01~1.20
+  - 해석: 결합 모델이 Sharpe/vol 모두 양호하고, 롤링에서도 유사 안정성. k=20@cap은 vol이 더 보수적.
+  - 링크: results/*_folds.csv, results/rolling_*.csv
 
 보너스(정규화)
 - [x] Ridge: 0.4008(↑), vol_ratio 1.246

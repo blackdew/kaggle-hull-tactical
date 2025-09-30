@@ -221,6 +221,8 @@ def main() -> None:
         # Top-N by abs corr
         "H8_top20": {"model": "ols", "top_corr_n": 20},
         "H8_top40": {"model": "ols", "top_corr_n": 40},
+        # Combined lasso + top20 + vol-aware
+        "H7_lasso_lo_top20_volaware": {"model": "lasso", "alpha": 1e-4, "top_corr_n": 20, "vol_cap": 1.2},
     }
 
     run_list = list(exps.keys()) if args.all else (args.only or [
