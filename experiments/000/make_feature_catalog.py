@@ -67,6 +67,44 @@ def main() -> None:
 
     cat = pd.DataFrame(cat_rows)
     cat = cat.sort_values(["group", "feature"]).reset_index(drop=True)
+
+    # Derive simple notes per feature for human-readable summaries
+    med_std = float(cat["std"].median()) if len(cat) else 0.0
+    def note_for_row(r: pd.Series) -> str:
+        notes = []
+        # Missing level
+        mr = r.get("missing_rate", 0.0)
+        if mr >= 0.50:
+            notes.append("결측↑↑")
+        elif mr >= 0.30:
+            notes.append("결측↑")
+        else:
+            notes.append("결측양호")
+        # Correlation (market excess)
+        cm = r.get("corr_market_forward_excess_returns", 0.0)
+        if pd.isna(cm):
+            pass
+        else:
+            ac = abs(cm)
+            sign = "+" if cm >= 0 else "-"
+            if ac >= 0.06:
+                notes.append(f"상관 보통({sign})")
+            elif ac >= 0.03:
+                notes.append(f"상관 약({sign})")
+            else:
+                notes.append("상관 매우 약")
+        # Scale (std)
+        sd = r.get("std", 0.0)
+        try:
+            if sd >= med_std * 1.5:
+                notes.append("스케일 큼(변동↑)")
+            elif sd <= med_std * 0.5:
+                notes.append("스케일 작음")
+        except Exception:
+            pass
+        return ", ".join(notes)
+
+    cat["note"] = cat.apply(note_for_row, axis=1)
     out_csv = SUMMARY / "feature_catalog.csv"
     cat.to_csv(out_csv, index=False)
 
@@ -79,12 +117,12 @@ def main() -> None:
         md.append(f"## Group {g}")
         md.append("- Columns: " + ", ".join(sub["feature"].tolist()))
         md.append("")
-        md.append("feature, missing, mean, std, corr_mkt_excess, corr_fwd")
+        md.append("feature, missing, mean, std, corr_mkt_excess, corr_fwd — note")
         for _, r in sub.iterrows():
             md.append(
                 f"- {r['feature']}, {r['missing_rate']:.3f}, {r['mean']:.3f}, {r['std']:.3f}, "
                 f"{(r['corr_market_forward_excess_returns'] if not pd.isna(r['corr_market_forward_excess_returns']) else 0):+.3f}, "
-                f"{(r['corr_forward_returns'] if not pd.isna(r['corr_forward_returns']) else 0):+.3f}"
+                f"{(r['corr_forward_returns'] if not pd.isna(r['corr_forward_returns']) else 0):+.3f} — {r['note']}"
             )
         md.append("")
 
@@ -95,4 +133,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
