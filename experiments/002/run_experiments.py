@@ -193,6 +193,7 @@ def main() -> None:
         "H4_k20": {"model": "ols", "k": 20.0},
         "H4_k22": {"model": "ols", "k": 22.0},
         "H4_k21": {"model": "ols", "k": 21.0},
+        "H4_k18": {"model": "ols", "k": 18.0},
         "H4_k24": {"model": "ols", "k": 24.0},
         "H4_k23": {"model": "ols", "k": 23.0},
         "H4_k25": {"model": "ols", "k": 25.0},

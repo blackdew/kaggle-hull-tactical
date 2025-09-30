@@ -40,4 +40,4 @@
 
 산출물
 - 폴드별: experiments/002/results/*_folds.csv
-- 요약: experiments/002/results/summary.csv
+- 요약: experiments/002/results/summary.csv, summary_all.csv(전체 폴드 파일 집계)

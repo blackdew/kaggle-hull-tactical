@@ -36,8 +36,8 @@
 
 추가 가설(다음 단계)
 - [x] H4b k 세분화(20~30): k∈{20,22,24,25,30}에서 최적 k 탐색 → BEST(k)
-  - 결과: k=20(0.4362, vol 1.058) > k=21(0.4318, 1.064) > k=22(0.4277, 1.070) > k=23(0.4241, 1.077) > k=24(0.4216, 1.083) > k=25(0.4198, 1.090) > k=30(0.4155, 1.123)
-  - 링크: results/H4_k20_folds.csv, H4_k21_folds.csv, H4_k22_folds.csv, H4_k23_folds.csv, H4_k24_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
+  - 결과: k=18(0.4436, vol 1.045) > k=20(0.4362, 1.058) > k=21(0.4318, 1.064) > k=22(0.4277, 1.070) > k=23(0.4241, 1.077) > k=24(0.4216, 1.083) > k=25(0.4198, 1.090) > k=30(0.4155, 1.123)
+  - 링크: results/H4_k18_folds.csv, H4_k20_folds.csv, H4_k21_folds.csv, H4_k22_folds.csv, H4_k23_folds.csv, H4_k24_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
 - [x] H7b k+vol‑aware 결합: {k∈{20,25,30}}×vol_cap=1.2에서 안정적 향상
   - 결과: k=20@cap 0.4362(=k20), vol 1.047; k=25@cap 0.4198(=k25), vol 1.067; k=30@cap 0.4155(=k30), vol 1.088
   - 링크: results/H7_k20_volaware_folds.csv, H7_k25_volaware_folds.csv, H7_k30_volaware_folds.csv
