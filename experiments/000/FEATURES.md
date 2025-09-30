@@ -2,6 +2,11 @@
 
 Total features: 94 (excluding date_id + targets)
 
+How to read
+- missing: 결측 비율(0~1). 0.3↑ 주의, 0.5↑ 제외/대치 우선 검토.
+- mean/std: 평균과 표준편차(스케일). 극단값은 min/max·분위수로 교차 확인(feature_catalog.csv 참조).
+- corr_mkt_excess / corr_fwd: 타깃과의 피어슨 상관. |0.05| 내외는 약한 선형 연관으로 해석(참고용).
+
 ## Group D
 - Columns: D1, D2, D3, D4, D5, D6, D7, D8, D9
 
