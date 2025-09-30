@@ -126,9 +126,66 @@ def main() -> None:
             )
         md.append("")
 
-    (ROOT / "FEATURES.md").write_text("\n".join(md))
+    features_md_path = ROOT / "FEATURES.md"
+    features_md_path.write_text("\n".join(md))
+
+    # Build insights markdown (per-feature utilization potential)
+    def pot_for_row(r: pd.Series) -> str:
+        mr = r.get("missing_rate", 0.0)
+        ac = abs(r.get("corr_market_forward_excess_returns", 0.0) or 0.0)
+        if mr < 0.30 and ac >= 0.05:
+            return "High"
+        if mr < 0.50 and ac >= 0.03:
+            return "Medium"
+        return "Low"
+
+    def actions_for_row(r: pd.Series) -> str:
+        parts = []
+        mr = r.get("missing_rate", 0.0)
+        sd = r.get("std", 0.0)
+        ac = abs(r.get("corr_market_forward_excess_returns", 0.0) or 0.0)
+        # Missing handling
+        if mr >= 0.50:
+            parts.append("고결측: 시계열 보간/모델대치, 제거 검토")
+        elif mr >= 0.30:
+            parts.append("결측↑: 강건 대치/마스킹 피처")
+        else:
+            parts.append("결측양호")
+        # Scale handling
+        if sd >= med_std * 1.5:
+            parts.append("스케일 큼: winsorize/로그/표준화")
+        elif sd <= med_std * 0.5:
+            parts.append("스케일 작음: 스케일 통일")
+        # Signal handling
+        if ac >= 0.05:
+            parts.append("신호 후보: 단순/상호작용/롤링")
+        elif ac >= 0.03:
+            parts.append("약신호: 군집/비선형에서 재검토")
+        else:
+            parts.append("신호 약: 차원축소/제거 후보")
+        return "; ".join(parts)
+
+    cat["potential"] = cat.apply(pot_for_row, axis=1)
+    cat["actions"] = cat.apply(actions_for_row, axis=1)
+
+    lines = ["# Feature Insights (EXP-000)", "", "각 피처별 결측/상관/스케일 기반 활용 가능성 요약.", ""]
+    for g in sorted(cat["group"].unique()):
+        sub = cat[cat["group"] == g]
+        lines.append(f"## Group {g}")
+        lines.append("feature | potential | note | actions")
+        lines.append("--- | --- | --- | ---")
+        for _, r in sub.iterrows():
+            lines.append(
+                f"{r['feature']} | {r['potential']} | {r['note']} | {r['actions']}"
+            )
+        lines.append("")
+
+    insights_path = ROOT / "FEATURES-INSIGHTS.md"
+    insights_path.write_text("\n".join(lines))
+
     print(f"Wrote {out_csv}")
-    print(f"Wrote {ROOT / 'FEATURES.md'}")
+    print(f"Wrote {features_md_path}")
+    print(f"Wrote {insights_path}")
 
 
 if __name__ == "__main__":
