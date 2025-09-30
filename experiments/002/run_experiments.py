@@ -163,6 +163,7 @@ def summarize(experiments: Dict[str, pd.DataFrame]) -> pd.DataFrame:
             "expid": expid,
             "mse_mean": df["mse"].mean(),
             "sharpe_mean": df["sharpe"].mean(),
+            "sharpe_std": df["sharpe"].std(ddof=0),
             "sharpe_median": df["sharpe"].median(),
             "vol_ratio_mean": df["vol_ratio"].mean(),
         })
@@ -191,7 +192,9 @@ def main() -> None:
         # H4
         "H4_k20": {"model": "ols", "k": 20.0},
         "H4_k22": {"model": "ols", "k": 22.0},
+        "H4_k21": {"model": "ols", "k": 21.0},
         "H4_k24": {"model": "ols", "k": 24.0},
+        "H4_k23": {"model": "ols", "k": 23.0},
         "H4_k25": {"model": "ols", "k": 25.0},
         "H4_k30": {"model": "ols", "k": 30.0},
         "H4_k35": {"model": "ols", "k": 35.0},

@@ -36,8 +36,8 @@
 
 추가 가설(다음 단계)
 - [x] H4b k 세분화(20~30): k∈{20,22,24,25,30}에서 최적 k 탐색 → BEST(k)
-  - 결과: k=20(0.4362, vol 1.058) > k=22(0.4277, 1.070) > k=24(0.4216, 1.083) > k=25(0.4198, 1.090) > k=30(0.4155, 1.123)
-  - 링크: results/H4_k20_folds.csv, H4_k22_folds.csv, H4_k24_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
+  - 결과: k=20(0.4362, vol 1.058) > k=21(0.4318, 1.064) > k=22(0.4277, 1.070) > k=23(0.4241, 1.077) > k=24(0.4216, 1.083) > k=25(0.4198, 1.090) > k=30(0.4155, 1.123)
+  - 링크: results/H4_k20_folds.csv, H4_k21_folds.csv, H4_k22_folds.csv, H4_k23_folds.csv, H4_k24_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
 - [x] H7b k+vol‑aware 결합: {k∈{20,25,30}}×vol_cap=1.2에서 안정적 향상
   - 결과: k=20@cap 0.4362(=k20), vol 1.047; k=25@cap 0.4198(=k25), vol 1.067; k=30@cap 0.4155(=k30), vol 1.088
   - 링크: results/H7_k20_volaware_folds.csv, H7_k25_volaware_folds.csv, H7_k30_volaware_folds.csv
@@ -54,6 +54,12 @@
 - [x] H8 Top‑N(상관 절댓값) 특성 선택: N=20/40
   - 결과: Top‑20 0.5848(vol 1.080) > Top‑40 0.4972(vol 1.275)
   - 링크: results/H8_top20_folds.csv, H8_top40_folds.csv
+
+안정성 가설
+- [x] H9 모델 안정성(샤프 표준편차): Lasso vs k=20@cap 비교
+  - 결과(상위): R_lasso_lo Sharpe 0.6040, sharpe_std 0.209; H8_top20 0.5848, std 0.235; H7_k20@cap 0.4362, std 0.350
+  - 해석: Lasso/Top‑N이 Sharpe와 안정성 모두 우수. k=20@cap은 Sharpe<지만 vol_ratio가 가장 안정(≈1.05)
+  - 링크: results/*_folds.csv (요약은 계산 스크립트 참조)
 
 보너스(정규화)
 - [x] Ridge: 0.4008(↑), vol_ratio 1.246
