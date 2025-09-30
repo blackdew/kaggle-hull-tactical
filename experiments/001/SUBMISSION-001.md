@@ -1,9 +1,10 @@
 # 첫 번째 제출 리포트 (SUB-001)
+<!-- snapshot: moved to experiments/001 -->
 
 ## 개요
 - 대회: Hull Tactical Market Prediction (`hull-tactical-market-prediction`)
-- 산출물: `submissions/submission.csv` (헤더 1 + 10행 = 11줄)
-- 생성 스크립트: `scripts/make_submission.py`
+- 산출물: `experiments/001/submission.csv` (헤더 1 + 10행 = 11줄)
+- 생성 스크립트: `experiments/001/make_submission.py`
 - 모델: 선형회귀 + 표준화(LinearRegression + StandardScaler), 0~2 포지션 사이징
 
 ## 방법
@@ -25,8 +26,15 @@
 ## 학습 내 평가(Proxy)
 - MSE(excess): 0.000109
 - 변동성(전략/시장/비율): 0.01083 / 0.01055 / 1.0266
-- 샤프 근사: 0.7173 (252 스케일)
+- 샤프 근사: 0.7173 (252 스케일) — 인샘플 값(훈련 데이터 전체 기준)
 - 주의: 공식 Modified Sharpe가 아닌 단순 근사치. 호스트 점수와 차이 가능
+
+## 검증 결과(CV 5폴드, Proxy)
+- 폴드별 샤프: [0.4896, 0.3199, 0.0640, 0.8508, 0.8108]
+- 집계 샤프: 평균 0.5070, 중앙값 0.4896
+- 변동성 비율(vol_ratio): 평균 1.1571, 중앙값 1.0550 (120% 캡에 근접/초과 폴드 존재)
+- MSE(excess): 평균 0.000283, 중앙값 0.000194
+- 비고: 스케일 캘리브레이션으로 vol_ratio를 1.2 이하로 안정화 필요
 
 ## 특징 중요도(선형 계수 절댓값 Top 12)
 - I5(−3.40e-03), I9(+3.28e-03), V7(−1.10e-03), V13(+1.07e-03), I7(+1.04e-03)

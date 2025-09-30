@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# snapshot: experiments/001
 """
 Evaluate the SimplePositionSizingModel used for the first submission.
 
@@ -70,4 +71,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

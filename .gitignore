@@ -67,6 +67,9 @@ data/
 *.pkl
 *.pickle
 
+# Keep experiment artifacts
+!experiments/**/*.csv
+
 # Models
 models/
 *.pkl

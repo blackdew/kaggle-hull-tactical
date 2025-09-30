@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# snapshot: experiments/001
 """
 Generate a first submission file for Hull Tactical - Market Prediction.
 
