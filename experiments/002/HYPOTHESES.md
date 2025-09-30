@@ -35,12 +35,12 @@
   - 링크: results/H7_k35_volaware_folds.csv
 
 추가 가설(다음 단계)
-- [x] H4b k 세분화(20~30): k∈{20,25,30}에서 최적 k 탐색 → BEST(k)
-  - 결과: k=20(0.4362, vol 1.058) > k=25(0.4198, vol 1.090) > k=30(0.4155, vol 1.123)
-  - 링크: results/H4_k20_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
-- [x] H7b k+vol‑aware 결합: {k∈{25,30}}×vol_cap=1.2에서 안정적 향상
-  - 결과: k=25@cap 0.4198(=k25), vol 1.067(더 안정); k=30@cap 0.4155(=k30), vol 1.088(더 안정)
-  - 링크: results/H7_k25_volaware_folds.csv, H7_k30_volaware_folds.csv
+- [x] H4b k 세분화(20~30): k∈{20,22,24,25,30}에서 최적 k 탐색 → BEST(k)
+  - 결과: k=20(0.4362, vol 1.058) > k=22(0.4277, 1.070) > k=24(0.4216, 1.083) > k=25(0.4198, 1.090) > k=30(0.4155, 1.123)
+  - 링크: results/H4_k20_folds.csv, H4_k22_folds.csv, H4_k24_folds.csv, H4_k25_folds.csv, H4_k30_folds.csv
+- [x] H7b k+vol‑aware 결합: {k∈{20,25,30}}×vol_cap=1.2에서 안정적 향상
+  - 결과: k=20@cap 0.4362(=k20), vol 1.047; k=25@cap 0.4198(=k25), vol 1.067; k=30@cap 0.4155(=k30), vol 1.088
+  - 링크: results/H7_k20_volaware_folds.csv, H7_k25_volaware_folds.csv, H7_k30_volaware_folds.csv
 - [x] R_lasso 안정성: α∈{1e‑4, 1e‑3, 1e‑2}에서 일관 개선 여부와 vol_ratio 확인
   - 결과: α=1e‑4 0.6040(vol 1.097), α=1e‑3 0.5589(vol ≈1.000), α=1e‑2 0.5589(vol ≈1.000)
   - 링크: results/R_lasso_lo_folds.csv, R_lasso_folds.csv, R_lasso_hi_folds.csv
@@ -49,6 +49,11 @@
   - 링크: results/H6mask_ridge_folds.csv, H6mask_lasso_folds.csv
 - [ ] (보류) LightGBM 소규모: Top‑N 피처, 얕은 트리로 비선형 확인(환경 의존)
   - 설치 필요 시 후순위로 진행, 대안으로 트리기반 sklearn 모델 검토
+
+신규 가설(추가)
+- [x] H8 Top‑N(상관 절댓값) 특성 선택: N=20/40
+  - 결과: Top‑20 0.5848(vol 1.080) > Top‑40 0.4972(vol 1.275)
+  - 링크: results/H8_top20_folds.csv, H8_top40_folds.csv
 
 보너스(정규화)
 - [x] Ridge: 0.4008(↑), vol_ratio 1.246

@@ -123,8 +123,16 @@ def run_experiment(df: pd.DataFrame, expid: str, config: Dict) -> pd.DataFrame:
     rows = []
     for fold, (tr, va) in enumerate(tscv.split(df), 1):
         tr_df, va_df = df.iloc[tr], df.iloc[va]
+        # Optional: top-N by abs corr on training fold
+        fold_feats = feats
+        top_n = config.get("top_corr_n")
+        if top_n:
+            corr = tr_df[fold_feats + ["market_forward_excess_returns"]].corr(numeric_only=True)[
+                "market_forward_excess_returns"
+            ].drop(labels=["market_forward_excess_returns"], errors="ignore").abs()
+            fold_feats = [f for f, _ in sorted(corr.items(), key=lambda x: -x[1])[: int(top_n)]]
 
-        Xs, scaler = preprocess(tr_df, feats)
+        Xs, scaler = preprocess(tr_df, fold_feats)
         y = tr_df["market_forward_excess_returns"].to_numpy()
 
         if model_type == "ridge":
@@ -135,7 +143,7 @@ def run_experiment(df: pd.DataFrame, expid: str, config: Dict) -> pd.DataFrame:
             model = LinearRegression()
         model.fit(Xs, y)
 
-        Xv = va_df[feats].copy().fillna(va_df[feats].median(numeric_only=True)).replace([np.inf, -np.inf], np.nan).fillna(0)
+        Xv = va_df[fold_feats].copy().fillna(va_df[fold_feats].median(numeric_only=True)).replace([np.inf, -np.inf], np.nan).fillna(0)
         Xvs = scaler.transform(Xv)
         yhat = model.predict(Xvs)
 
@@ -182,6 +190,8 @@ def main() -> None:
         "H3_none": {"model": "ols", "d12_mode": "none"},
         # H4
         "H4_k20": {"model": "ols", "k": 20.0},
+        "H4_k22": {"model": "ols", "k": 22.0},
+        "H4_k24": {"model": "ols", "k": 24.0},
         "H4_k25": {"model": "ols", "k": 25.0},
         "H4_k30": {"model": "ols", "k": 30.0},
         "H4_k35": {"model": "ols", "k": 35.0},
@@ -196,6 +206,7 @@ def main() -> None:
         "H7_k25_volaware": {"model": "ols", "k": 25.0, "vol_cap": 1.2},
         "H7_k30_volaware": {"model": "ols", "k": 30.0, "vol_cap": 1.2},
         "H7_k35_volaware": {"model": "ols", "k": 35.0, "vol_cap": 1.2},
+        "H7_k20_volaware": {"model": "ols", "k": 20.0, "vol_cap": 1.2},
         # Regularization variants (bonus)
         "R_ridge": {"model": "ridge", "alpha": 1.0},
         "R_lasso_lo": {"model": "lasso", "alpha": 1e-4},
@@ -204,6 +215,9 @@ def main() -> None:
         # Masks + regularization
         "H6mask_ridge": {"model": "ridge", "alpha": 1.0, "add_missing_indicators": True},
         "H6mask_lasso": {"model": "lasso", "alpha": 1e-3, "add_missing_indicators": True},
+        # Top-N by abs corr
+        "H8_top20": {"model": "ols", "top_corr_n": 20},
+        "H8_top40": {"model": "ols", "top_corr_n": 40},
     }
 
     run_list = list(exps.keys()) if args.all else (args.only or [
