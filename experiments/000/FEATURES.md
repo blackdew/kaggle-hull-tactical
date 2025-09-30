@@ -137,6 +137,21 @@ feature, missing, mean, std, corr_mkt_excess, corr_fwd — note
 - V8, 0.112, 0.304, 0.351, +0.003, -0.002 — 결측양호, 상관 매우 약
 - V9, 0.505, 0.129, 1.277, +0.017, +0.017 — 결측↑↑, 상관 매우 약, 스케일 큼(변동↑)
 
+## Validated Findings (from EXP-002)
+- 모델 후보(우선순위)
+  - 후보 A(성능): Lasso(α=1e‑4) + Top‑20(상관 절댓값) + vol‑aware → Sharpe≈0.57, vol≈1.05, 표준편차≈0.23
+  - 후보 B(안정/단순): OLS k=18~20 + vol‑aware → Sharpe≈0.44, vol≈1.04~1.06
+  - 대안: GBR Top‑20(+vol‑aware) → Sharpe≈0.566, vol≈1.165, 표준편차≈0.231
+- 포지션 스케일 k 최적: 18~20 범위. k=18(≈0.444, vol≈1.045)·k=20(≈0.436, ≈1.058)
+- vol‑aware 효과: Sharpe 유지하며 vol_ratio를 1.05±로 안정화
+- 상호작용/스케일 보정(H2/H1): 현 조합·강도에서 유의 개선 없음(신규 조합 시 재검토)
+- 결측 마스킹(H6): 고결측(E7, V10, M1, M13, M14, V9) is_nan_* 추가로 소폭 개선(+)
+- D1/D2 중복(H3): D1만 유지 ≈ BASE, 둘 다 제거↓ → D1 유지 권장
+- Top‑N 선택(H8): Top‑20가 Top‑40 대비 Sharpe↑·vol↓
+- 핵심 피처 시사점: M4(−), V13(+)는 스케일 보정+표준화 후 유효 신호로 확인. S5(+)·S2(−)는 Top‑N/정규화에서 보조 신호로 유효
+
+참고: experiments/002/HYPOTHESES.md, experiments/002/REPORT.md, experiments/002/results/
+
 ## Per-Feature Insights
 
 각 피처별 결측/상관/스케일 기반 활용 가능성 요약.
