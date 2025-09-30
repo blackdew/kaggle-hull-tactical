@@ -15,16 +15,30 @@
 - [x] H2 상호작용(S5×V13, S2×V7): 약신호 조합으로 MSR 개선
   - 결과: ≈ 유지 (0.3804), vol_ratio 유사(1.246)
   - 링크: results/H2_interact_folds.csv
-- [ ] H3 중복 제거(D1/D2): D1만 vs 둘 다 vs 제거, 성능 유지 또는 개선
-  - 계획: H3_d1_only, H3_none 실행 후 BASE 대비 ΔSharpe·vol_ratio 비교
+- [x] H3 중복 제거(D1/D2): D1만 vs 둘 다 vs 제거, 성능 유지 또는 개선
+  - 결과: H3_d1_only≈BASE(0.3831), H3_none 하락(0.3703) → D1만 유지 권장
+  - 링크: results/H3_d1_only_folds.csv, results/H3_none_folds.csv
 - [x] H4 포지션 스케일 k 튜닝: k∈{20,35,50,70,90} 최적화로 MSR 개선
   - 결과(부분): k=35에서 개선(0.4081, +0.025p), vol_ratio 1.158로 안정
   - 링크: results/H4_k35_folds.csv
 - [x] H5 vol‑aware 스케일: 사전 스케일링으로 vol_ratio≤1.2 보장 시 안정화
   - 결과: Sharpe 유지(0.3831), vol_ratio 개선(1.134)
   - 링크: results/H5_volaware_folds.csv
-- [ ] H6 결측 마스킹: 고결측(E7,V10,M1,M13,M14,V9) is_nan_* 추가로 MSR 개선
-  - 계획: BASE vs H6_missing_mask 전/후 ΔSharpe, vol_ratio 비교
+- [x] H6 결측 마스킹: 고결측(E7,V10,M1,M13,M14,V9) is_nan_* 추가로 MSR 개선
+  - 결과: 소폭 개선(0.3865, +0.0034), vol_ratio 1.198로 안정화 경향
+  - 링크: results/H6_missing_mask_folds.csv
+
+신규 가설(추가)
+- [x] H7 k‑튜닝+vol‑aware 결합: k=35와 vol_cap=1.2 동시 적용 시 안정적 개선
+  - 근거: H4(k=35) 개선+H5(vol-aware) 안정화 → 결합 기대
+  - 결과: 0.4081(=H4_k35 수준 유지), vol_ratio 1.106로 추가 안정
+  - 링크: results/H7_k35_volaware_folds.csv
+
+보너스(정규화)
+- [x] Ridge: 0.4008(↑), vol_ratio 1.246
+  - 링크: results/R_ridge_folds.csv
+- [x] Lasso: 0.5589(↑↑), vol_ratio ≈1.000
+  - 링크: results/R_lasso_folds.csv
 
 출력
 - 결과 요약: `experiments/002/results/summary.csv`(실험별 평균/중앙값)

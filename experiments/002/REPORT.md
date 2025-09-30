@@ -14,16 +14,24 @@
 - H4_k35(k=35): sharpe_mean=0.4081(↑), vol_ratio 1.1577(↓)
 - H5_volaware(vol_cap=1.2): sharpe_mean=0.3831(≈), vol_ratio 1.1336(↓)
 
+추가 실행(2차)
+- H3_d1_only: 0.3831(≈), H3_none: 0.3703(↓) → D1만 유지 권장
+- H6_missing_mask: 0.3865(+), vol_ratio 1.198(↓)
+- H4_k25: 0.4198(↑), vol_ratio 1.090(↓↓) — k=25 유망
+- H4_k40: 0.3988(↑), vol_ratio 1.191(↓); H4_k45: 0.3900(≈), 1.222(↓)
+- H7_k35_volaware: 0.4081(=H4_k35), vol_ratio 1.106(↓)
+- Ridge: 0.4008(↑), Lasso: 0.5589(↑↑), vol_ratio≈1.000
+
 해석
 - H4(k 튜닝): k=35에서 Sharpe 평균이 +0.025p 개선, vol_ratio가 1.16으로 제약에 근접하게 안정화 → 유효.
 - H5(vol‑aware): 평균 Sharpe 유지하면서 vol_ratio를 1.13까지 낮춤 → 안정성 관점에서 긍정적.
 - H1/H2: 현 설정에서는 유의 개선 없음. 스케일/상호작용 선택을 재탐색 필요(대상 피처/변환 강도/비율).
 
 다음 단계(우선순위)
-1) k 최적화(세분화: k=25~45 범위) + vol‑aware 동시 적용 → BEST(k)@cap
-2) H3(D1/D2 중복) 비교 실험 추가(H3_d1_only/H3_none)
-3) H6(결측 마스킹) + H1(스케일 보정) 조합 검증
-4) 정규화 모델(Ridge/Lasso) 비교 및 Top‑N 피처 선별 후 LightGBM 스몰 튜닝
+1) k 최적화: k=25가 2차 기준 최선 → k=20~30 세분화 + vol‑aware 결합 검증
+2) D군: D1만 유지(중복 제거)로 고정, 파이프라인 반영
+3) H6 마스킹 + 정규화(Lasso/Ridge) 조합 검증(과적합/안정성 확인)
+4) LightGBM 소규모 실험(Top‑N, 제한적 트리 깊이)로 비선형 검토
 
 산출물
 - 폴드별: experiments/002/results/*_folds.csv
