@@ -181,18 +181,38 @@ def main() -> None:
         "H3_d1_only": {"model": "ols", "d12_mode": "d1_only"},
         "H3_none": {"model": "ols", "d12_mode": "none"},
         # H4
+        "H4_k20": {"model": "ols", "k": 20.0},
+        "H4_k25": {"model": "ols", "k": 25.0},
+        "H4_k30": {"model": "ols", "k": 30.0},
         "H4_k35": {"model": "ols", "k": 35.0},
+        "H4_k40": {"model": "ols", "k": 40.0},
+        "H4_k45": {"model": "ols", "k": 45.0},
         "H4_k70": {"model": "ols", "k": 70.0},
         # H5
         "H5_volaware": {"model": "ols", "vol_cap": 1.2},
         # H6
         "H6_missing_mask": {"model": "ols", "add_missing_indicators": True},
+        # Combined (new hypothesis)
+        "H7_k25_volaware": {"model": "ols", "k": 25.0, "vol_cap": 1.2},
+        "H7_k30_volaware": {"model": "ols", "k": 30.0, "vol_cap": 1.2},
+        "H7_k35_volaware": {"model": "ols", "k": 35.0, "vol_cap": 1.2},
         # Regularization variants (bonus)
         "R_ridge": {"model": "ridge", "alpha": 1.0},
-        "R_lasso": {"model": "lasso", "alpha": 0.001},
+        "R_lasso_lo": {"model": "lasso", "alpha": 1e-4},
+        "R_lasso": {"model": "lasso", "alpha": 1e-3},
+        "R_lasso_hi": {"model": "lasso", "alpha": 1e-2},
+        # Masks + regularization
+        "H6mask_ridge": {"model": "ridge", "alpha": 1.0, "add_missing_indicators": True},
+        "H6mask_lasso": {"model": "lasso", "alpha": 1e-3, "add_missing_indicators": True},
     }
 
-    run_list = list(exps.keys()) if args.all else (args.only or ["BASE","H1_scale","H2_interact","H4_k35","H5_volaware"])
+    run_list = list(exps.keys()) if args.all else (args.only or [
+        "BASE","H1_scale","H2_interact",
+        "H4_k20","H4_k25","H4_k30","H4_k35","H4_k40","H4_k45",
+        "H5_volaware","H7_k25_volaware","H7_k30_volaware","H7_k35_volaware",
+        "H3_d1_only","H3_none","H6_missing_mask",
+        "H6mask_ridge","H6mask_lasso","R_ridge","R_lasso_lo","R_lasso","R_lasso_hi"
+    ])
 
     results: Dict[str, pd.DataFrame] = {}
     for expid in run_list:
@@ -207,4 +227,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
