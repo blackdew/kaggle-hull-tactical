@@ -62,6 +62,11 @@
   - 해석: 결합 모델이 Sharpe/vol 모두 양호하고, 롤링에서도 유사 안정성. k=20@cap은 vol이 더 보수적.
   - 링크: results/*_folds.csv, results/rolling_*.csv
 
+추가 실행(H10 확장)
+- R_lasso_lo 롤링: Sharpe [0.13, 0.14, 1.05, 0.82], vol≈1.03~1.17
+- H8_top20 롤링: Sharpe [0.10, 0.07, 1.06, 0.82], vol≈0.98~1.28
+  - 결론: Lasso/Top‑20/결합 모두 3번째 블록에서 강한 성과, 전·후반 약세 구간 존재(예상 가능한 체 regime).
+
 보너스(정규화)
 - [x] Ridge: 0.4008(↑), vol_ratio 1.246
   - 링크: results/R_ridge_folds.csv
