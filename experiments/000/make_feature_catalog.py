@@ -189,6 +189,27 @@ def main() -> None:
     features_md_path = ROOT / "FEATURES.md"
     features_md_path.write_text("\n".join(md_numeric + lines))
 
+    # Build a compact, per-feature, one-line summary (numbers + insights together)
+    comp: list[str] = []
+    comp.append("# Feature-by-Feature Compact Summary (EXP-000)")
+    comp.append("")
+    comp.append("각 피처를 중심으로 수치와 해석(잠재력/액션)을 한 줄에 결합해 제공합니다.")
+    comp.append("")
+    for g in sorted(cat["group"].unique()):
+        sub = cat[cat["group"] == g]
+        comp.append(f"## Group {g}")
+        for _, r in sub.iterrows():
+            comp.append(
+                f"- {r['feature']}: missing {r['missing_rate']:.3f} | mean {r['mean']:.3f} | std {r['std']:.3f} | "
+                f"corr_mkt {((r['corr_market_forward_excess_returns']) if not pd.isna(r['corr_market_forward_excess_returns']) else 0):+0.3f} | "
+                f"corr_fwd {((r['corr_forward_returns']) if not pd.isna(r['corr_forward_returns']) else 0):+0.3f} — "
+                f"Insight: potential={r['potential']}; {r['note']}; Action: {r['actions']}"
+            )
+        comp.append("")
+
+    # Append compact one-liners to FEATURES.md (no separate file)
+    features_md_path.write_text(features_md_path.read_text() + "\n\n" + "\n".join(comp))
+
     print(f"Wrote {out_csv}")
     print(f"Wrote {features_md_path}")
 

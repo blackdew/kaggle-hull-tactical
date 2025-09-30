@@ -262,3 +262,116 @@ V6 | Low | 결측양호, 상관 매우 약 | 결측양호; 신호 약: 차원축
 V7 | Medium | 결측양호, 상관 약(+), 스케일 큼(변동↑) | 결측양호; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
 V8 | Low | 결측양호, 상관 매우 약 | 결측양호; 신호 약: 차원축소/제거 후보
 V9 | Low | 결측↑↑, 상관 매우 약, 스케일 큼(변동↑) | 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+
+
+# Feature-by-Feature Compact Summary (EXP-000)
+
+각 피처를 중심으로 수치와 해석(잠재력/액션)을 한 줄에 결합해 제공합니다.
+
+## Group D
+- D1: missing 0.000 | mean 0.032 | std 0.175 | corr_mkt +0.034 | corr_fwd +0.034 — Insight: potential=Medium; 결측양호, 상관 약(+), 스케일 작음; Action: 결측양호; 스케일 작음: 스케일 통일; 약신호: 군집/비선형에서 재검토
+- D2: missing 0.000 | mean 0.032 | std 0.175 | corr_mkt +0.034 | corr_fwd +0.034 — Insight: potential=Medium; 결측양호, 상관 약(+), 스케일 작음; Action: 결측양호; 스케일 작음: 스케일 통일; 약신호: 군집/비선형에서 재검토
+- D3: missing 0.000 | mean 0.048 | std 0.213 | corr_mkt +0.006 | corr_fwd +0.006 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D4: missing 0.000 | mean 0.575 | std 0.494 | corr_mkt +0.017 | corr_fwd +0.017 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D5: missing 0.000 | mean 0.191 | std 0.393 | corr_mkt +0.017 | corr_fwd +0.017 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D6: missing 0.000 | mean -0.238 | std 0.426 | corr_mkt +0.017 | corr_fwd +0.017 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D7: missing 0.000 | mean 0.046 | std 0.209 | corr_mkt +0.011 | corr_fwd +0.011 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D8: missing 0.000 | mean 0.143 | std 0.350 | corr_mkt +0.025 | corr_fwd +0.025 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- D9: missing 0.000 | mean 0.143 | std 0.350 | corr_mkt +0.001 | corr_fwd +0.001 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+
+## Group E
+- E1: missing 0.198 | mean 1.565 | std 0.634 | corr_mkt +0.007 | corr_fwd +0.009 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E10: missing 0.112 | mean 0.505 | std 0.337 | corr_mkt -0.003 | corr_fwd -0.001 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- E11: missing 0.112 | mean 0.126 | std 0.246 | corr_mkt -0.032 | corr_fwd -0.031 — Insight: potential=Medium; 결측양호, 상관 약(-); Action: 결측양호; 약신호: 군집/비선형에서 재검토
+- E12: missing 0.112 | mean 0.119 | std 0.252 | corr_mkt -0.031 | corr_fwd -0.030 — Insight: potential=Medium; 결측양호, 상관 약(-); Action: 결측양호; 약신호: 군집/비선형에서 재검토
+- E13: missing 0.112 | mean 0.012 | std 0.019 | corr_mkt -0.010 | corr_fwd -0.008 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 작음; Action: 결측양호; 스케일 작음: 스케일 통일; 신호 약: 차원축소/제거 후보
+- E14: missing 0.112 | mean 0.007 | std 0.012 | corr_mkt +0.001 | corr_fwd +0.003 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 작음; Action: 결측양호; 스케일 작음: 스케일 통일; 신호 약: 차원축소/제거 후보
+- E15: missing 0.112 | mean 0.485 | std 0.349 | corr_mkt +0.005 | corr_fwd +0.006 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- E16: missing 0.112 | mean -0.047 | std 1.138 | corr_mkt +0.006 | corr_fwd +0.005 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E17: missing 0.112 | mean -0.007 | std 1.159 | corr_mkt +0.007 | corr_fwd +0.005 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E18: missing 0.112 | mean 0.098 | std 1.147 | corr_mkt -0.008 | corr_fwd -0.008 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E19: missing 0.112 | mean 0.119 | std 1.248 | corr_mkt +0.023 | corr_fwd +0.025 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E2: missing 0.112 | mean 0.501 | std 1.425 | corr_mkt -0.002 | corr_fwd -0.001 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E20: missing 0.180 | mean 0.903 | std 1.272 | corr_mkt -0.002 | corr_fwd +0.001 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E3: missing 0.112 | mean 0.341 | std 1.507 | corr_mkt -0.002 | corr_fwd +0.000 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E4: missing 0.112 | mean 0.017 | std 0.042 | corr_mkt +0.006 | corr_fwd +0.004 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 작음; Action: 결측양호; 스케일 작음: 스케일 통일; 신호 약: 차원축소/제거 후보
+- E5: missing 0.112 | mean 0.600 | std 0.338 | corr_mkt -0.007 | corr_fwd -0.005 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- E6: missing 0.112 | mean 0.122 | std 0.222 | corr_mkt +0.013 | corr_fwd +0.016 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- E7: missing 0.775 | mean -0.037 | std 1.926 | corr_mkt -0.032 | corr_fwd -0.032 — Insight: potential=Low; 결측↑↑, 상관 약(-), 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- E8: missing 0.112 | mean -0.272 | std 1.515 | corr_mkt -0.002 | corr_fwd -0.003 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- E9: missing 0.112 | mean 0.263 | std 0.299 | corr_mkt +0.015 | corr_fwd +0.014 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+
+## Group I
+- I1: missing 0.112 | mean 0.747 | std 0.245 | corr_mkt -0.006 | corr_fwd -0.005 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I2: missing 0.112 | mean -0.528 | std 1.252 | corr_mkt -0.026 | corr_fwd -0.023 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- I3: missing 0.112 | mean 0.610 | std 0.331 | corr_mkt +0.005 | corr_fwd +0.005 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I4: missing 0.112 | mean 0.551 | std 0.307 | corr_mkt +0.002 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I5: missing 0.112 | mean 0.185 | std 1.642 | corr_mkt +0.004 | corr_fwd +0.007 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- I6: missing 0.112 | mean 0.456 | std 0.303 | corr_mkt -0.006 | corr_fwd -0.005 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I7: missing 0.112 | mean 0.708 | std 0.257 | corr_mkt +0.004 | corr_fwd +0.004 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I8: missing 0.112 | mean 0.574 | std 0.326 | corr_mkt -0.003 | corr_fwd -0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- I9: missing 0.112 | mean 0.186 | std 1.642 | corr_mkt +0.004 | corr_fwd +0.007 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+
+## Group M
+- M1: missing 0.617 | mean -0.616 | std 1.000 | corr_mkt +0.046 | corr_fwd +0.045 — Insight: potential=Low; 결측↑↑, 상관 약(+), 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- M10: missing 0.112 | mean 0.061 | std 1.318 | corr_mkt +0.008 | corr_fwd +0.008 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M11: missing 0.112 | mean -0.289 | std 1.224 | corr_mkt +0.006 | corr_fwd +0.007 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M12: missing 0.112 | mean 0.480 | std 1.397 | corr_mkt -0.025 | corr_fwd -0.024 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M13: missing 0.616 | mean -0.949 | std 0.654 | corr_mkt +0.012 | corr_fwd +0.011 — Insight: potential=Low; 결측↑↑, 상관 매우 약, 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M14: missing 0.616 | mean -0.865 | std 0.193 | corr_mkt -0.001 | corr_fwd -0.006 — Insight: potential=Low; 결측↑↑, 상관 매우 약, 스케일 작음; Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 작음: 스케일 통일; 신호 약: 차원축소/제거 후보
+- M15: missing 0.112 | mean 0.462 | std 0.274 | corr_mkt -0.004 | corr_fwd -0.003 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- M16: missing 0.112 | mean 0.231 | std 0.326 | corr_mkt +0.005 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- M17: missing 0.112 | mean 0.273 | std 0.227 | corr_mkt +0.025 | corr_fwd +0.025 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- M18: missing 0.112 | mean 0.601 | std 0.344 | corr_mkt -0.012 | corr_fwd -0.013 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- M2: missing 0.358 | mean 0.086 | std 1.092 | corr_mkt +0.033 | corr_fwd +0.033 — Insight: potential=Medium; 결측↑, 상관 약(+), 스케일 큼(변동↑); Action: 결측↑: 강건 대치/마스킹 피처; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- M3: missing 0.224 | mean 0.145 | std 1.221 | corr_mkt +0.017 | corr_fwd +0.016 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M4: missing 0.112 | mean -0.002 | std 1.094 | corr_mkt -0.066 | corr_fwd -0.067 — Insight: potential=High; 결측양호, 상관 보통(-), 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 후보: 단순/상호작용/롤링
+- M5: missing 0.365 | mean 0.229 | std 1.551 | corr_mkt +0.008 | corr_fwd +0.009 — Insight: potential=Low; 결측↑, 상관 매우 약, 스케일 큼(변동↑); Action: 결측↑: 강건 대치/마스킹 피처; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M6: missing 0.561 | mean 0.232 | std 1.365 | corr_mkt +0.010 | corr_fwd +0.008 — Insight: potential=Low; 결측↑↑, 상관 매우 약, 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M7: missing 0.112 | mean 0.003 | std 1.020 | corr_mkt -0.007 | corr_fwd -0.007 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- M8: missing 0.112 | mean 0.435 | std 0.318 | corr_mkt -0.022 | corr_fwd -0.024 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- M9: missing 0.112 | mean 0.382 | std 1.412 | corr_mkt -0.002 | corr_fwd -0.003 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+
+## Group P
+- P1: missing 0.112 | mean 0.528 | std 0.328 | corr_mkt +0.001 | corr_fwd +0.001 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- P10: missing 0.112 | mean 1.466 | std 0.814 | corr_mkt -0.020 | corr_fwd -0.017 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P11: missing 0.112 | mean 1.256 | std 1.096 | corr_mkt -0.012 | corr_fwd -0.009 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P12: missing 0.112 | mean -0.025 | std 1.083 | corr_mkt -0.023 | corr_fwd -0.022 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P13: missing 0.112 | mean 0.509 | std 0.284 | corr_mkt -0.004 | corr_fwd -0.004 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- P2: missing 0.112 | mean -0.361 | std 1.445 | corr_mkt +0.004 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P3: missing 0.112 | mean 0.495 | std 0.288 | corr_mkt -0.011 | corr_fwd -0.011 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- P4: missing 0.112 | mean 0.501 | std 0.288 | corr_mkt +0.003 | corr_fwd +0.003 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- P5: missing 0.175 | mean 0.000 | std 1.071 | corr_mkt -0.023 | corr_fwd -0.023 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P6: missing 0.182 | mean 0.054 | std 1.153 | corr_mkt -0.001 | corr_fwd +0.000 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P7: missing 0.180 | mean 0.249 | std 1.133 | corr_mkt -0.023 | corr_fwd -0.022 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P8: missing 0.112 | mean 1.542 | std 0.709 | corr_mkt -0.030 | corr_fwd -0.026 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- P9: missing 0.112 | mean 0.395 | std 0.386 | corr_mkt +0.005 | corr_fwd +0.004 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+
+## Group S
+- S1: missing 0.112 | mean 0.240 | std 1.423 | corr_mkt +0.004 | corr_fwd +0.005 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- S10: missing 0.112 | mean 0.438 | std 0.322 | corr_mkt -0.003 | corr_fwd -0.006 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- S11: missing 0.112 | mean 0.433 | std 0.325 | corr_mkt +0.000 | corr_fwd -0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- S12: missing 0.393 | mean 0.264 | std 0.956 | corr_mkt +0.026 | corr_fwd +0.025 — Insight: potential=Low; 결측↑, 상관 매우 약, 스케일 큼(변동↑); Action: 결측↑: 강건 대치/마스킹 피처; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- S2: missing 0.112 | mean 0.025 | std 1.025 | corr_mkt -0.038 | corr_fwd -0.037 — Insight: potential=Medium; 결측양호, 상관 약(-), 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- S3: missing 0.638 | mean 0.059 | std 1.010 | corr_mkt -0.019 | corr_fwd -0.019 — Insight: potential=Low; 결측↑↑, 상관 매우 약, 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- S4: missing 0.112 | mean 0.456 | std 0.327 | corr_mkt -0.001 | corr_fwd -0.004 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- S5: missing 0.168 | mean 0.035 | std 1.136 | corr_mkt +0.040 | corr_fwd +0.041 — Insight: potential=Medium; 결측양호, 상관 약(+), 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- S6: missing 0.112 | mean 0.516 | std 0.289 | corr_mkt +0.022 | corr_fwd +0.022 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- S7: missing 0.112 | mean 0.493 | std 0.307 | corr_mkt -0.012 | corr_fwd -0.012 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- S8: missing 0.335 | mean 0.075 | std 1.098 | corr_mkt -0.010 | corr_fwd -0.011 — Insight: potential=Low; 결측↑, 상관 매우 약, 스케일 큼(변동↑); Action: 결측↑: 강건 대치/마스킹 피처; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- S9: missing 0.112 | mean 0.457 | std 0.328 | corr_mkt -0.009 | corr_fwd -0.012 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+
+## Group V
+- V1: missing 0.112 | mean 0.326 | std 0.346 | corr_mkt +0.001 | corr_fwd -0.004 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V10: missing 0.673 | mean 0.001 | std 1.247 | corr_mkt +0.033 | corr_fwd +0.032 — Insight: potential=Low; 결측↑↑, 상관 약(+), 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- V11: missing 0.112 | mean 0.230 | std 0.316 | corr_mkt +0.006 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V12: missing 0.112 | mean 0.253 | std 0.307 | corr_mkt +0.009 | corr_fwd +0.005 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V13: missing 0.168 | mean 0.112 | std 1.331 | corr_mkt +0.062 | corr_fwd +0.063 — Insight: potential=High; 결측양호, 상관 보통(+), 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 후보: 단순/상호작용/롤링
+- V2: missing 0.112 | mean 0.509 | std 0.306 | corr_mkt +0.002 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V3: missing 0.112 | mean 0.490 | std 0.306 | corr_mkt -0.002 | corr_fwd -0.003 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V4: missing 0.112 | mean 0.507 | std 0.307 | corr_mkt +0.002 | corr_fwd +0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V5: missing 0.168 | mean 0.372 | std 1.153 | corr_mkt -0.002 | corr_fwd -0.003 — Insight: potential=Low; 결측양호, 상관 매우 약, 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
+- V6: missing 0.112 | mean 0.287 | std 0.312 | corr_mkt +0.010 | corr_fwd +0.008 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V7: missing 0.168 | mean 0.148 | std 1.327 | corr_mkt +0.032 | corr_fwd +0.033 — Insight: potential=Medium; 결측양호, 상관 약(+), 스케일 큼(변동↑); Action: 결측양호; 스케일 큼: winsorize/로그/표준화; 약신호: 군집/비선형에서 재검토
+- V8: missing 0.112 | mean 0.304 | std 0.351 | corr_mkt +0.003 | corr_fwd -0.002 — Insight: potential=Low; 결측양호, 상관 매우 약; Action: 결측양호; 신호 약: 차원축소/제거 후보
+- V9: missing 0.505 | mean 0.129 | std 1.277 | corr_mkt +0.017 | corr_fwd +0.017 — Insight: potential=Low; 결측↑↑, 상관 매우 약, 스케일 큼(변동↑); Action: 고결측: 시계열 보간/모델대치, 제거 검토; 스케일 큼: winsorize/로그/표준화; 신호 약: 차원축소/제거 후보
