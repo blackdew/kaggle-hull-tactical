@@ -32,10 +32,24 @@ class LassoTop20Server(InferenceServer):
     def _get_gateway_for_test(self, data_paths=None, file_share_dir=None, *args, **kwargs):
         return DefaultGateway(data_paths)
 
+    def _load_train(self) -> pd.DataFrame:
+        """Robust train loader for Kaggle + local."""
+        candidates = [
+            '/kaggle/input/hull-tactical-market-prediction/train.csv',  # Kaggle dataset mount
+            'train.csv',
+            './train.csv',
+            '/kaggle/working/train.csv',
+            'data/train.csv',  # local repo
+        ]
+        for path in candidates:
+            if os.path.exists(path):
+                return pd.read_csv(path)
+        raise FileNotFoundError('train.csv not found in known locations: ' + ', '.join(candidates))
+
     def train_if_needed(self):
         if self.ready:
             return
-        train = pd.read_csv('train.csv')
+        train = self._load_train()
         target = 'market_forward_excess_returns'
 
         # base feature selection (exclude non-features)
@@ -74,13 +88,18 @@ class LassoTop20Server(InferenceServer):
         # Convert Polars to Pandas if needed
         if pl is not None and hasattr(pl, 'DataFrame') and isinstance(df, pl.DataFrame):
             df = df.to_pandas()
-        X = df[self.features].copy()
-        X = X.fillna(X.median(numeric_only=True)).replace([np.inf, -np.inf], np.nan).fillna(0)
+        # Ensure all expected features exist (fill missing with zeros)
+        missing = [c for c in self.features if c not in df.columns]
+        for c in missing:
+            df[c] = 0.0
+
+        X = df[self.features].astype('float64')
+        X = X.replace([np.inf, -np.inf], np.nan).fillna(0.0)
         Xs = self.scaler.transform(X)
         excess = self.model.predict(Xs)
         positions = np.clip(1.0 + excess * (self.k / 1.0), 0.0, 2.0)
         # Return a scalar or a single-value array per batch
-        return float(positions.iloc[0] if hasattr(positions, 'iloc') else positions[0])
+        return float(positions[0])
 
 
 if __name__ == '__main__':
@@ -89,6 +108,21 @@ if __name__ == '__main__':
     srv = LassoTop20Server()
     srv.server.start()
     try:
-        DefaultGateway(data_paths=('.',)).run()
+        # Pick competition data directory that actually contains test.csv
+        candidates = [
+            '/kaggle/input/hull-tactical-market-prediction',  # Kaggle Code environment
+            '.',  # working dir
+            'data',  # local repo
+        ]
+        comp_dir = None
+        for p in candidates:
+            if os.path.exists(os.path.join(p, 'test.csv')):
+                comp_dir = p
+                break
+
+        if comp_dir is None:
+            DefaultGateway().run()
+        else:
+            DefaultGateway(data_paths=(comp_dir,)).run()
     finally:
         srv.server.stop(0)
