@@ -103,26 +103,30 @@ class LassoTop20Server(InferenceServer):
 
 
 if __name__ == '__main__':
-    # Start server and run the competition gateway so that
-    # submission.parquet is produced in the Outputs for this Version.
-    srv = LassoTop20Server()
-    srv.server.start()
-    try:
-        # Pick competition data directory that actually contains test.csv
-        candidates = [
-            '/kaggle/input/hull-tactical-market-prediction',  # Kaggle Code environment
-            '.',  # working dir
-            'data',  # local repo
-        ]
-        comp_dir = None
-        for p in candidates:
-            if os.path.exists(os.path.join(p, 'test.csv')):
-                comp_dir = p
-                break
+    # In Kaggle rerun (host evaluation), only start the server and block.
+    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+        srv = LassoTop20Server()
+        srv.serve()
+    else:
+        # Local/Kaggle notebook execution: start server and run the gateway to write submission.parquet
+        srv = LassoTop20Server()
+        srv.server.start()
+        try:
+            # Pick competition data directory that actually contains test.csv
+            candidates = [
+                '/kaggle/input/hull-tactical-market-prediction',  # Kaggle Code environment
+                '.',  # working dir
+                'data',  # local repo
+            ]
+            comp_dir = None
+            for p in candidates:
+                if os.path.exists(os.path.join(p, 'test.csv')):
+                    comp_dir = p
+                    break
 
-        if comp_dir is None:
-            DefaultGateway().run()
-        else:
-            DefaultGateway(data_paths=(comp_dir,)).run()
-    finally:
-        srv.server.stop(0)
+            if comp_dir is None:
+                DefaultGateway().run()
+            else:
+                DefaultGateway(data_paths=(comp_dir,)).run()
+        finally:
+            srv.server.stop(0)
