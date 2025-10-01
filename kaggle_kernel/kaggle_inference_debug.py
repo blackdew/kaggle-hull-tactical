@@ -52,7 +52,10 @@ class LassoTop20DebugServer(InferenceServer):
         self.ready = False
         self.features: List[str] = []
         self.k = 50.0
-        super().__init__(self.predict)
+        # Register a named function (not a bound method) so relay accepts it
+        def predict(batch):  # noqa: D401
+            return LassoTop20DebugServer.predict(self, batch)
+        super().__init__(predict)
 
     def _load_train(self) -> pd.DataFrame:
         candidates = [
@@ -179,4 +182,3 @@ if __name__ == '__main__':
         finally:
             srv.server.stop(0)
             log("server stopped")
-

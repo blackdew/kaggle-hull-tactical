@@ -26,7 +26,10 @@ class LassoTop20Server(InferenceServer):
         self.Lasso = Lasso
         self.StandardScaler = StandardScaler
         self.ready = False
-        super().__init__(self.predict)
+        # Register a named function (not a bound method) per relay requirements
+        def predict(batch):  # noqa: D401
+            return LassoTop20Server.predict(self, batch)
+        super().__init__(predict)
 
     # Required by InferenceServer: return a gateway instance for local tests
     def _get_gateway_for_test(self, data_paths=None, file_share_dir=None, *args, **kwargs):
