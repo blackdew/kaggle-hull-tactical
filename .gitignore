@@ -85,6 +85,7 @@ logs/
 # Submissions
 submissions/*
 !submissions/.gitkeep
+!submissions/submission.py
 output/
 
 # API keys and secrets
