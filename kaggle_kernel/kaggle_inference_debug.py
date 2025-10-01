@@ -185,6 +185,20 @@ if __name__ == '__main__':
                     df = pd.read_parquet(sub_path)
                     log(f"submission: shape={df.shape}, columns={list(df.columns)} (via gateway={wrote_via_gateway})")
                     log(f"submission.head():\n{df.head()}\n...")
+                    # Write visible duplicates for debugging convenience
+                    debug_parq = 'submission_debug.parquet'
+                    debug_csv = 'submission_debug.csv'
+                    df.to_parquet(debug_parq, index=False)
+                    df.to_csv(debug_csv, index=False)
+                    log(f"also wrote: {debug_parq}, {debug_csv}")
+                    # List /kaggle/working contents with sizes
+                    try:
+                        import os
+                        files = sorted(os.listdir('/kaggle/working'))
+                        sizes = {f: os.path.getsize(os.path.join('/kaggle/working', f)) for f in files}
+                        log("/kaggle/working files: " + json.dumps(sizes, ensure_ascii=False))
+                    except Exception:
+                        pass
                 except Exception:
                     log("EXCEPTION while reading submission.parquet:\n" + traceback.format_exc())
             else:
