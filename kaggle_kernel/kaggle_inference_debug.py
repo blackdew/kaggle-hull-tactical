@@ -144,7 +144,8 @@ class LassoTop20DebugServer(InferenceServer):
 
 if __name__ == '__main__':
     log("kernel start (debug mode)")
-    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+    force_local = os.getenv('KAGGLE_DEBUG_LOCAL') == '1'
+    if os.getenv('KAGGLE_IS_COMPETITION_RERUN') and not force_local:
         # Host rerun: serve only
         srv = LassoTop20DebugServer()
         log("serve() on rerun")
@@ -165,24 +166,59 @@ if __name__ == '__main__':
                     break
             log(f"selected data dir: {comp_dir or '(DefaultGateway defaults)'}")
 
-            if comp_dir is None:
-                DefaultGateway().run()
-            else:
-                DefaultGateway(data_paths=(comp_dir,)).run()
+            wrote_via_gateway = False
+            try:
+                if comp_dir is None:
+                    DefaultGateway().run()
+                else:
+                    DefaultGateway(data_paths=(comp_dir,)).run()
+                wrote_via_gateway = True
+            except Exception:
+                log("EXCEPTION during gateway run (will attempt fallback writer):\n" + traceback.format_exc())
 
-            # Post-run: summarize submission
+            # Post-run: summarize or fallback-generate submission
             sub_path = 'submission.parquet'
             if os.path.exists(sub_path):
                 try:
                     import pyarrow as pa  # noqa: F401
                     import pandas as pd
                     df = pd.read_parquet(sub_path)
-                    log(f"submission: shape={df.shape}, columns={list(df.columns)}")
+                    log(f"submission: shape={df.shape}, columns={list(df.columns)} (via gateway={wrote_via_gateway})")
                     log(f"submission.head():\n{df.head()}\n...")
                 except Exception:
                     log("EXCEPTION while reading submission.parquet:\n" + traceback.format_exc())
             else:
-                log("WARNING: submission.parquet not found after gateway run")
+                # Fallback: build submission directly if gateway didn't write it
+                try:
+                    import pandas as pd
+                    # pick test path
+                    test_path = None
+                    for p in [
+                        '/kaggle/input/hull-tactical-market-prediction/test.csv',
+                        (comp_dir + '/test.csv') if comp_dir else None,
+                        'test.csv', './test.csv', 'data/test.csv', '/kaggle/working/test.csv',
+                    ]:
+                        if p and os.path.exists(p):
+                            test_path = p
+                            break
+                    if not test_path:
+                        raise FileNotFoundError('test.csv not found in fallback search paths')
+
+                    log(f"fallback writer using: {test_path}")
+                    tdf = pd.read_csv(test_path)
+                    row_id_col = tdf.columns[0]
+                    preds = []
+                    row_ids = []
+                    # batch by row_id values as gateway would do
+                    for rid, batch in tdf.groupby(row_id_col):
+                        row_ids.append(rid)
+                        preds.append(LassoTop20DebugServer.predict(srv, batch))
+
+                    out = pd.DataFrame({row_id_col: row_ids, 'prediction': preds})
+                    out.to_parquet(sub_path, index=False)
+                    log(f"fallback submission written: shape={out.shape}, columns={list(out.columns)}")
+                except Exception:
+                    log("FALLBACK FAILED — no submission.parquet written:\n" + traceback.format_exc())
         finally:
             srv.server.stop(0)
             log("server stopped")
