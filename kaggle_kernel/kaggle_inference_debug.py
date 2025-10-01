@@ -57,6 +57,10 @@ class LassoTop20DebugServer(InferenceServer):
             return LassoTop20DebugServer.predict(self, batch)
         super().__init__(predict)
 
+    # InferenceServer가 요구하는 테스트용 게이트웨이 생성자 구현
+    def _get_gateway_for_test(self, data_paths=None, file_share_dir=None, *args, **kwargs):
+        return DefaultGateway(data_paths)
+
     def _load_train(self) -> pd.DataFrame:
         candidates = [
             '/kaggle/input/hull-tactical-market-prediction/train.csv',
