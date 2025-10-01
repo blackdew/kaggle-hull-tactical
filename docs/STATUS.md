@@ -58,3 +58,40 @@ Last updated: 2025-10-01 (local repo snapshot)
 - 경로는 상대경로 사용, 결측/파일 없음 방어적 처리
 - 캐글 환경: 학습 8h·예측 9h, 인터넷 제한, 공개 외부데이터만
 
+## 제출 이슈 기록(2025-10-01)
+
+문제 증상
+- Kaggle 제출이 "Kaggle Error"로 실패하고 상세 로그 확인 불가.
+- 노트북 콘솔에는 nbconvert 로그만 보이거나, 초기에 TypeError만 출력.
+- 일부 실행에서는 로그는 정상이나 `submission.parquet`가 Outputs에 보이지 않음.
+
+원인 분석
+- InferenceServer 엔드포인트 등록을 bound method로 넘겨 relay가 거부(FunctionType만 허용) → 초기화 TypeError.
+- `InferenceServer._get_gateway_for_test` 미구현으로 추상 메서드 에러(TypeError) 발생.
+- rerun(호스트 재실행) 환경에서 서버 컨테이너가 게이트웨이까지 구동하려 해 포트/호스트 충돌 가능 → 평가 단계에서 실패.
+- 경로 탐색이 협소해 train/test를 못 찾는 케이스 존재(특히 캐글 환경 경로 차이).
+- 배치별 피처 누락 시 스케일러 입력 차원 불일치 가능.
+
+적용한 해결책
+- `kaggle_kernel/kaggle_inference.py`
+  - predict 등록 방식을 함수(FunctionType)로 래핑하여 전달.
+  - `_get_gateway_for_test` 구현.
+  - 학습/테스트 경로 폴백 탐색 강화(`/kaggle/input/...`, `.`/`./`, `/kaggle/working`, `data/`).
+  - 배치 피처 누락 0.0 보정 + float64 캐스팅.
+  - rerun 가드 추가: 호스트 재실행 시 `serve()`만, 로컬/노트북에선 게이트웨이 별도.
+- `kaggle_kernel/kaggle_inference_debug.py`(신규)
+  - 위 동일 개선 + 풍부한 [DEBUG] 로그(경로/피처/스케일/예측/제출 요약).
+  - `KAGGLE_DEBUG_LOCAL=1`로 강제 로컬 실행(서버+게이트웨이 동시 구동) 지원.
+  - 게이트웨이 실패 시 폴백 라이터로 `submission.parquet` 직접 생성.
+  - 가시성 확보용 복제 아티팩트: `submission_debug.parquet`, `submission_debug.csv`와 `/kaggle/working` 목록 출력.
+
+재현/검증 절차
+- 로컬: `uv run python submissions/run_local.py` → `submission.parquet` 생성, 포맷 검사.
+- Kaggle 디버그 실행: `kaggle_inference_debug.py` + `KAGGLE_DEBUG_LOCAL=1` → [DEBUG] 로그 확인, 제출 파일 3종 확인.
+- 정상 제출: `kaggle_inference.py` 스크립트 커널로 실행 후 Submit.
+
+운영 Runbook(에러 시)
+- 증상: Kaggle Error/상세 로그 없음 → 디버그 커널로 재실행(`KAGGLE_DEBUG_LOCAL=1`)해 로그 수집.
+- `submission.parquet` 미노출 → `submission_debug.parquet`/`csv`로 가시성 확인·응급 제출, UI 갱신 후 원인 추적.
+- 경로 이슈 의심 → 로그의 경로 탐색 결과 확인, 입력 마운트 존재 여부 점검.
+- 타입/차원 이슈 의심 → 로그의 피처 개수/입력 shape/스칼라 반환 여부 확인.
