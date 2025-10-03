@@ -78,7 +78,7 @@ class LassoTop20Server(InferenceServer):
         self.model = self.Lasso(alpha=1e-4, max_iter=50000)
         self.model.fit(Xs, y)
         self.features = top20
-        self.k = 50.0
+        self.k = 500.0  # Updated from EXP-004: H3a_large_k500 (Sharpe 0.836)
         self.ready = True
 
     def predict(self, test_batch):
