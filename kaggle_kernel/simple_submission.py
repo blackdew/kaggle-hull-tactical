@@ -9,7 +9,7 @@ from sklearn.linear_model import Lasso
 from sklearn.preprocessing import StandardScaler
 
 print("="*60)
-print("EXP-004 k=500 Submission Script")
+print("EXP-004 k=200 Submission Script")
 print("="*60)
 
 # Load data
@@ -51,8 +51,8 @@ X_test = test[top20].fillna(train[top20].median()).replace([np.inf, -np.inf], np
 X_test_scaled = scaler.transform(X_test)
 excess_pred = model.predict(X_test_scaled)
 
-# Convert to positions with k=500 (EXP-004 best result)
-k = 500.0
+# Convert to positions with k=200 (EXP-004 stable result)
+k = 200.0
 positions = np.clip(1.0 + excess_pred * k, 0.0, 2.0)
 
 print(f"✓ Predictions generated:")
@@ -80,5 +80,5 @@ print(submission)
 print("\nNext steps:")
 print("1. Check Output tab for submission.parquet")
 print("2. Click 'Submit to Competition' button")
-print("3. Enter message: 'EXP-004 k=500, Sharpe 0.836'")
+print("3. Enter message: 'EXP-004 k=200, Sharpe 0.788 (stable)'")
 print("4. Submit and wait for score!")

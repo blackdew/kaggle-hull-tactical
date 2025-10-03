@@ -86,7 +86,7 @@ class LassoTop20Server(InferenceServer):
         self.model = self.Lasso(alpha=1e-4, max_iter=50000)
         self.model.fit(Xs, y)
         self.features = top20
-        self.k = 500.0  # Updated from EXP-004: H3a_large_k500 (Sharpe 0.836)
+        self.k = 200.0  # Updated from EXP-004: H3a_large_k200 (Sharpe 0.788, stable)
         print(f"[INFO] Training complete. k={self.k}")
         self.ready = True
 
@@ -115,7 +115,7 @@ class LassoTop20Server(InferenceServer):
 
 
 if __name__ == '__main__':
-    print("[START] Kaggle Hull Tactical Submission - EXP-004 k=500")
+    print("[START] Kaggle Hull Tactical Submission - EXP-004 k=200")
     print(f"[INFO] Current directory: {os.getcwd()}")
     print(f"[INFO] Directory contents: {os.listdir('.')}")
 
