@@ -1,0 +1,6 @@
+,,sharpe,sharpe,vol_ratio,vol_ratio,mse
+,,mean,std,mean,std,mean
+hypothesis,k,,,,,
+H3_feature_eng,50,0.583,0.2415,1.0755,0.062,0.0001
+H3_feature_eng,100,0.6008,0.2333,1.1485,0.1176,0.0001
+H3_feature_eng,200,0.6271,0.2341,1.2325,0.1746,0.0001

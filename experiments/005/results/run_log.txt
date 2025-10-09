@@ -1,0 +1,155 @@
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+[INFO] Loading training data...
+[INFO] Train shape: (8990, 98)
+
+================================================================================
+H1: XGBoost Baseline
+================================================================================
+[INFO] Features: 94
+
+[INFO] Testing k=50
+  Fold 1/5: Sharpe 0.487, Vol Ratio 1.003
+  Fold 2/5: Sharpe 0.358, Vol Ratio 1.129
+  Fold 3/5: Sharpe 0.352, Vol Ratio 1.135
+  Fold 4/5: Sharpe 0.917, Vol Ratio 1.028
+  Fold 5/5: Sharpe 0.802, Vol Ratio 1.132
+[RESULT] H1 k=50: Sharpe 0.583 ± 0.234
+
+[INFO] Testing k=100
+  Fold 1/5: Sharpe 0.489, Vol Ratio 1.021
+  Fold 2/5: Sharpe 0.409, Vol Ratio 1.258
+  Fold 3/5: Sharpe 0.333, Vol Ratio 1.273
+  Fold 4/5: Sharpe 0.940, Vol Ratio 1.067
+  Fold 5/5: Sharpe 0.758, Vol Ratio 1.234
+[RESULT] H1 k=100: Sharpe 0.586 ± 0.228
+
+[INFO] Testing k=200
+  Fold 1/5: Sharpe 0.500, Vol Ratio 1.070
+  Fold 2/5: Sharpe 0.414, Vol Ratio 1.461
+  Fold 3/5: Sharpe 0.313, Vol Ratio 1.385
+  Fold 4/5: Sharpe 0.983, Vol Ratio 1.088
+  Fold 5/5: Sharpe 0.717, Vol Ratio 1.324
+[RESULT] H1 k=200: Sharpe 0.585 ± 0.239
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/005/results/h1_xgboost_folds.csv
+
+================================================================================
+H2: LightGBM Baseline
+================================================================================
+
+[INFO] Testing k=50
+  Fold 1/5: Sharpe 0.493, Vol Ratio 1.037
+  Fold 2/5: Sharpe 0.356, Vol Ratio 1.201
+  Fold 3/5: Sharpe 0.370, Vol Ratio 1.149
+  Fold 4/5: Sharpe 0.910, Vol Ratio 1.051
+  Fold 5/5: Sharpe 0.780, Vol Ratio 1.100
+[RESULT] H2 k=50: Sharpe 0.582 ± 0.224
+
+[INFO] Testing k=100
+  Fold 1/5: Sharpe 0.502, Vol Ratio 1.085
+  Fold 2/5: Sharpe 0.391, Vol Ratio 1.396
+  Fold 3/5: Sharpe 0.388, Vol Ratio 1.273
+  Fold 4/5: Sharpe 0.923, Vol Ratio 1.106
+  Fold 5/5: Sharpe 0.749, Vol Ratio 1.211
+[RESULT] H2 k=100: Sharpe 0.591 ± 0.212
+
+[INFO] Testing k=200
+  Fold 1/5: Sharpe 0.512, Vol Ratio 1.202
+  Fold 2/5: Sharpe 0.408, Vol Ratio 1.649
+  Fold 3/5: Sharpe 0.395, Vol Ratio 1.377
+  Fold 4/5: Sharpe 0.998, Vol Ratio 1.111
+  Fold 5/5: Sharpe 0.741, Vol Ratio 1.317
+[RESULT] H2 k=200: Sharpe 0.611 ± 0.230
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/005/results/h2_lightgbm_folds.csv
+
+================================================================================
+SUMMARY
+================================================================================
+                 sharpe         vol_ratio             mse
+                   mean     std      mean     std    mean
+hypothesis  k                                            
+H1_xgboost  50   0.5833  0.2612    1.0855  0.0644  0.0001
+            100  0.5858  0.2547    1.1707  0.1173  0.0001
+            200  0.5854  0.2675    1.2654  0.1771  0.0001
+H2_lightgbm 50   0.5818  0.2503    1.1077  0.0684  0.0001
+            100  0.5906  0.2371    1.2142  0.1275  0.0001
+            200  0.6109  0.2570    1.3311  0.2053  0.0001
+
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/005/results/summary.csv
+
+[DONE] EXP-005 experiments completed!
+[INFO] Loading training data...
+[INFO] Train shape: (8990, 98)
+
+================================================================================
+H3: Feature Engineering (Lag + Rolling)
+================================================================================
+[INFO] Base features for engineering: 20
+[INFO] Total features after engineering: 234
+
+[INFO] Testing k=50
+  Fold 1/5: Sharpe 0.532, Vol Ratio 0.975
+  Fold 2/5: Sharpe 0.347, Vol Ratio 1.074
+  Fold 3/5: Sharpe 0.371, Vol Ratio 1.137
+  Fold 4/5: Sharpe 0.886, Vol Ratio 1.076
+  Fold 5/5: Sharpe 0.778, Vol Ratio 1.115
+[RESULT] H3 k=50: Sharpe 0.583 ± 0.216
+
+[INFO] Testing k=100
+  Fold 1/5: Sharpe 0.580, Vol Ratio 0.964
+  Fold 2/5: Sharpe 0.407, Vol Ratio 1.159
+  Fold 3/5: Sharpe 0.356, Vol Ratio 1.281
+  Fold 4/5: Sharpe 0.916, Vol Ratio 1.133
+  Fold 5/5: Sharpe 0.745, Vol Ratio 1.205
+[RESULT] H3 k=100: Sharpe 0.601 ± 0.209
+
+[INFO] Testing k=200
+  Fold 1/5: Sharpe 0.694, Vol Ratio 0.959
+  Fold 2/5: Sharpe 0.489, Vol Ratio 1.297
+  Fold 3/5: Sharpe 0.322, Vol Ratio 1.432
+  Fold 4/5: Sharpe 0.941, Vol Ratio 1.198
+  Fold 5/5: Sharpe 0.690, Vol Ratio 1.278
+[RESULT] H3 k=200: Sharpe 0.627 ± 0.209
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/005/results/h3_feature_eng_folds.csv
+
+================================================================================
+SUMMARY
+================================================================================
+                    sharpe         vol_ratio             mse
+                      mean     std      mean     std    mean
+hypothesis     k                                            
+H3_feature_eng 50   0.5830  0.2415    1.0755  0.0620  0.0001
+               100  0.6008  0.2333    1.1485  0.1176  0.0001
+               200  0.6271  0.2341    1.2325  0.1746  0.0001
+
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/005/results/summary.csv
+
+[DONE] EXP-005 experiments completed!
