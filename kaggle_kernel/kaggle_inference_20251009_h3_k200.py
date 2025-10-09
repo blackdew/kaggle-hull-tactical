@@ -5,9 +5,9 @@ import pandas as pd
 from kaggle_evaluation.core.templates import InferenceServer
 
 try:
-    import lightgbm as lgb
+    import xgboost as xgb
 except Exception:
-    lgb = None
+    xgb = None
 
 try:
     from default_gateway import DefaultGateway
@@ -15,14 +15,14 @@ except Exception:
     from kaggle_evaluation.default_gateway import DefaultGateway
 
 
-class LightGBMServer(InferenceServer):
+class XGBoostFeatureEngServer(InferenceServer):
     def __init__(self):
         from sklearn.preprocessing import StandardScaler
         self.StandardScaler = StandardScaler
         self.ready = False
 
         def predict(batch):
-            return LightGBMServer.predict(self, batch)
+            return XGBoostFeatureEngServer.predict(self, batch)
 
         super().__init__(predict)
 
@@ -52,42 +52,98 @@ class LightGBMServer(InferenceServer):
         }
         return [c for c in df.columns if c not in exclude]
 
+    def top_n_features(self, df: pd.DataFrame, target: str, n: int = 20):
+        feats = self.select_features(df)
+        num = df[feats + [target]].select_dtypes(include=[np.number])
+        corr = num.corr(numeric_only=True)[target].drop(index=target).abs().sort_values(ascending=False)
+        return [c for c in corr.index[:n] if c in feats]
+
+    def create_lag_features(self, df, features, lags=[1, 5, 10]):
+        # Handle both pandas and polars DataFrames
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
+
+        df_new = df.copy() if hasattr(df, 'copy') else df
+        for col in features:
+            if col in df_new.columns:
+                for lag in lags:
+                    df_new[f'{col}_lag{lag}'] = df_new[col].shift(lag)
+        return df_new
+
+    def create_rolling_features(self, df, features, windows=[5, 10]):
+        # Handle both pandas and polars DataFrames
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
+
+        df_new = df.copy() if hasattr(df, 'copy') else df
+        for col in features:
+            if col in df_new.columns:
+                for window in windows:
+                    df_new[f'{col}_rolling_mean_{window}'] = df_new[col].rolling(window).mean()
+                    df_new[f'{col}_rolling_std_{window}'] = df_new[col].rolling(window).std()
+        return df_new
+
     def train_if_needed(self):
         if self.ready:
             return
 
-        if lgb is None:
-            raise ImportError("LightGBM not available")
+        if xgb is None:
+            raise ImportError("XGBoost not available")
 
         print("[INFO] Starting training...")
         train = self._load_train()
         print(f"[INFO] Train data shape: {train.shape}")
 
         target = 'market_forward_excess_returns'
-        features = self.select_features(train)
-        print(f"[INFO] Features: {len(features)}")
 
-        X = train[features].copy()
+        # Get top-20 features
+        base_features = self.top_n_features(train, target, n=20)
+        print(f"[INFO] Base features: {len(base_features)}")
+
+        # Create engineered features
+        train_eng = self.create_lag_features(train, base_features, lags=[1, 5, 10])
+        train_eng = self.create_rolling_features(train_eng, base_features, windows=[5, 10])
+
+        # Select all features
+        all_features = [c for c in train_eng.columns if c not in {
+            'date_id', 'forward_returns', 'risk_free_rate',
+            'market_forward_excess_returns', 'is_scored',
+            'lagged_forward_returns', 'lagged_risk_free_rate',
+            'lagged_market_forward_excess_returns'
+        }]
+        print(f"[INFO] Total features after engineering: {len(all_features)}")
+
+        X = train_eng[all_features].copy()
         X = X.fillna(X.median(numeric_only=True)).replace([np.inf, -np.inf], np.nan).fillna(0)
 
         self.scaler = self.StandardScaler()
         Xs = self.scaler.fit_transform(X)
-        y = train[target].to_numpy()
+        y = train_eng[target].to_numpy()
 
-        print("[INFO] Training LightGBM model...")
-        self.model = lgb.LGBMRegressor(
+        print("[INFO] Training XGBoost model...")
+        self.model = xgb.XGBRegressor(
             n_estimators=300,
             learning_rate=0.01,
-            num_leaves=31,
+            max_depth=5,
             subsample=0.8,
             colsample_bytree=0.8,
             random_state=42,
-            verbosity=-1
+            tree_method='hist',
+            verbosity=0
         )
         self.model.fit(Xs, y)
 
-        self.features = features
-        self.k = 200.0  # Best from EXP-005: H2 k=200, Sharpe 0.611
+        self.features = all_features
+        self.base_features = base_features
+        self.k = 200.0  # Best from EXP-005: H3 k=200, Sharpe 0.627
         print(f"[INFO] Training complete. k={self.k}")
         self.ready = True
 
@@ -99,12 +155,24 @@ class LightGBMServer(InferenceServer):
 
         df = test_batch
 
+        # Convert polars to pandas if needed
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
+
+        # Create engineered features
+        df_eng = self.create_lag_features(df, self.base_features, lags=[1, 5, 10])
+        df_eng = self.create_rolling_features(df_eng, self.base_features, windows=[5, 10])
+
         # Ensure all features exist
         for c in self.features:
-            if c not in df.columns:
-                df[c] = 0.0
+            if c not in df_eng.columns:
+                df_eng[c] = 0.0
 
-        X = df[self.features].astype('float64')
+        X = df_eng[self.features].astype('float64')
         X = X.replace([np.inf, -np.inf], np.nan).fillna(0.0)
         Xs = self.scaler.transform(X)
 
@@ -115,7 +183,7 @@ class LightGBMServer(InferenceServer):
 
 
 if __name__ == '__main__':
-    print("[START] Kaggle Hull Tactical Submission - EXP-005 H2 LightGBM k=200")
+    print("[START] Kaggle Hull Tactical Submission - EXP-005 H3 k=200")
     print(f"[INFO] Current directory: {os.getcwd()}")
 
     is_rerun = os.getenv('KAGGLE_IS_COMPETITION_RERUN')
@@ -123,11 +191,11 @@ if __name__ == '__main__':
 
     if is_rerun:
         print("[INFO] Running in RERUN mode - starting server only")
-        srv = LightGBMServer()
+        srv = XGBoostFeatureEngServer()
         srv.serve()
     else:
         print("[INFO] Running in NOTEBOOK mode - generating submission.parquet")
-        srv = LightGBMServer()
+        srv = XGBoostFeatureEngServer()
         srv.server.start()
         try:
             candidates = [
