@@ -58,19 +58,37 @@ class XGBoostFeatureEngServer(InferenceServer):
         corr = num.corr(numeric_only=True)[target].drop(index=target).abs().sort_values(ascending=False)
         return [c for c in corr.index[:n] if c in feats]
 
-    def create_lag_features(self, df: pd.DataFrame, features, lags=[1, 5, 10]):
-        df_new = df.copy()
+    def create_lag_features(self, df, features, lags=[1, 5, 10]):
+        # Handle both pandas and polars DataFrames
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
+
+        df_new = df.copy() if hasattr(df, 'copy') else df
         for col in features:
-            for lag in lags:
-                df_new[f'{col}_lag{lag}'] = df[col].shift(lag)
+            if col in df_new.columns:
+                for lag in lags:
+                    df_new[f'{col}_lag{lag}'] = df_new[col].shift(lag)
         return df_new
 
-    def create_rolling_features(self, df: pd.DataFrame, features, windows=[5, 10]):
-        df_new = df.copy()
+    def create_rolling_features(self, df, features, windows=[5, 10]):
+        # Handle both pandas and polars DataFrames
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
+
+        df_new = df.copy() if hasattr(df, 'copy') else df
         for col in features:
-            for window in windows:
-                df_new[f'{col}_rolling_mean_{window}'] = df[col].rolling(window).mean()
-                df_new[f'{col}_rolling_std_{window}'] = df[col].rolling(window).std()
+            if col in df_new.columns:
+                for window in windows:
+                    df_new[f'{col}_rolling_mean_{window}'] = df_new[col].rolling(window).mean()
+                    df_new[f'{col}_rolling_std_{window}'] = df_new[col].rolling(window).std()
         return df_new
 
     def train_if_needed(self):
@@ -136,6 +154,14 @@ class XGBoostFeatureEngServer(InferenceServer):
             test_batch = test_batch[0]
 
         df = test_batch
+
+        # Convert polars to pandas if needed
+        try:
+            import polars as pl
+            if isinstance(df, pl.DataFrame):
+                df = df.to_pandas()
+        except:
+            pass
 
         # Create engineered features
         df_eng = self.create_lag_features(df, self.base_features, lags=[1, 5, 10])
