@@ -1,12 +1,12 @@
-# 실험 전체 회고 및 결론 (EXP-005~007)
+# 실험 전체 회고 및 결론 (EXP-005~015)
 
 ## 목표
-- **최종 목표**: Kaggle utility 17.395
-- **필요 조건**: Sharpe ≈ 6.0, Profit ≈ 2.9
+- **최종 목표**: Kaggle utility 17+ (목표치)
+- **필요 조건**: Sharpe > 1.0 (최소), Sharpe > 3.0 (이상적)
 
 ---
 
-## 실험 경과
+## 실험 경과 (전체)
 
 ### EXP-005: 모델 전환 (Lasso → XGBoost)
 **접근**: 비선형 모델로 예측력 향상
@@ -33,22 +33,81 @@
 
 **평가**: 제한적 성공 (개선되었지만 목표에 크게 부족)
 
+### EXP-008~010: 딥러닝 시도 (삭제됨)
+**접근**: Classification, Autoencoder, Transformer
+- EXP-008: Binary classification
+- EXP-009: Autoencoder multi-task learning
+- EXP-010: Temporal Transformer
+- **결과**: 모두 0.75 이하로 실패
+
+**평가**: 실패 (삭제됨)
+
+### EXP-011: Direct Utility Optimization
+**접근**: Utility 함수 직접 최적화
+- Differentiable Sharpe loss 사용
+- **결과**: Sharpe 0.552 (오히려 하락)
+
+**평가**: 실패 (목표 함수 직접 최적화도 효과 없음)
+
+### EXP-012: Missing Pattern Recognition
+**접근**: E features 등장 패턴 활용
+- Missing indicator features
+- Period-aware features
+- **결과**: Sharpe 0.647
+
+**평가**: 실패 (baseline 대비 하락)
+
+### EXP-013: Technical Analysis
+**접근**: 차트 분석 (RSI, MACD, Bollinger Bands)
+- Rule-based strategy
+- ML with technical indicators
+- **결과**: Sharpe 0.483 (rule-based)
+
+**평가**: 실패 (기술적 지표만으로는 부족)
+
+### EXP-014: Multi-variate LSTM
+**접근**: 94개 feature를 시계열로 동시 학습
+- SimpleLSTM: 2 layers, hidden=128
+- **결과**: Sharpe 0.471 (3-fold CV)
+
+**평가**: 실패 (딥러닝 첫 시도, 매우 낮은 성능)
+
+### EXP-015: Transformer + Residual Connections
+**접근**: LSTM보다 강력한 Transformer 적용
+- Pre-LN architecture + Residual connections
+- Tiny: d=64, 2 heads, 2 layers → Sharpe 0.257
+- Medium: d=96, 3 heads, 2 layers → Sharpe 0.299
+- **결과**: LSTM(0.471)보다도 훨씬 나쁨
+
+**평가**: 실패 (데이터 부족, 짧은 sequence로 Transformer 비효율)
+
 ---
 
-## 현재 상황
+## 현재 상황 (EXP-015 종료 기준)
 
-### 성과 요약
-| Metric | EXP-005 | EXP-007 | 개선율 |
-|--------|---------|---------|--------|
-| CV Sharpe | 0.627 | **0.749** | +19.5% |
-| MSE | 0.000150 | 0.000126 | -16% |
-| Features | 234 | 754 | +222% |
-| Kaggle (실제) | 0.724 | ? | ? |
+### 전체 실험 성과 요약
+| Experiment | Method | CV Sharpe | vs Baseline |
+|------------|--------|-----------|-------------|
+| **EXP-005** | XGBoost (234 feat) | 0.627 | baseline |
+| **EXP-006** | XGBoost + k튜닝 | 0.699 | +11.5% |
+| **EXP-007** | XGBoost (754 feat) | **0.749** | +19.5% ✅ **BEST** |
+| **EXP-008~010** | Deep Learning | <0.75 | 실패 (삭제) |
+| **EXP-011** | Direct Utility Opt | 0.552 | -26.2% |
+| **EXP-012** | Missing Patterns | 0.647 | -13.6% |
+| **EXP-013** | Technical Analysis | 0.483 | -35.5% |
+| **EXP-014** | Multi-variate LSTM | 0.471 | -37.1% |
+| **EXP-015** | Transformer+Residual | 0.257~0.299 | -60% ~ -66% |
 
 ### 문제: 목표와의 격차
-- **현재**: Sharpe 0.749
-- **목표**: Sharpe 6.0
-- **격차**: **8배 부족**
+- **현재 최고**: Sharpe 0.749 (EXP-007)
+- **목표**: Sharpe > 3.0 (이상적), 17+ utility
+- **격차**: **4배 이상 부족**
+
+### 핵심 발견
+1. **XGBoost (EXP-007)이 압도적 최강** - 10개 실험 중 1위
+2. **딥러닝 모두 실패** - LSTM, Transformer 모두 XGBoost의 절반 수준
+3. **Feature Engineering이 핵심** - 754 features가 성능의 원천
+4. **시계열 접근 실패** - Multivariate time series로 보는 것은 비효율
 
 ---
 
@@ -264,77 +323,131 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 
 ---
 
-## 최종 결론
+## 최종 결론 (EXP-015 기준)
 
 ### 현실
-- **달성**: CV Sharpe 0.749 (19.5% 개선)
-- **목표**: Sharpe 6.0 (8배 부족)
-- **결론**: 현재 접근으로는 불가능
+- **달성**: CV Sharpe 0.749 (EXP-007, XGBoost)
+- **목표**: Sharpe > 3.0, utility 17+
+- **격차**: 4배 이상 부족
+- **결론**: 10개 실험 모두 0.749를 넘지 못함
 
-### 제안
+### 주요 교훈
 
-**즉시 (오늘):**
-1. ✅ CONCLUSION.md 작성 (이 문서)
-2. ⏭️ 전체 커밋 및 정리
-3. ⏭️ 목표 재설정 또는 대회 종료 대기
+**1. XGBoost의 압도적 우위**
+- Feature Engineering (754 features)이 핵심
+- 딥러닝(LSTM, Transformer)은 XGBoost의 절반 수준
+- 작은 데이터셋에서는 전통적 ML이 강력
 
-**선택 (시간 있으면):**
-- Volatility Scaling (2시간)
-- Ensemble (2시간)
-- 예상: Sharpe 0.85~0.95
+**2. 딥러닝의 실패 원인**
+- 데이터 부족: Fold 1에서 2,220 samples로 75K+ parameters 학습 불가
+- 짧은 sequence: 30-60일은 Attention/LSTM에 불리
+- Inductive bias: 금융 시계열에 부적합
 
-**장기 (배움 목적):**
-- 대회 종료 후 Top Solution 분석
-- Classification, Portfolio Optimization 접근 학습
+**3. 접근법의 한계**
+- 94개 feature를 multivariate time series로 보는 것은 비효율
+- Regression으로 excess return 예측 자체가 어려움
+- Feature group별 특성 무시 (D, E, I, S, P, M, V)
 
 ### 성과
+- ✅ 10개 실험 완료 (EXP-005~015)
 - ✅ 체계적 실험 프로세스 확립
-- ✅ EXP-005~007 문서화
-- ✅ k, feature, model 한계 확인
-- ✅ Sharpe 0.749 달성 (현실적 최선)
-- ✅ 문제의 근본 원인 이해
+- ✅ Sharpe 0.749 달성 (XGBoost baseline)
+- ✅ 딥러닝 실패 원인 파악
+- ✅ 전체 문서화 완료
 
 ### 한계
-- ❌ 목표 17.395 미달성
-- ❌ Sharpe 6.0 도달 불가
+- ❌ 목표 utility 17+ 미달성
+- ❌ Sharpe 1.0 돌파 실패
+- ❌ 딥러닝으로 XGBoost 능가 실패
 - ❌ 근본적 돌파구 미발견
 
+### 다음 방향 제안
+
+**Option 1: 포기 및 정리** ⭐⭐⭐⭐⭐
+- EXP-007 (0.749)를 최종 결과로 인정
+- 딥러닝 접근은 이 문제에 부적합
+- 다른 대회로 이동
+
+**Option 2: 하이브리드 시도** ⭐⭐⭐
+- XGBoost + LSTM Ensemble
+- Feature group별 다른 처리
+- 예상: Sharpe 0.8~0.9 (큰 개선 없음)
+
+**Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐
+- Winning solution 학습
+- 17+ utility가 실제로 달성 가능한지 확인
+
 ---
 
-**작성일**: 2025-10-13
-**상태**: EXP-005~007 완료, 현실적 한계 도달
-**추천**: Option 1 (현재 최선으로 마무리) or Option 3 (Top Solution 분석 대기)
+**작성일**: 2025-10-15
+**상태**: EXP-005~015 완료, XGBoost(0.749)가 최고 성능
+**추천**: Option 1 (정리 후 종료) or Option 3 (Top Solution 분석 대기)
 
 ---
 
-## 부록: 실험 산출물
+## 부록: 실험 산출물 (전체)
 
 ### 문서
 - `experiments/005/REPORT.md`: EXP-005 전체 결과
 - `experiments/006/PIVOT.md`: k 접근 실패 분석
 - `experiments/007/HYPOTHESES.md`: Feature Engineering 계획
 - `experiments/007/ANALYSIS.md`: 현실적 가능성 평가
+- `experiments/011/README.md`: Direct utility optimization
+- `experiments/012/README.md`: Missing pattern features
+- `experiments/013/README.md`: Technical analysis
+- `experiments/014/STRATEGY.md`: Multivariate time series 전략
+- `experiments/015/README.md`: Transformer + Residual
+- `experiments/015/RESULT.md`: EXP-015 상세 결과
 - `experiments/CONCLUSION.md`: 이 문서
 
-### 코드
+### 주요 코드
 - `experiments/005/run_experiments.py`: H1, H2, H3 실험
 - `experiments/006/run_experiments.py`: k-grid search
-- `experiments/007/feature_engineering.py`: 확장 feature 모듈
+- `experiments/007/feature_engineering.py`: 754 features
 - `experiments/007/run_experiments.py`: Feature Eng 실험
+- `experiments/011/direct_utility_optimization.py`: Utility 최적화
+- `experiments/012/missing_pattern_features.py`: Missing indicators
+- `experiments/013/technical_analysis.py`: RSI, MACD, BB
+- `experiments/014/multivariate_lstm.py`: Multi-variate LSTM
+- `experiments/014/multivariate_lstm_fast.py`: Fast LSTM (3-fold)
+- `experiments/015/transformer_tiny.py`: Transformer (최종)
+- `experiments/015/transformer_medium.py`: Transformer (medium)
 
-### 데이터
+### 결과 데이터
 - `experiments/005/results/`: H1~H3 결과
 - `experiments/006/results/`: k 최적화 결과
-- `experiments/007/results/`: Feature Eng 결과
+- `experiments/007/results/`: Feature Eng 결과 (✅ **BEST**)
+- `experiments/011/results/`: Utility optimization 결과
+- `experiments/012/results/`: Missing pattern 결과
+- `experiments/013/results/`: Technical analysis 결과
+- `experiments/014/results/`: LSTM 결과
+- `experiments/015/results/`: Transformer 결과
 
 ### 총 실험 시간
 - EXP-005: 6~8시간
 - EXP-006: 3~4시간
 - EXP-007: 4~5시간
-- **총**: 13~17시간
+- EXP-008~010: 3~4시간 (삭제됨)
+- EXP-011: 2시간
+- EXP-012: 2시간
+- EXP-013: 3시간
+- EXP-014: 2시간
+- EXP-015: 2시간
+- **총**: 27~32시간
 
 ### 얻은 것
-- Sharpe 0.749 (실질적 최선)
-- 체계적 실험 프로세스
-- 문제의 근본 이해
-- 한계 인식
+- ✅ Sharpe 0.749 (XGBoost, 754 features)
+- ✅ 10개 실험 완료 및 문서화
+- ✅ 딥러닝 실패 원인 파악
+- ✅ 체계적 실험 프로세스 확립
+- ✅ 문제의 근본 이해 및 한계 인식
+
+### 실패한 접근들
+- ❌ Classification (EXP-008)
+- ❌ Autoencoder (EXP-009)
+- ❌ Temporal Transformer (EXP-010)
+- ❌ Direct Utility Optimization (EXP-011)
+- ❌ Missing Pattern Recognition (EXP-012)
+- ❌ Technical Analysis (EXP-013)
+- ❌ Multi-variate LSTM (EXP-014)
+- ❌ Transformer + Residual (EXP-015)
