@@ -1,0 +1,2 @@
+n_estimators,learning_rate,max_depth,subsample,colsample_bytree,min_child_weight,reg_alpha,reg_lambda,random_state,tree_method,verbosity,n_jobs
+150,0.025084004832746396,7,1.0,0.6,1,0.0,0.5,42,hist,0,-1
