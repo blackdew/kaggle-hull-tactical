@@ -5,9 +5,6 @@ Model: Top 20 features + Optimized XGBoost
 Expected Sharpe: ~0.78 (5-fold CV)
 """
 
-import warnings
-warnings.filterwarnings('ignore')
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -54,7 +51,9 @@ def create_volatility_features(df, cols, windows=[5, 20, 60]):
             rolling_std = df[col].rolling(window).std()
             vol_dfs.append(rolling_std.rename(f'{col}_vol_{window}'))
             vol_dfs.append((df[col] / (rolling_std + 1e-8)).rename(f'{col}_vol_norm_{window}'))
-            vol_dfs.append((rolling_std > rolling_std.rolling(60).mean()).astype(int).rename(f'{col}_vol_regime_{window}'))
+            # Fix NaN comparison warning
+            regime = rolling_std.gt(rolling_std.rolling(60).mean()).fillna(0).astype(int)
+            vol_dfs.append(regime.rename(f'{col}_vol_regime_{window}'))
     return pd.concat(vol_dfs, axis=1)
 
 
@@ -110,8 +109,8 @@ BEST_PARAMS = {
     'n_jobs': -1,
 }
 
-# Position sizing parameter (from Phase 3 evaluation)
-K = 600.0
+# Position sizing parameter (same as Version 9: 0.5 * 100)
+K = 50.0
 
 # ============================================================================
 # Main
