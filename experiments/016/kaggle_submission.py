@@ -170,19 +170,27 @@ if test is None:
 print(f"Train: {train.shape}")
 print(f"Test: {test.shape}")
 
-# Get base features
-base_cols = [c for c in train.columns
-             if c not in ['date_id', 'forward_returns', 'risk_free_rate',
-                         'market_forward_excess_returns', 'is_scored',
-                         'lagged_forward_returns', 'lagged_risk_free_rate',
-                         'lagged_market_forward_excess_returns']]
+# Get base features from train
+exclude_cols = ['date_id', 'forward_returns', 'risk_free_rate',
+                'market_forward_excess_returns', 'is_scored',
+                'lagged_forward_returns', 'lagged_risk_free_rate',
+                'lagged_market_forward_excess_returns']
+base_cols = [c for c in train.columns if c not in exclude_cols]
 
-print(f"Base features: {len(base_cols)}")
+print(f"Base features (train): {len(base_cols)}")
+
+# Get base features from test (excluding id/date columns only)
+test_base_cols = [c for c in test.columns if c not in ['date_id', 'id', 'date']]
+print(f"Base features (test): {len(test_base_cols)}")
+
+# Use common features only
+common_cols = [c for c in base_cols if c in test.columns]
+print(f"Common features: {len(common_cols)}")
 
 # Create features
 print("Creating features...")
-X_train_full = create_all_features(train, base_cols)
-X_test_full = create_all_features(test, base_cols)
+X_train_full = create_all_features(train, common_cols)
+X_test_full = create_all_features(test, common_cols)
 
 # Select Top 20
 X_train = X_train_full[TOP_20_FEATURES]
