@@ -263,26 +263,30 @@
 
 ---
 
-### 3.4 최종 검증 ⏭️ (Skip - 3.3에서 목표 달성)
+### 3.4 최종 검증 ✅ (완료: 2025-10-18, ~5분, **중요한 발견**)
 - [x] **3-fold CV 최종 Sharpe: 1.001** ✅
-- [ ] ~~5-fold CV~~ (선택 사항)
+- [x] **5-fold CV 최종 Sharpe: 0.781** ⚠️
 
-**Skip 이유:**
-- 3-fold CV로 Sharpe 1.0+ 달성
-- 목표 초과 달성
-- 추가 검증 불필요
+**결과:**
+- 3-fold CV: 1.001 (낙관적 추정)
+- 5-fold CV: 0.781 (현실적 추정)
+- **차이: -22.0%**
+- **핵심 발견: 3-fold에 overfitting, 진짜 성능 ~0.78**
 
 ---
 
 ### Phase 3 최종 체크 ✅
 - [x] **Sharpe 1.0+ 달성 확인**
-  - ✅ **YES: 성공!** (Sharpe 1.001)
-  - ✅ EXP-007 (0.749) 대비 **+33.6%**
-  - ✅ 목표 초과 달성
+  - ⚠️ **3-fold CV: YES (1.001)** - 낙관적
+  - ⚠️ **5-fold CV: NO (0.781)** - 현실적
+  - ✅ EXP-007 (0.749) 대비 **+4.3%** (5-fold 기준)
+  - **부분 달성: 3-fold에서만 1.0+**
 - [x] **Phase 3 Summary 작성**: `results/PHASE_3_3_SUMMARY.md`
+- [x] **Final Validation Summary 작성**: `results/FINAL_VALIDATION_SUMMARY.md`
 - [x] **다음 단계 결정**
   - **REPORT.md 작성** (전체 실험 정리)
-  - Kaggle 제출 준비 (선택)
+  - 현실 인정: 5-fold CV 0.781이 진짜 성능
+  - 목표 1.0은 너무 낙관적이었음
 
 ---
 
@@ -335,9 +339,11 @@
 
 **시작일**: 2025-10-18
 **완료일**: 2025-10-18
-**현재 상태**: ✅ **완료! 목표 달성!**
-**완료된 Phase**: Phase 1 ✅ (성공), Phase 2 ❌ (실패), Phase 3 ✅ (성공!)
-**최종 Sharpe**: **1.001** (Top 20 + Optimized) ← EXP-007 0.749 대비 **+33.6%**
+**현재 상태**: ✅ **완료! (부분 달성)**
+**완료된 Phase**: Phase 1 ✅ (성공), Phase 2 ❌ (실패), Phase 3 ✅ (부분 성공)
+**최종 Sharpe**:
+- **3-fold CV: 1.001** (낙관적) ← EXP-007 대비 +33.6%
+- **5-fold CV: 0.781** (현실적) ← EXP-007 대비 +4.3% ✅
 
 ### 완료된 작업
 - ✅ Phase 1.1: Feature Importance Analysis (~15분)
@@ -360,8 +366,12 @@
   - **확인: Top 20이 최적**
 - ✅ Phase 3.3: Hyperparameter Tuning (~20분)
   - Optuna 200 trials
-  - Sharpe 0.852 → **1.001** (+17.5%)
-  - **🎉 목표 달성: Sharpe 1.0+!**
+  - Sharpe 0.852 → **1.001** (+17.5%) @ 3-fold
+  - **⚠️ 3-fold에서만 1.0+**
+- ✅ Phase 3.4: Final Validation (~5분)
+  - 5-fold CV: Sharpe **0.781**
+  - **핵심 발견: 3-fold에 overfitting**
+  - **진짜 성능: ~0.78**
 
 ### 전체 진행 경로
 ```
@@ -371,15 +381,19 @@ Phase 1:   0.874  (20 features, default)      [+16.7%]
     ↓ Phase 2.1: Interaction Features
 Phase 2.1: 0.686  (780 features, default)     [-21.6% ❌]
     ↓ Phase 3.3: Hyperparameter Tuning
-Phase 3.3: 1.001  (20 features, optimized)    [+33.6% ✅]
+Phase 3.3: 1.001  (20 features, optimized)    [+33.6% @ 3-fold]
+    ↓ Phase 3.4: Final Validation
+Phase 3.4: 0.781  (20 features, optimized)    [+4.3% @ 5-fold] ← 현실
 ```
 
 ### 핵심 교훈
 1. **Less is More**: 20 features > 754 features > 780 features
 2. **Feature Selection > Feature Engineering**: 고르기 > 만들기
-3. **Hyperparameter Tuning의 중요성**: +17.5% 개선
+3. **Hyperparameter Tuning의 중요성**: +17.5% 개선 (하지만 overfitting)
 4. **실패도 가치**: Phase 2 실패가 Phase 3 성공으로 이어짐
 5. **체계적 접근**: CHECKLIST 따라 단계별 진행
+6. **CV의 중요성**: 3-fold만으로는 부족, 5-fold로 reality check**
+7. **현실 직시**: 낙관적 추정(1.0)보다 현실적 추정(0.78)이 중요
 
 ---
 

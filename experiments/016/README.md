@@ -18,8 +18,10 @@
 
 **시작일**: 2025-10-18
 **완료일**: 2025-10-18
-**최종 상태**: ✅ **완료! 목표 달성!**
-**최종 Sharpe**: **1.001** ← EXP-007 0.749 대비 **+33.6%** 🎉
+**최종 상태**: ✅ **완료 (부분 달성)**
+**최종 Sharpe**:
+- **3-fold CV: 1.001** (낙관적) ← +33.6% vs EXP-007
+- **5-fold CV: 0.781** (현실적) ← +4.3% vs EXP-007 ✅
 
 ### Phase 1 완료 ✅ 성공
 - [x] Phase 1.1: Feature Importance Analysis (~15분)
@@ -35,11 +37,13 @@
 - **확인: Top 20이 최적**
 - **교훈: Feature Engineering < Feature Selection**
 
-### Phase 3 완료 ✅ 성공!
+### Phase 3 완료 ✅ 부분 성공
 - [x] Phase 3.3: Hyperparameter Tuning (~20분)
 - **방법: Optuna 200 trials**
-- **결과: Sharpe 0.852 → 1.001 (+17.5%)**
-- **🎉 목표 달성: Sharpe 1.0+!**
+- **결과: Sharpe 0.852 → 1.001 (+17.5%) @ 3-fold**
+- [x] Phase 3.4: Final Validation (~5분)
+- **결과: Sharpe 0.781 @ 5-fold**
+- **⚠️ 3-fold에 overfitting, 진짜 성능 ~0.78**
 
 ### 전체 여정
 ```
@@ -49,7 +53,9 @@ Phase 1:   0.874  (20 features, default params)  [+16.7%]
     ↓
 Phase 2.1: 0.686  (780 features, default params) [-21.6% ❌]
     ↓
-Phase 3.3: 1.001  (20 features, optimized)       [+33.6% ✅]
+Phase 3.3: 1.001  (20 features, optimized)       [+33.6% @ 3-fold]
+    ↓
+Phase 3.4: 0.781  (20 features, optimized)       [+4.3% @ 5-fold] ← 현실
 ```
 
 ## 폴더 구조
