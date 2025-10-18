@@ -109,8 +109,8 @@ BEST_PARAMS = {
     'n_jobs': -1,
 }
 
-# Position sizing parameter (same as Version 9: 0.5 * 100)
-K = 50.0
+# Position sizing parameter (from Phase 3 evaluation)
+K = 600.0
 
 # ============================================================================
 # Main
@@ -214,10 +214,18 @@ model.fit(X_train_scaled, y_train)
 # Predict excess returns
 excess_returns_pred = model.predict(X_test_scaled)
 
-# Convert to positions (0~2)
-positions = np.clip(1.0 + excess_returns_pred * K, 0.0, 2.0)
+print(f"\nExcess Returns (raw predictions):")
+print(f"  Mean: {excess_returns_pred.mean():.6f}")
+print(f"  Std:  {excess_returns_pred.std():.6f}")
+print(f"  Min:  {excess_returns_pred.min():.6f}")
+print(f"  Max:  {excess_returns_pred.max():.6f}")
 
-print(f"\nPredictions:")
+# Convert to positions (0~2)
+# Use K=50 for submission (not K=600 which was for CV evaluation)
+K_SUBMIT = 50.0
+positions = np.clip(1.0 + excess_returns_pred * K_SUBMIT, 0.0, 2.0)
+
+print(f"\nPositions (K={K_SUBMIT}):")
 print(f"  Mean: {positions.mean():.4f}")
 print(f"  Std:  {positions.std():.4f}")
 print(f"  Min:  {positions.min():.4f}")
