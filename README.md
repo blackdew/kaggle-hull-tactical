@@ -7,9 +7,9 @@
 
 **Claude Code AI Agent와 함께하는** Kaggle Code Competition 체계적 실험 및 모델 개발 프로젝트
 
-> 🤖 이 프로젝트는 **Claude Code AI Agent**를 활용하여 진행합나다.
+> 🤖 이 프로젝트는 **Claude Code AI Agent**를 활용하여 진행되었습니다.
 > Human이 실험 방향을 결정하고, AI Agent가 코드 작성·실행·분석을 담당하는 협업 방식입니다.
-> 상세한 협업 방법은 [CLAUDE.md](CLAUDE.md)를 참고하세요.
+> 개발 가이드는 [CLAUDE.md](CLAUDE.md)를 참고하세요.
 
 **Competition**: [Hull Tactical US Market Predictions](https://www.kaggle.com/competitions/hull-tactical-market-prediction)
 
@@ -216,24 +216,16 @@ python submissions/submission.py
 이 프로젝트는 **Human-AI 협업**으로 진행되었습니다.
 
 ### 역할 분담
-- **Human**:
-  - 실험 방향 및 전략 결정
-  - 결과 해석 및 피드백
-  - 중요한 의사결정 (Pivot, 재설계 등)
+- **Human**: 실험 방향 결정, 결과 해석, 중요 의사결정 (Pivot, 재설계 등)
+- **Claude Code**: 코드 작성·실행, 데이터 분석, 문서화, 버그 수정
 
-- **Claude Code (AI Agent)**:
-  - 코드 작성 및 실험 실행
-  - 데이터 분석 및 시각화
-  - 문서화 (회고, README, 실험 리포트)
-  - 버그 수정 및 최적화
+### 주요 성과
+- ✅ **12개 실험 완료** (29~35시간)
+- ✅ **Public Score 4.440** (6.1배 향상)
+- ✅ **체계적 문서화** (모든 실험 과정 기록)
+- ✅ **빠른 실험 사이클** (아이디어 → 구현 → 결과)
 
-### 협업의 장점
-✅ **빠른 실험 사이클**: AI가 코드를 즉시 작성·실행
-✅ **체계적 문서화**: 모든 실험 과정 자동 기록
-✅ **Human은 전략에 집중**: 코딩보다 방향 결정에 시간 투자
-✅ **실수 감소**: AI가 일관된 코드 스타일 유지
-
-> **자세한 내용**: [CLAUDE.md](CLAUDE.md)에서 협업 방법, 프롬프트 예시, 장단점 확인
+> **개발 가이드**: [CLAUDE.md](CLAUDE.md) - 미래 Claude Code 인스턴스를 위한 아키텍처 및 명령어
 
 ---
 
