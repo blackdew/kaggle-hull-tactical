@@ -1,0 +1,5 @@
+parameter,value
+best_k,250.0
+avg_sharpe,0.5589962472925161
+std_sharpe,0.362038388569047
+n_features,30.0

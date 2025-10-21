@@ -1,89 +1,89 @@
-# EXP-016: Feature Engineering Deep Dive - 1.0 돌파
+# EXP-016: InferenceServer-Compatible Feature Engineering
 
-## 목표
-**Sharpe 1.0+ 달성** (현재 최고 0.749 대비 +34%)
-
-## 배경
-- **EXP-007 최고 성능**: Sharpe 0.749 (XGBoost + 754 features)
-- **이전 실패**: 얕은 시도, 754개에서 멈춤, Hyperparameter tuning 부족
-- **새로운 접근**: 깊게 파기, 포기하지 않기, 한계까지 밀어붙이기
-
-## 전략
-1. **Phase 1**: 754 features 심층 분석 → 진짜 효과적인 것만 선택
-2. **Phase 2**: 1500+ features로 확장 (Interaction, Polynomial, Domain)
-3. **Phase 3**: Feature selection + Hyperparameter tuning
-4. **Phase 4**: Ensemble (조건부)
-
-## 실험 진행 상황
-
-**시작일**: 2025-10-18
-**완료일**: 2025-10-18
-**최종 상태**: ✅ **완료 (부분 달성)**
-**최종 Sharpe**:
-- **3-fold CV: 1.001** (낙관적) ← +33.6% vs EXP-007
-- **5-fold CV: 0.781** (현실적) ← +4.3% vs EXP-007 ✅
-
-### Phase 1 완료 ✅ 성공
-- [x] Phase 1.1: Feature Importance Analysis (~15분)
-- [x] Phase 1.2: Null Importance Test (~30분)
-- [x] Phase 1.4: Baseline Comparison (~10분)
-- **핵심 발견: Top 20 features > 754 features (+21%)**
-- **Less is More!**
-- **결과: Sharpe 0.874**
-
-### Phase 2 완료 ❌ 실패 (하지만 가치 있는 실패)
-- [x] Phase 2.1: Interaction Features (~5분) - **실패 -21.6%**
-- **발견: Feature 추가 = 과적합**
-- **확인: Top 20이 최적**
-- **교훈: Feature Engineering < Feature Selection**
-
-### Phase 3 완료 ✅ 부분 성공
-- [x] Phase 3.3: Hyperparameter Tuning (~20분)
-- **방법: Optuna 200 trials**
-- **결과: Sharpe 0.852 → 1.001 (+17.5%) @ 3-fold**
-- [x] Phase 3.4: Final Validation (~5분)
-- **결과: Sharpe 0.781 @ 5-fold**
-- **⚠️ 3-fold에 overfitting, 진짜 성능 ~0.78**
-
-### 전체 여정
-```
-EXP-007:   0.749  (754 features, default params)
-    ↓
-Phase 1:   0.874  (20 features, default params)  [+16.7%]
-    ↓
-Phase 2.1: 0.686  (780 features, default params) [-21.6% ❌]
-    ↓
-Phase 3.3: 1.001  (20 features, optimized)       [+33.6% @ 3-fold]
-    ↓
-Phase 3.4: 0.781  (20 features, optimized)       [+4.3% @ 5-fold] ← 현실
-```
-
-## 폴더 구조
-```
-experiments/016/
-├── README.md              # 이 파일
-├── CHECKLIST.md           # 실험 체크리스트 (진행 상황)
-├── HYPOTHESES.md          # 가설 및 실험 설계
-├── feature_analysis.py    # Phase 1: Feature 분석
-├── feature_engineering.py # Phase 2: Feature 확장 (예정)
-├── run_experiments.py     # 실험 실행 (예정)
-├── results/               # 결과 저장
-└── REPORT.md             # 최종 리포트 (완료 후)
-```
-
-## 다음 단계
-1. EXP-007 feature 생성 코드 확인
-2. 754 features 로딩 및 전처리
-3. Phase 1.1 시작: SHAP analysis
-
-## 원칙
-- ✅ 깊게 파기 - 각 단계 완료할 때까지
-- ✅ 포기하지 않기 - 1.0 넘거나 진짜 한계 확인할 때까지
-- ✅ 변명하지 않기 - 실제 측정으로 검증
-- ✅ 문서화 - 모든 실험 결과 기록
+**목표**: Sharpe 1.0+ 달성 (현실적 목표: 0.8+)
+**제약**: InferenceServer 호환 (1 row씩 예측)
+**접근**: 원본 features + interaction features (lag/rolling 제외)
 
 ---
 
-**작성일**: 2025-10-18
-**목표**: Sharpe 1.0+
-**예상 기간**: 2~3주
+## 🎯 핵심 전략
+
+### 문제 인식
+- 기존 EXP-007: lag/rolling features 사용 → InferenceServer 불가
+- Kaggle Code Competition: row-by-row 예측 필요
+- **1 row에서 계산 가능한 features만 사용**
+
+### 해결책
+1. **원본 features 선택**
+   - lag/rolling/ema 제외
+   - 즉시 계산 가능한 features만
+
+2. **Feature Engineering**
+   - Interaction features (A × B, A / B)
+   - Polynomial features (A², A³)
+   - Ratio features (A / (B + ε))
+
+3. **Model**
+   - XGBoost Regressor
+   - Hyperparameter tuning
+   - K parameter optimization
+
+---
+
+## 📋 실험 계획
+
+### Phase 1: 원본 Features 분석
+- [ ] 1.1: 전체 features 목록 확인
+- [ ] 1.2: 1 row 계산 가능 features 필터링
+- [ ] 1.3: Feature importance 분석
+- [ ] 1.4: Top N features 선택
+
+### Phase 2: Feature Engineering
+- [ ] 2.1: Interaction features 생성 (곱셈, 나눗셈)
+- [ ] 2.2: Polynomial features 생성
+- [ ] 2.3: Feature selection (중요도 기반)
+
+### Phase 3: Model Training
+- [ ] 3.1: Baseline model (원본 features만)
+- [ ] 3.2: Engineered features 추가
+- [ ] 3.3: Hyperparameter tuning
+- [ ] 3.4: Cross-validation (5-fold)
+
+### Phase 4: InferenceServer 구현
+- [ ] 4.1: Server 코드 작성
+- [ ] 4.2: 로컬 테스트
+- [ ] 4.3: Kaggle 제출
+
+---
+
+## 🚫 제약사항
+
+### 사용 불가 Features
+- `*_lag*`: lag features (과거 데이터 필요)
+- `*_rolling_*`: rolling window features (여러 row 필요)
+- `*_ema_*`: exponential moving average (과거 데이터 필요)
+
+### 사용 가능 Features
+- 원본 features: `M4`, `V13`, `P7`, `E19` 등
+- Interaction: `M4 * V13`, `M4 / (V13 + 1e-8)`
+- Polynomial: `M4²`, `V13³`
+
+---
+
+## 📊 성공 기준
+
+- **Minimum**: Sharpe 0.75+ (EXP-007 수준)
+- **Target**: Sharpe 0.85+
+- **Stretch**: Sharpe 1.0+
+- **필수**: InferenceServer 정상 작동
+- **필수**: Kaggle 제출 성공
+
+---
+
+## 📝 진행 상황
+
+- [x] 기존 EXP-016 백업
+- [ ] Phase 1: 원본 Features 분석
+- [ ] Phase 2: Feature Engineering
+- [ ] Phase 3: Model Training
+- [ ] Phase 4: InferenceServer 구현
