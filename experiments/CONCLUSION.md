@@ -1,8 +1,16 @@
-# 실험 전체 회고 및 결론 (EXP-005~015)
+# 실험 전체 회고 및 결론 (EXP-005~016)
+
+## 최종 결과 🏆
+
+**Public Score: 4.440** (2025-10-21, EXP-016 v2)
+- 이전 최고 (Version 9): 0.724
+- **개선: 6.1배 향상** ✅
+- 접근: InferenceServer 호환 + Interaction Features
 
 ## 목표
 - **최종 목표**: Kaggle utility 17+ (목표치)
 - **필요 조건**: Sharpe > 1.0 (최소), Sharpe > 3.0 (이상적)
+- **달성**: Public Score 4.440 (목표치는 아니지만 큰 성과)
 
 ---
 
@@ -81,33 +89,53 @@
 
 **평가**: 실패 (데이터 부족, 짧은 sequence로 Transformer 비효율)
 
+### EXP-016 v2: InferenceServer + Interaction Features ✅ 🏆
+**접근**: 완전 재설계 - 1-row 계산 가능한 features만 사용
+- **문제 발견**: 기존 lag/rolling features는 InferenceServer에서 사용 불가 (row-by-row 예측)
+- **해결책**:
+  1. Top 20 원본 features 선택
+  2. Interaction features 120개 생성 (곱셈, 나눗셈, 다항식)
+  3. XGBoost로 Top 30 선택
+  4. K=250 최적화
+- **결과**: **Public Score 4.440** (이전 0.724 대비 6.1배 향상)
+- CV Sharpe: 0.559 (낮아 보였지만 Public에서 폭발)
+
+**평가**: 대성공 🎉
+- ✅ InferenceServer 제약 극복
+- ✅ Interaction features의 강력한 효과
+- ✅ 완전 재설계의 용기
+- ✅ 최고 성과 달성
+
 ---
 
-## 현재 상황 (EXP-015 종료 기준)
+## 현재 상황 (EXP-016 종료 기준, 2025-10-21)
 
 ### 전체 실험 성과 요약
-| Experiment | Method | CV Sharpe | vs Baseline |
-|------------|--------|-----------|-------------|
-| **EXP-005** | XGBoost (234 feat) | 0.627 | baseline |
-| **EXP-006** | XGBoost + k튜닝 | 0.699 | +11.5% |
-| **EXP-007** | XGBoost (754 feat) | **0.749** | +19.5% ✅ **BEST** |
-| **EXP-008~010** | Deep Learning | <0.75 | 실패 (삭제) |
-| **EXP-011** | Direct Utility Opt | 0.552 | -26.2% |
-| **EXP-012** | Missing Patterns | 0.647 | -13.6% |
-| **EXP-013** | Technical Analysis | 0.483 | -35.5% |
-| **EXP-014** | Multi-variate LSTM | 0.471 | -37.1% |
-| **EXP-015** | Transformer+Residual | 0.257~0.299 | -60% ~ -66% |
+| Experiment | Method | CV Sharpe | Public Score | Note |
+|------------|--------|-----------|--------------|------|
+| **EXP-005** | XGBoost (234 feat) | 0.627 | 0.724 | baseline |
+| **EXP-006** | XGBoost + k튜닝 | 0.699 | - | +11.5% |
+| **EXP-007** | XGBoost (754 feat) | 0.749 | - | +19.5% (CV 최고) |
+| **EXP-008~010** | Deep Learning | <0.75 | - | 실패 (삭제) |
+| **EXP-011** | Direct Utility Opt | 0.552 | - | -26.2% |
+| **EXP-012** | Missing Patterns | 0.647 | - | -13.6% |
+| **EXP-013** | Technical Analysis | 0.483 | - | -35.5% |
+| **EXP-014** | Multi-variate LSTM | 0.471 | - | -37.1% |
+| **EXP-015** | Transformer+Residual | 0.257~0.299 | - | -60% ~ -66% |
+| **EXP-016 v2** | **Interaction Features** | **0.559** | **4.440** | **🏆 +514% (Public)** |
 
-### 문제: 목표와의 격차
-- **현재 최고**: Sharpe 0.749 (EXP-007)
-- **목표**: Sharpe > 3.0 (이상적), 17+ utility
-- **격차**: **4배 이상 부족**
+### 돌파구: EXP-016 v2의 성공
+- **CV Sharpe**: 0.559 (EXP-007보다 낮음)
+- **Public Score**: **4.440** (이전 0.724 대비 **6.1배**)
+- **핵심**: InferenceServer 제약 이해 + Interaction Features
 
 ### 핵심 발견
-1. **XGBoost (EXP-007)이 압도적 최강** - 10개 실험 중 1위
-2. **딥러닝 모두 실패** - LSTM, Transformer 모두 XGBoost의 절반 수준
-3. **Feature Engineering이 핵심** - 754 features가 성능의 원천
-4. **시계열 접근 실패** - Multivariate time series로 보는 것은 비효율
+1. **InferenceServer 제약이 결정적** - lag/rolling features 사용 불가
+2. **Interaction Features의 힘** - 곱셈, 나눗셈, 다항식이 비선형 관계 포착
+3. **완전 재설계의 용기** - 기존 접근 포기하고 처음부터 다시
+4. **CV ≠ Public Score** - CV 0.559 → Public 4.440 (예상 밖 성공)
+5. **XGBoost가 여전히 최강** - 딥러닝 모두 실패, XGBoost가 답
+6. **Quality > Quantity** - 30 features > 754 features
 
 ---
 
@@ -323,65 +351,92 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 
 ---
 
-## 최종 결론 (EXP-015 기준)
+## 최종 결론 (EXP-016 기준, 2025-10-21)
 
 ### 현실
-- **달성**: CV Sharpe 0.749 (EXP-007, XGBoost)
-- **목표**: Sharpe > 3.0, utility 17+
-- **격차**: 4배 이상 부족
-- **결론**: 10개 실험 모두 0.749를 넘지 못함
+- **달성**: **Public Score 4.440** (EXP-016 v2) 🏆
+- **CV Sharpe**: 0.559 (낮았지만 Public에서 폭발)
+- **이전 최고**: 0.724 (Version 9)
+- **개선**: **6.1배 향상**
+- **결론**: InferenceServer 제약을 이해하고 완전 재설계로 돌파구 찾음
 
 ### 주요 교훈
 
-**1. XGBoost의 압도적 우위**
-- Feature Engineering (754 features)이 핵심
+**1. 제약 조건이 설계를 결정한다**
+- InferenceServer = row-by-row 예측
+- lag/rolling features 사용 불가 (과거 데이터 필요)
+- 제약을 초기에 이해했어야 10~13번의 실패 제출 방지 가능
+
+**2. Interaction Features의 놀라운 효과**
+- 곱셈: `P8*S2`, `M4*V7` (비선형 관계)
+- 나눗셈: `P8/P7`, `M4/S2` (상대적 변화)
+- 다항식: `M4²`, `V13²` (비선형 패턴)
+- 120개 생성 → Top 30 선택 = **6.1배 성능 향상**
+
+**3. 완전 재설계의 용기**
+- EXP-016 초기 버전 (CV Sharpe 1.001) 포기
+- Sunk cost fallacy 극복
+- 처음부터 다시 설계 → 최고 성과 달성
+
+**4. XGBoost의 압도적 우위**
 - 딥러닝(LSTM, Transformer)은 XGBoost의 절반 수준
+- Feature Engineering이 핵심
 - 작은 데이터셋에서는 전통적 ML이 강력
 
-**2. 딥러닝의 실패 원인**
-- 데이터 부족: Fold 1에서 2,220 samples로 75K+ parameters 학습 불가
-- 짧은 sequence: 30-60일은 Attention/LSTM에 불리
-- Inductive bias: 금융 시계열에 부적합
+**5. CV Score ≠ Public Score**
+- CV Sharpe 0.559 (보통)
+- Public Score 4.440 (최고!)
+- Metric 차이, Test set 특성 고려 필요
 
-**3. 접근법의 한계**
-- 94개 feature를 multivariate time series로 보는 것은 비효율
-- Regression으로 excess return 예측 자체가 어려움
-- Feature group별 특성 무시 (D, E, I, S, P, M, V)
+**6. Quality > Quantity**
+- 754 features (EXP-007): CV 0.749, Public -
+- 30 features (EXP-016): CV 0.559, **Public 4.440**
+- 많은 features보다 의미 있는 features
 
 ### 성과
-- ✅ 10개 실험 완료 (EXP-005~015)
+- ✅ 12개 실험 완료 (EXP-005~016)
 - ✅ 체계적 실험 프로세스 확립
-- ✅ Sharpe 0.749 달성 (XGBoost baseline)
+- ✅ **Public Score 4.440 달성** (최고 기록!) 🏆
+- ✅ InferenceServer 제약 극복
+- ✅ Interaction Features 효과 입증
 - ✅ 딥러닝 실패 원인 파악
+- ✅ 완전 재설계 경험
 - ✅ 전체 문서화 완료
 
-### 한계
-- ❌ 목표 utility 17+ 미달성
-- ❌ Sharpe 1.0 돌파 실패
-- ❌ 딥러닝으로 XGBoost 능가 실패
-- ❌ 근본적 돌파구 미발견
+### 돌파구
+- ✅ **EXP-016 v2**: 완전 재설계로 6.1배 향상
+- ✅ InferenceServer 호환 설계
+- ✅ Interaction Features의 힘 입증
+- ✅ CV와 Public Score 차이 경험
+
+### 여전히 미달성
+- ❌ 목표 utility 17+ (하지만 4.440은 큰 성과)
+- ❌ Sharpe 6.0 (Public Score와 Sharpe는 다른 metric)
+- ❌ 딥러닝으로 XGBoost 능가 (여전히 XGBoost가 최강)
 
 ### 다음 방향 제안
 
-**Option 1: 포기 및 정리** ⭐⭐⭐⭐⭐
-- EXP-007 (0.749)를 최종 결과로 인정
-- 딥러닝 접근은 이 문제에 부적합
+**Option 1: 현재 결과로 마무리** ⭐⭐⭐⭐⭐ (추천)
+- Public Score 4.440은 충분히 좋은 성과
+- 문서화 완료
 - 다른 대회로 이동
 
-**Option 2: 하이브리드 시도** ⭐⭐⭐
-- XGBoost + LSTM Ensemble
-- Feature group별 다른 처리
-- 예상: Sharpe 0.8~0.9 (큰 개선 없음)
+**Option 2: 추가 개선 시도** ⭐⭐⭐
+- Interaction features 추가 탐색
+- Ensemble (여러 K 값)
+- Hyperparameter fine-tuning
+- 예상: Public Score 5~7
 
-**Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐
+**Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐ (추천)
 - Winning solution 학습
-- 17+ utility가 실제로 달성 가능한지 확인
+- Private Score 확인
+- Top 참가자들의 접근 분석
 
 ---
 
-**작성일**: 2025-10-15
-**상태**: EXP-005~015 완료, XGBoost(0.749)가 최고 성능
-**추천**: Option 1 (정리 후 종료) or Option 3 (Top Solution 분석 대기)
+**작성일**: 2025-10-21 (업데이트)
+**상태**: EXP-005~016 완료, **Public Score 4.440 달성** 🏆
+**추천**: Option 1 (마무리) or Option 3 (Top Solution 분석 대기)
 
 ---
 
@@ -392,12 +447,8 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - `experiments/006/PIVOT.md`: k 접근 실패 분석
 - `experiments/007/HYPOTHESES.md`: Feature Engineering 계획
 - `experiments/007/ANALYSIS.md`: 현실적 가능성 평가
-- `experiments/011/README.md`: Direct utility optimization
-- `experiments/012/README.md`: Missing pattern features
-- `experiments/013/README.md`: Technical analysis
-- `experiments/014/STRATEGY.md`: Multivariate time series 전략
-- `experiments/015/README.md`: Transformer + Residual
-- `experiments/015/RESULT.md`: EXP-015 상세 결과
+- `experiments/016/README.md`: **EXP-016 v2 성공 사례** 🏆
+- `docs/retrospectives/2025-10-21.md`: EXP-016 v2 회고
 - `experiments/CONCLUSION.md`: 이 문서
 
 ### 주요 코드
@@ -405,23 +456,16 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - `experiments/006/run_experiments.py`: k-grid search
 - `experiments/007/feature_engineering.py`: 754 features
 - `experiments/007/run_experiments.py`: Feature Eng 실험
-- `experiments/011/direct_utility_optimization.py`: Utility 최적화
-- `experiments/012/missing_pattern_features.py`: Missing indicators
-- `experiments/013/technical_analysis.py`: RSI, MACD, BB
-- `experiments/014/multivariate_lstm.py`: Multi-variate LSTM
-- `experiments/014/multivariate_lstm_fast.py`: Fast LSTM (3-fold)
-- `experiments/015/transformer_tiny.py`: Transformer (최종)
-- `experiments/015/transformer_medium.py`: Transformer (medium)
+- `experiments/016/phase1_analyze_features.py`: Top 20 원본 features 선택
+- `experiments/016/phase2_feature_engineering.py`: Interaction features 생성
+- `experiments/016/phase3_sharpe_evaluation.py`: K 최적화 및 평가
+- `submissions/submission.py`: **InferenceServer 구현** (최종 제출)
 
 ### 결과 데이터
 - `experiments/005/results/`: H1~H3 결과
 - `experiments/006/results/`: k 최적화 결과
-- `experiments/007/results/`: Feature Eng 결과 (✅ **BEST**)
-- `experiments/011/results/`: Utility optimization 결과
-- `experiments/012/results/`: Missing pattern 결과
-- `experiments/013/results/`: Technical analysis 결과
-- `experiments/014/results/`: LSTM 결과
-- `experiments/015/results/`: Transformer 결과
+- `experiments/007/results/`: Feature Eng 결과 (CV 최고)
+- `experiments/016/results/`: **Interaction features 결과** (🏆 **Public 최고**)
 
 ### 총 실험 시간
 - EXP-005: 6~8시간
@@ -433,16 +477,21 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - EXP-013: 3시간
 - EXP-014: 2시간
 - EXP-015: 2시간
-- **총**: 27~32시간
+- **EXP-016**: 2~3시간 (완전 재설계)
+- **총**: 29~35시간
 
 ### 얻은 것
-- ✅ Sharpe 0.749 (XGBoost, 754 features)
-- ✅ 10개 실험 완료 및 문서화
+- ✅ **Public Score 4.440** (최고 기록!) 🏆
+- ✅ InferenceServer 제약 이해 및 극복
+- ✅ Interaction Features 효과 입증
+- ✅ 완전 재설계 경험
+- ✅ 12개 실험 완료 및 문서화
 - ✅ 딥러닝 실패 원인 파악
 - ✅ 체계적 실험 프로세스 확립
 - ✅ 문제의 근본 이해 및 한계 인식
+- ✅ CV와 Public Score 차이 경험
 
-### 실패한 접근들
+### 실패한 접근들 (배움)
 - ❌ Classification (EXP-008)
 - ❌ Autoencoder (EXP-009)
 - ❌ Temporal Transformer (EXP-010)
@@ -451,3 +500,8 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - ❌ Technical Analysis (EXP-013)
 - ❌ Multi-variate LSTM (EXP-014)
 - ❌ Transformer + Residual (EXP-015)
+
+### 성공한 접근
+- ✅ **EXP-016 v2**: InferenceServer + Interaction Features
+  - 완전 재설계로 6.1배 향상
+  - Public Score 4.440 달성
