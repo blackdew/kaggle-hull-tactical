@@ -1,0 +1,2 @@
+ensemble_models,mean_sharpe,std_sharpe,expected_public_score,vol_regime_thresholds
+"['k250_top30', 'k100_conservative', 'k250_top50', 'k150_top50', 'k100_top50']",3.54100825974624,0.7723334387497942,28.12536077508641,"{'high': np.float64(0.86031348622559), 'low': np.float64(0.15734896835945986)}"
