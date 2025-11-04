@@ -48,8 +48,20 @@ class MyServer(InferenceServer):
         # Best hyperparameters from EXP-035
         self.K = 400  # Position sizing parameter
 
-        # EXP-028 top 105 features (will be loaded)
-        self.features_105 = []
+        # EXP-028 top 105 features (hardcoded for Kaggle)
+        self.features_105 = [
+            'V7_sqrt', 'E19', 'V7_log', 'E19_sqrt', 'E19_log', 'V7', 'V7/E2', 'V7/E3', 'V7/V13', 'V7/P2',
+            'E19/E2', 'E19/E3', 'V13_sqrt', 'V13_log', 'S8_sqrt', 'S8_log', 'S8', 'V13', 'V7*E20', 'V13/E2',
+            'P5_log', 'S8/E3', 'P5', 'V13/E3', 'E19/P2', 'P5_sqrt', 'V9/E20', 'E2_sqrt', 'E2_log', 'E3_sqrt',
+            'E19*E20', 'E3_log', 'E2', 'V9_sqrt', 'V13*E20', 'S8/E20', 'V9_log', 'V9', 'P5*E20', 'E3',
+            'V13/P2', 'V7*P2', 'V7*E2', 'S8/P2', 'E19*P2', 'E20', 'E19*S8', 'E_range', 'E19*E3', 'V_mean',
+            'vol_mean', 'P10_sqrt', 'I9_log', 'V9/P2', 'E19*P5', 'V1_sqrt', 'E1_sqrt', 'S8/E2', 'econ_uncertainty',
+            'E_std', 'P8_sqrt', 'P2_log', 'P2_sqrt', 'I9_sqrt', 'E19_squared', 'E20_log', 'P2', 'I9',
+            'E1_log', 'P5_squared', 'P10_log', 'E20_sqrt', 'E19*E2', 'P10', 'E17', 'E19*V13', 'P5*E2', 'V9*E20',
+            'V7*E3', 'E1', 'S8*E3', 'E20*P2', 'M4', 'E12', 'V7*V13', 'V7*P5', 'E18', 'P8_log',
+            'V1_log', 'V13*E3', 'E2/P2', 'V13_squared', 'E10_squared', 'I4', 'E17_sqrt', 'I2_log', 'vol_composite', 'E3/P2',
+            'S2', 'V_skew_proxy', 'I5', 'E17_log', 'S8_squared', 'E1_squared', 'E18_log'
+        ]
 
         # REQUIRED: predict 함수를 super().__init__()에 전달
         def predict(batch):
@@ -82,18 +94,8 @@ class MyServer(InferenceServer):
 
         # Store sorted values for rank-to-value conversion during prediction
         self.y_train_sorted = np.sort(y_excess)
-        print(f"[EXP-035] Stored {len(self.y_train_sorted)} sorted training values for rank conversion")
-
-        # Load EXP-028 features (top 105)
-        try:
-            # Try Kaggle paths first
-            features_df = pd.read_csv("/kaggle/input/hull-tactical-market-prediction/experiments/028/results/top105_features.csv")
-        except:
-            # Fall back to local
-            features_df = pd.read_csv("experiments/028/results/top105_features.csv")
-
-        self.features_105 = features_df['feature'].tolist()
-        print(f"[EXP-035] Loaded {len(self.features_105)} features from EXP-028")
+        print(f"[EXP-035] Stored {len(self.y_train_sorted)} sorted training values")
+        print(f"[EXP-035] Using {len(self.features_105)} features")
 
         # Create features
         X = self.create_features(train)
@@ -127,25 +129,57 @@ class MyServer(InferenceServer):
         if pl is not None and isinstance(df, pl.DataFrame):
             df = df.to_pandas()
 
-        # Load phase2 engineered features
-        try:
-            # Try Kaggle first
-            engineered = pd.read_parquet("/kaggle/input/hull-tactical-market-prediction/experiments/024/results/phase2_engineered_features.parquet")
-            phase2_list = pd.read_csv("/kaggle/input/hull-tactical-market-prediction/experiments/024/results/phase2_feature_list.csv")
-        except:
-            # Fall back to local
-            engineered = pd.read_parquet("experiments/024/results/phase2_engineered_features.parquet")
-            phase2_list = pd.read_csv("experiments/024/results/phase2_feature_list.csv")
+        # Simplified: Create engineered features from scratch
+        # This avoids dependency on pre-computed feature files
 
-        # Get original features
-        original_features = phase2_list[phase2_list['type'] == 'original']['feature'].tolist()
-        original_data = df[original_features].copy()
+        # Get base features (original columns)
+        base_cols = [c for c in df.columns if c not in ['date_id', 'market_forward_excess_returns', 'forward_returns', 'risk_free_rate']]
+        X_all = df[base_cols].copy()
 
-        # Combine original + engineered
-        X_all = pd.concat([original_data, engineered], axis=1)
+        # Create nonlinear transforms
+        for col in base_cols:
+            if col.startswith(('V', 'E', 'P', 'S', 'I', 'M')):
+                X_all[f'{col}_sqrt'] = np.sqrt(np.abs(X_all[col]))
+                X_all[f'{col}_log'] = np.log1p(np.abs(X_all[col]))
+                X_all[f'{col}_squared'] = X_all[col] ** 2
+
+        # Create interactions (multiplication)
+        key_features = ['V7', 'E19', 'V13', 'S8', 'P5', 'E2', 'E3', 'E20', 'V9', 'P2']
+        for i, col1 in enumerate(key_features):
+            if col1 in X_all.columns:
+                for col2 in key_features[i+1:]:
+                    if col2 in X_all.columns:
+                        X_all[f'{col1}*{col2}'] = X_all[col1] * X_all[col2]
+
+        # Create interactions (division)
+        for col1 in key_features:
+            if col1 in X_all.columns:
+                for col2 in key_features:
+                    if col2 in X_all.columns and col1 != col2:
+                        X_all[f'{col1}/{col2}'] = X_all[col1] / (X_all[col2].abs() + 1e-8)
+
+        # Create category statistics
+        if 'E' in ''.join(base_cols):
+            e_cols = [c for c in base_cols if c.startswith('E')]
+            if len(e_cols) > 0:
+                X_all['E_range'] = X_all[e_cols].max(axis=1) - X_all[e_cols].min(axis=1)
+                X_all['E_std'] = X_all[e_cols].std(axis=1)
+
+        if 'V' in ''.join(base_cols):
+            v_cols = [c for c in base_cols if c.startswith('V')]
+            if len(v_cols) > 0:
+                X_all['V_mean'] = X_all[v_cols].mean(axis=1)
+                X_all['V_skew_proxy'] = (X_all[v_cols].max(axis=1) - X_all[v_cols].min(axis=1)) / (X_all[v_cols].std(axis=1) + 1e-8)
+
+        # Create volatility features
+        if 'V7' in X_all.columns and 'V13' in X_all.columns:
+            X_all['vol_mean'] = (X_all['V7'] + X_all['V13']) / 2
+            X_all['vol_composite'] = np.sqrt(X_all['V7']**2 + X_all['V13']**2)
+
+        if 'E_std' in X_all.columns:
+            X_all['econ_uncertainty'] = X_all['E_std']
 
         # Select top 105 features
-        # Handle case where some features might be missing
         available_features = [f for f in self.features_105 if f in X_all.columns]
         if len(available_features) < len(self.features_105):
             print(f"[WARNING] Only {len(available_features)}/{len(self.features_105)} features available")
@@ -194,32 +228,54 @@ class MyServer(InferenceServer):
         return float(position[0])
 
 
-# Main execution
-if __name__ == "__main__":
-    # Create server instance
-    server = MyServer()
+# REQUIRED: Main 블록 구현
+if __name__ == '__main__':
+    print("[START] EXP-035 Submission")
+    print(f"[INFO] Current directory: {os.getcwd()}")
+    print(f"[INFO] KAGGLE_IS_COMPETITION_RERUN: {os.getenv('KAGGLE_IS_COMPETITION_RERUN')}")
 
-    # Get Gateway (for local testing)
-    data_paths = {
-        "train": "data/train.csv",
-        "test": "data/test.csv",
-    }
+    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+        # Competition rerun mode
+        print("[INFO] Running in COMPETITION RERUN mode")
+        srv = MyServer()
+        srv.serve()
+    else:
+        # Notebook mode - generate submission.parquet
+        print("[INFO] Running in NOTEBOOK mode")
+        srv = MyServer()
+        srv.server.start()
+        try:
+            # Find competition data
+            candidates = [
+                '/kaggle/input/hull-tactical-market-prediction',
+                '.',
+                'data',
+            ]
+            comp_dir = None
+            for p in candidates:
+                if os.path.exists(os.path.join(p, 'test.csv')):
+                    comp_dir = p
+                    print(f"[INFO] Found test.csv at: {comp_dir}")
+                    break
 
-    try:
-        gateway = server._get_gateway_for_test(data_paths=data_paths)
-        print("[Main] Gateway created successfully")
+            if comp_dir is None:
+                print("[INFO] Running gateway with default paths")
+                DefaultGateway().run()
+            else:
+                print(f"[INFO] Running gateway with data_paths: {comp_dir}")
+                DefaultGateway(data_paths=(comp_dir,)).run()
 
-        # Process all test batches
-        print("[Main] Processing test batches...")
-        for i, batch in enumerate(gateway):
-            prediction = server.predict(batch)
-            if i < 3:  # Print first 3 predictions
-                print(f"[Main] Batch {i}: position = {prediction:.4f}")
+            # Verify submission.parquet
+            if os.path.exists('submission.parquet'):
+                sub = pd.read_parquet('submission.parquet')
+                print(f"[SUCCESS] submission.parquet created! Shape: {sub.shape}")
+                print(f"[INFO] Prediction stats - Mean: {sub['prediction'].mean():.4f}, Std: {sub['prediction'].std():.4f}")
+                print(f"[INFO] Prediction range: [{sub['prediction'].min():.4f}, {sub['prediction'].max():.4f}]")
+                print("\n[INFO] First 5 predictions:")
+                print(sub.head())
+            else:
+                print("[ERROR] submission.parquet not created!")
+        finally:
+            srv.server.stop(0)
 
-        print("[Main] All batches processed successfully")
-        print("[Main] submission.parquet should be created")
-
-    except Exception as e:
-        print(f"[Main] Error: {e}")
-        import traceback
-        traceback.print_exc()
+        print("[END] Script complete")
