@@ -1,0 +1,5 @@
+strategy,cv_sharpe,expected_public
+EXP-021 (Baseline),0.637,5.4782
+Strategy 1 (Multi-Seed),0.61717326292738,5.307690061175467
+Strategy 2 (Feature Ensemble),0.5974953468780929,5.1384599831515985
+Strategy 3 (Model Ensemble),0.6191817596303425,5.324963132820946
