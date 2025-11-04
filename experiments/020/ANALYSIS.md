@@ -1,5 +1,53 @@
 # EXP-020: 10점 달성을 위한 근본적 재설계
 
+## 전체 실험 히스토리 요약
+
+### 목표
+**Kaggle Public Score 10점 이상 달성** (다른 참가자 최고 17점)
+
+### 실험 경과
+
+| Experiment | 날짜 | 전략 | CV Sharpe | Public Score | 상태 |
+|------------|------|------|-----------|--------------|------|
+| **EXP-005** | 2025-10 초반 | XGBoost baseline | 0.627 | 0.724 | ✅ Baseline |
+| **EXP-006** | 2025-10 초반 | K parameter 튜닝 | 0.699 | - | ⚠️ 한계 확인 |
+| **EXP-007** | 2025-10 중반 | 754 features (lag/rolling) | 0.749 | - | ❌ InferenceServer 불가 |
+| **EXP-008-015** | 2025-10 중반 | 딥러닝 시도들 | <0.75 | - | ❌ 모두 실패 |
+| **EXP-016** | 2025-10-21 | **Interaction Features** | **0.559** | **4.440** | ✅ **최고 성과!** |
+| **EXP-018** | 2025-10-25 | Dynamic K + Volatility | 0.582 | - | ⚠️ 제출 안함 |
+| **EXP-019** | 2025-10-25 | Aggressive Ensemble | 3.541 | 3.599 | ❌ **Overfitting** |
+| **EXP-020** | 진행 예정 | Volatility-aware Position | TBD | TBD | 📋 **계획 중** |
+
+### 주요 발견사항
+
+**성공 사례 (EXP-016)**:
+- ✅ Simple 2-way interactions (30 features)
+- ✅ K=250 fixed
+- ✅ CV 0.559 → Public 4.440 (ratio 7.9x)
+- ✅ InferenceServer 호환
+
+**실패 사례 (EXP-019)**:
+- ❌ Complex 3-way, 4-way interactions (284→30 features)
+- ❌ Kelly Criterion + 5-model ensemble
+- ❌ CV 3.541 → Public 3.599 (ratio 1.0x = Overfitting!)
+- ❌ 복잡도 증가 = 성능 저하
+
+**핵심 교훈**:
+1. **Simple > Complex**: 2-way interactions까지만 유효
+2. **High CV ≠ Good Public**: CV 3.54인데 Public 3.60은 overfitting 신호
+3. **CV-to-Public Ratio 중요**: 7-8x가 정상, 1x는 위험
+4. **Feature Quality > Quantity**: 30 simple features > 284 complex features
+
+### 현재 상황
+
+**최고 성과**: EXP-016 (Public Score 4.440)
+**목표**: 10점 이상 (2.25배 향상 필요)
+**Gap with Top**: 17점 / 4.44점 = 3.83배 차이
+
+**다음 전략**: Position formula 근본 변경 (Feature 복잡도 증가는 실패 확인)
+
+---
+
 ## 실패 원인 분석 (EXP-019)
 
 ### 결과 비교

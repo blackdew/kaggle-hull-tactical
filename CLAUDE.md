@@ -6,9 +6,101 @@
 
 ## 프로젝트 개요
 
-Human-AI 협업으로 진행한 Kaggle Code Competition (Hull Tactical Market Prediction). 최종 성과: **Public Score 4.440** (6.1배 향상).
+Human-AI 협업으로 진행한 Kaggle Code Competition (Hull Tactical Market Prediction).
+
+### 목표
+**Kaggle Public Score 10점 이상 달성** (참고: 다른 참가자 최고 17점)
+
+### 현재 상태
+- **최고 성과**: EXP-016 (Public Score **4.440**)
+- **달성 필요**: 4.440 → 10.0 (2.25배 향상)
+- **최근 실험**: EXP-019 실패 (Public 3.599, overfitting)
+- **다음 전략**: EXP-020 (Position formula 근본 변경)
+
+### 실험 진행 상황
+
+| Experiment | CV Sharpe | Public Score | 상태 | 비고 |
+|------------|-----------|--------------|------|------|
+| EXP-016 | 0.559 | **4.440** | ✅ **최고** | Interaction features |
+| EXP-018 | 0.582 | - | ⚠️ | Dynamic K (제출 안함) |
+| EXP-019 | 3.541 | 3.599 | ❌ | Overfitting (CV-to-Public ratio 1.0x) |
+| EXP-020 | TBD | TBD | 📋 | **진행 예정** (Volatility-aware) |
 
 **핵심 제약**: InferenceServer는 **row-by-row 예측** 방식 - 단일 행에서 계산 가능한 features만 허용 (lag/rolling features 사용 불가).
+
+---
+
+## Kaggle 제출 결과 확인
+
+### 명령어
+```bash
+# 모든 제출 결과 확인
+kaggle competitions submissions hull-tactical-market-prediction
+
+# 최근 3개 제출 결과만 확인
+kaggle competitions submissions hull-tactical-market-prediction | head -5
+```
+
+### 결과 해석
+- **publicScore**: Public Leaderboard 점수 (목표: 10+)
+- **status**: COMPLETE (성공) / ERROR (실패)
+- **CV-to-Public Ratio**: CV Sharpe / Public Score 비율
+  - **정상 범위**: 7-8x (예: CV 0.559 → Public 4.440 = 7.9x)
+  - **위험 신호**: 1-2x (overfitting, 예: CV 3.541 → Public 3.599 = 1.0x)
+
+### 최근 제출 결과
+```
+Version 16 (EXP-019): Public 3.599 ❌ (Overfitting)
+Version 15 (EXP-016): Public 4.440 ✅ (최고 성과)
+```
+
+**중요**: 새 실험 후 반드시 Kaggle 제출 결과 확인!
+
+---
+
+## 다음 작업: EXP-020
+
+### 목표
+Position formula 근본적 변경으로 10점 달성
+
+### 전략
+**핵심 원칙**: EXP-016의 단순함 유지 + Position formula 혁신
+
+**4가지 접근**:
+1. **Volatility-Scaled Position** (최우선 ⭐⭐⭐⭐⭐)
+   - Volatility 예측 추가
+   - Target volatility approach
+   - 예상: Public 5.8-6.7
+
+2. **Quantile Regression**
+   - Uncertainty quantification
+   - Confidence-based sizing
+   - 예상: Public 5.3-6.2
+
+3. **Multi-Objective Optimization**
+   - Return-Risk tradeoff
+   - 예상: Public 5.6-6.4
+
+4. **Regime-Aware Models**
+   - Market regime별 전략
+   - 예상: Public 5.8-6.7
+
+### 실행 순서
+1. Phase 1: Volatility Prediction Model (30분)
+2. Phase 2: Volatility-Scaled Strategy (1시간) ← 가장 유망
+3. Phase 3: Quantile Regression (1시간)
+4. Phase 4: Multi-Objective (1시간)
+5. Phase 5: Best Strategy Selection (30분)
+
+### 예상 결과
+- Conservative: Public 5.77
+- Expected: Public 6.22
+- Optimistic: Public 6.66
+- Best Case: Public 8.0-8.9
+
+**10점 달성 확률**: 30-40%
+
+**상세 계획**: `experiments/020/ANALYSIS.md` 참조
 
 ---
 
