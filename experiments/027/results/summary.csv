@@ -1,0 +1,2 @@
+n_features,cv_sharpe_mean,cv_sharpe_std,expected_public_avg,expected_public_conservative
+50,0.5572736199166195,0.2635252666074848,4.7925531312829275,3.343641719499717
