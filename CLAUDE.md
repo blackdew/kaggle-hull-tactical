@@ -112,27 +112,75 @@ position = clip(1.0 + excess_return_pred * K, 0.0, 2.0)
 
 ## InferenceServer 구현
 
-**submission.py 구조**
+**템플릿 파일 사용**
+- 새로운 제출 파일을 만들 때: `submissions/template_inference_server.py` 복사
+- 템플릿에는 모든 필수 구조가 포함되어 있음
+- TODO 주석 부분만 채워서 사용
+
+**핵심 구조**
 ```python
 class MyServer(InferenceServer):
+    def __init__(self):
+        # 필수: super().__init__(predict) 호출
+        def predict(batch):
+            return MyServer.predict(self, batch)
+        super().__init__(predict)
+
+    def _get_gateway_for_test(self, ...):
+        # 필수: Gateway 반환
+        return DefaultGateway(data_paths)
+
     def train_if_needed(self):
-        # 첫 예측 시 lazy training
-        # train.csv 로드 및 모델 학습
+        # Lazy training 구현
 
     def create_features(self, df):
-        # 1-row에서 계산 가능한 features 생성
-        # Interaction features 포함
+        # Polars → Pandas 변환 (필수)
+        # Missing value 처리 (필수)
+        # Feature engineering
 
     def predict(self, test_batch):
-        # Row-by-row 예측
-        # Position 계산 및 반환
+        # Batch unpacking (필수)
+        # Polars → Pandas 변환 (필수)
+        # return float(position[0])  # Scalar 반환 (필수)
 ```
 
+**제출 파일 생성 시 자주 발생하는 에러 및 해결법**
+
+1. **TypeError: Can't instantiate abstract class with abstract method _get_gateway_for_test**
+   - 원인: `_get_gateway_for_test` 메서드 미구현
+   - 해결: `def _get_gateway_for_test(self, ...): return DefaultGateway(data_paths)` 추가
+
+2. **'DataFrame' object has no attribute 'fillna'**
+   - 원인: Polars DataFrame을 Pandas로 변환 안함
+   - 해결: `create_features()` 시작 부분에 `if pl is not None and isinstance(df, pl.DataFrame): df = df.to_pandas()` 추가
+
+3. **Invalid prediction data type, received: numpy.ndarray**
+   - 원인: predict()가 numpy array 반환
+   - 해결: `return float(position[0])` - **반드시 scalar float 반환**
+
+4. **Missing features in DataFrame**
+   - 원인: test data에 일부 features 없을 수 있음
+   - 해결: `for feat in features: if feat not in df.columns: df[feat] = 0.0`
+
+5. **submission.parquet not created**
+   - 원인: `if __name__ == '__main__'` 블록에서 Gateway 미실행
+   - 해결: 위 템플릿의 main 블록 전체 복사
+
 **제출 프로세스**
-1. 로컬에서 테스트: `python submissions/submission.py`
-2. `submission.parquet` 생성 확인
-3. Kaggle Notebook에 업로드 및 실행
-4. Public Score 확인: `kaggle competitions submissions ...`
+1. 로컬에서 테스트: `python submissions/submission.py` (선택, kaggle_evaluation 필요)
+2. Kaggle Notebook에 코드 업로드
+3. 노트북 실행 → `submission.parquet` 생성 확인
+4. "Submit to Competition" 또는 수동 제출
+5. Public Score 확인: `kaggle competitions submissions hull-tactical-market-prediction`
+
+**체크리스트**
+- [ ] `_get_gateway_for_test()` 메서드 구현
+- [ ] `__init__`에서 `super().__init__(predict)` 호출
+- [ ] `predict()` scalar float 반환 (`return float(position[0])`)
+- [ ] Polars → Pandas 변환 (create_features, predict 모두)
+- [ ] Missing features 처리 (0.0으로 채우기)
+- [ ] `if __name__ == '__main__'` 블록 구현
+- [ ] train.csv 경로 처리 (Kaggle/로컬 모두 대응)
 
 ---
 
