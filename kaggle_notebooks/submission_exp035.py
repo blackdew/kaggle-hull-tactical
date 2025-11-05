@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 """
-EXP-035 Fixed Submission
+EXP-035 Submission: Best Configuration
+
+CV Sharpe: 0.809 (+27.1% vs EXP-021)
+Expected Public: 6.96
 
 Configuration:
 - Features: EXP-028 (105 features from phase2 engineering + top by MI)
-- Loss: MSE (default)
-- Target: Direct excess returns prediction
-- Hyperparameters: lr=0.03, depth=5, K=250 (verified from EXP-028)
+- Loss: MAE (reg:absoluteerror)
+- Target: Rank-based with quantile mapping
+- Hyperparameters: lr=0.05, depth=4, K=400
 """
 
 from kaggle_evaluation.core.templates import InferenceServer
 import os
 import numpy as np
 import pandas as pd
+from scipy.stats import rankdata
 
 try:
     from default_gateway import DefaultGateway
@@ -26,7 +30,7 @@ except Exception:
 
 
 class MyServer(InferenceServer):
-    """EXP-035 Fixed: 105 Features with verified EXP-028 settings"""
+    """EXP-035: Optimized MAE + Rank + 105 Features"""
 
     def __init__(self):
         from sklearn.preprocessing import StandardScaler
@@ -39,23 +43,24 @@ class MyServer(InferenceServer):
         # Model components
         self.model = None
         self.scaler = None
+        self.y_train_sorted = None  # For rank-to-value conversion
 
-        # Best hyperparameters from EXP-028 (verified)
-        self.K = 250  # Position sizing parameter
+        # Best hyperparameters from EXP-035
+        self.K = 400  # Position sizing parameter
 
-        # EXP-028 top 105 features (normalized multiplication names)
+        # EXP-028 top 105 features (hardcoded for Kaggle)
         self.features_105 = [
             'V7_sqrt', 'E19', 'V7_log', 'E19_sqrt', 'E19_log', 'V7', 'V7/E2', 'V7/E3', 'V7/V13', 'V7/P2',
-            'E19/E2', 'E19/E3', 'V13_sqrt', 'V13_log', 'S8_sqrt', 'S8_log', 'S8', 'V13', 'E20*V7', 'V13/E2',
+            'E19/E2', 'E19/E3', 'V13_sqrt', 'V13_log', 'S8_sqrt', 'S8_log', 'S8', 'V13', 'V7*E20', 'V13/E2',
             'P5_log', 'S8/E3', 'P5', 'V13/E3', 'E19/P2', 'P5_sqrt', 'V9/E20', 'E2_sqrt', 'E2_log', 'E3_sqrt',
-            'E19*E20', 'E3_log', 'E2', 'V9_sqrt', 'E20*V13', 'S8/E20', 'V9_log', 'V9', 'E20*P5', 'E3',
-            'V13/P2', 'P2*V7', 'E2*V7', 'S8/P2', 'E19*P2', 'E20', 'E19*S8', 'E_range', 'E19*E3', 'V_mean',
-            'vol_mean', 'P10_sqrt', 'I9_log', 'V9/P2', 'E19*P5', 'V1_sqrt', 'E1_sqrt', 'S8/E2', 'econ_uncertainty', 'E_std',
-            'P8_sqrt', 'P2_log', 'P2_sqrt', 'I9_sqrt', 'E19_squared', 'E20_log', 'P2', 'I9', 'E1_log', 'P5_squared',
-            'P10_log', 'E20_sqrt', 'E19*E2', 'P10', 'E17', 'E19*V13', 'E2*P5', 'E20*V9', 'E3*V7', 'E1',
-            'E3*S8', 'E20*P2', 'M4', 'E12', 'V13*V7', 'P5*V7', 'E18', 'P8_log', 'V1_log', 'E3*V13',
-            'E2/P2', 'V13_squared', 'E10_squared', 'I4', 'E17_sqrt', 'I2_log', 'vol_composite', 'E3/P2', 'S2', 'V_skew_proxy',
-            'I5', 'E17_log', 'S8_squared', 'E1_squared', 'E18_log'
+            'E19*E20', 'E3_log', 'E2', 'V9_sqrt', 'V13*E20', 'S8/E20', 'V9_log', 'V9', 'P5*E20', 'E3',
+            'V13/P2', 'V7*P2', 'V7*E2', 'S8/P2', 'E19*P2', 'E20', 'E19*S8', 'E_range', 'E19*E3', 'V_mean',
+            'vol_mean', 'P10_sqrt', 'I9_log', 'V9/P2', 'E19*P5', 'V1_sqrt', 'E1_sqrt', 'S8/E2', 'econ_uncertainty',
+            'E_std', 'P8_sqrt', 'P2_log', 'P2_sqrt', 'I9_sqrt', 'E19_squared', 'E20_log', 'P2', 'I9',
+            'E1_log', 'P5_squared', 'P10_log', 'E20_sqrt', 'E19*E2', 'P10', 'E17', 'E19*V13', 'P5*E2', 'V9*E20',
+            'V7*E3', 'E1', 'S8*E3', 'E20*P2', 'M4', 'E12', 'V7*V13', 'V7*P5', 'E18', 'P8_log',
+            'V1_log', 'V13*E3', 'E2/P2', 'V13_squared', 'E10_squared', 'I4', 'E17_sqrt', 'I2_log', 'vol_composite', 'E3/P2',
+            'S2', 'V_skew_proxy', 'I5', 'E17_log', 'S8_squared', 'E1_squared', 'E18_log'
         ]
 
         # REQUIRED: predict 함수를 super().__init__()에 전달
@@ -83,6 +88,13 @@ class MyServer(InferenceServer):
             print(f"[EXP-035] Loaded train data locally: {train.shape}")
 
         y_excess = train['market_forward_excess_returns'].values
+
+        # Convert to rank (0~1 scale)
+        y_rank = rankdata(y_excess, method='average') / len(y_excess)
+
+        # Store sorted values for rank-to-value conversion during prediction
+        self.y_train_sorted = np.sort(y_excess)
+        print(f"[EXP-035] Stored {len(self.y_train_sorted)} sorted training values")
         print(f"[EXP-035] Using {len(self.features_105)} features")
 
         # Create features
@@ -93,21 +105,20 @@ class MyServer(InferenceServer):
         self.scaler = self.StandardScaler()
         X_scaled = self.scaler.fit_transform(X)
 
-        # Train model with MSE loss (verified from EXP-028)
+        # Train model with MAE loss on rank target
         self.model = self.XGBRegressor(
             n_estimators=150,
-            max_depth=5,  # From EXP-028
-            learning_rate=0.03,  # From EXP-028
+            max_depth=4,  # Best from EXP-035
+            learning_rate=0.05,  # Best from EXP-035
             subsample=0.8,
             colsample_bytree=0.8,
-            colsample_bylevel=0.8,
             reg_alpha=0.1,
             reg_lambda=1.0,
-            min_child_weight=1,
+            objective='reg:absoluteerror',  # MAE loss
             random_state=42,
             n_jobs=-1
         )
-        self.model.fit(X_scaled, y_excess, verbose=False)
+        self.model.fit(X_scaled, y_rank, verbose=False)
         print("[EXP-035] Model training complete")
 
         self.ready = True
@@ -136,11 +147,9 @@ class MyServer(InferenceServer):
         key_features = ['V7', 'E19', 'V13', 'S8', 'P5', 'E2', 'E3', 'E20', 'V9', 'P2']
         for i, col1 in enumerate(key_features):
             if col1 in X_all.columns:
-                for j, col2 in enumerate(key_features):
-                    if j > i and col2 in X_all.columns:
-                        # Use alphabetically sorted names for consistency
-                        name1, name2 = sorted([col1, col2])
-                        X_all[f'{name1}*{name2}'] = X_all[col1] * X_all[col2]
+                for col2 in key_features[i+1:]:
+                    if col2 in X_all.columns:
+                        X_all[f'{col1}*{col2}'] = X_all[col1] * X_all[col2]
 
         # Create interactions (division)
         for col1 in key_features:
@@ -203,8 +212,13 @@ class MyServer(InferenceServer):
         # Scale
         X_test_scaled = self.scaler.transform(X_test)
 
-        # Predict excess returns directly
-        y_pred = self.model.predict(X_test_scaled)
+        # Predict rank (0~1)
+        y_pred_rank = self.model.predict(X_test_scaled)
+        y_pred_rank = np.clip(y_pred_rank, 0.0, 1.0)
+
+        # Convert rank back to value using training distribution
+        indices = (y_pred_rank * (len(self.y_train_sorted) - 1)).astype(int)
+        y_pred = self.y_train_sorted[indices]
 
         # Calculate position
         position = 1.0 + y_pred * self.K
