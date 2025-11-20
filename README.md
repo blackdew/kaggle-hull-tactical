@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Status](https://img.shields.io/badge/Status-Active-success)
-![Best Score](https://img.shields.io/badge/Public%20Score-4.440-brightgreen)
+![Best Score](https://img.shields.io/badge/Public%20Score-5.872-brightgreen)
 ![AI Agent](https://img.shields.io/badge/AI-Claude%20Code-blueviolet)
 
 **Claude Code AI Agent와 함께하는** Kaggle Code Competition 체계적 실험 및 모델 개발 프로젝트
@@ -19,12 +19,13 @@
 
 | Metric | Value | Date |
 |--------|-------|------|
-| **Public Score** | **4.440** | 2025-10-21 |
-| Previous Best | 0.724 | - |
-| **Improvement** | **6.1x** | - |
+| **Public Score** | **5.872** | 2025-11-04 |
+| Previous Best | 4.440 | 2025-10-21 |
+| **Improvement from Baseline** | **13.3x** | - |
 | CV Sharpe (5-fold) | 0.559 ± 0.362 | EXP-016 v2 |
 
-**Experiment**: [EXP-016 v2](experiments/016/) - InferenceServer-Compatible Feature Engineering
+**Current Best**: [Version 22](https://www.kaggle.com/code/sookbunlee/hull-tactical-market-prediction) - EXP-020 Recovery
+**Previous Best**: [EXP-016 v2](experiments/016/) - InferenceServer-Compatible Feature Engineering
 
 ---
 
@@ -51,12 +52,35 @@ kaggle/
 
 ## 🔬 주요 실험
 
-### EXP-016 v2: Interaction Features (최종 ✅)
+### Version 22 (EXP-020): Recovery & Optimization (현재 최고 ✅)
+- **접근**: EXP-016 코드 복구 및 최적화
+- **Features**: Original 20 + Interaction 10
+- **Model**: XGBoost (기존 설정)
+- **결과**: Public Score **5.872** 🏆 (Baseline 대비 13.3배)
+- **문서**: [Kaggle Version 22](https://www.kaggle.com/code/sookbunlee/hull-tactical-market-prediction)
+
+### EXP-037: 17.396 Data Leak 시도 (실패 ❌)
+- **접근**: scipy.optimize로 train 마지막 180일 최적화
+- **출처**: khai42 public notebook (76 votes)
+- **결과**: Public Score **-0.260** (원본도 동일)
+- **문제**: Counter 기반 인덱싱 오류, 139일 오차
+- **미스터리**: 리더보드에는 여전히 17.396 제출 발생 중
+- **문서**: [experiments/037_optimization_17396/](experiments/037_optimization_17396/)
+
+### EXP-021~035: 대규모 Feature Engineering (개선 실패)
+- **EXP-021**: Quantile Regression Grid Search (CV: 0.6368, 개선 없음)
+- **EXP-029**: Ensemble Strategy (CV: 0.637, 약간 개선)
+- **EXP-022~028**: Position Amplification, MI Analysis, Deep Learning 등
+- **EXP-030~035**: 추가 최적화 시도
+- **결과**: EXP-020 (5.872)을 넘지 못함
+- **결론**: Feature Quality > Quantity 재확인
+
+### EXP-016 v2: Interaction Features (이전 최고)
 - **접근**: InferenceServer 호환 (row-by-row 예측)
 - **Features**: Original 20 + Interaction 10 (곱셈, 나눗셈, 다항식)
 - **Model**: XGBoost (n_estimators=150, max_depth=7)
 - **K Parameter**: 250
-- **결과**: Public Score **4.440** 🏆
+- **결과**: Public Score **4.440**
 - **문서**: [experiments/016/README.md](experiments/016/README.md)
 
 ### EXP-010 ~ EXP-015: 딥러닝 시도 (실패)
@@ -64,15 +88,9 @@ kaggle/
 - 결과: 모두 XGBoost보다 낮은 성능
 - 교훈: 시계열 금융 데이터에서 딥러닝은 과적합 위험
 
-### EXP-007: Feature Engineering 확장
-- 754 features (lag, rolling, cross-sectional, volatility, momentum)
-- CV Sharpe: 0.749
-- 결과: 0.75가 해당 접근의 상한으로 판단
-
-### EXP-005: XGBoost + Feature Engineering
-- Baseline에서 XGBoost로 전환
-- CV Sharpe: 0.627
-- Kaggle: 0.441 → 0.724 (+64%)
+### EXP-005~007: XGBoost + Feature Engineering
+- **EXP-007**: 754 features (CV: 0.749) - 복잡도 증가의 한계
+- **EXP-005**: XGBoost 전환 (0.441 → 0.724, +64%)
 
 ### EXP-000 ~ EXP-004: 초기 탐색
 - Baseline (Lasso Regression)
@@ -93,17 +111,24 @@ kaggle/
 - 곱셈: `P8*S2`, `M4*V7` (비선형 관계)
 - 나눗셈: `P8/P7`, `M4/S2` (상대적 변화)
 - 다항식: `M4²`, `V13²` (비선형 패턴)
-- 120개 생성 → Top 30 선택 = 6.1배 성능 향상
+- 120개 생성 → Top 30 선택 = 13.3배 성능 향상
 
 ### 3. 딥러닝의 한계
 - LSTM, Transformer 등 모두 XGBoost보다 낮음
 - 금융 시계열 데이터: 신호 약함, 과적합 쉬움
 - **XGBoost가 최강**
 
-### 4. Feature 많다고 좋은 게 아님
-- 754 features → Sharpe 0.749 (제한적)
-- 30 features (interaction) → Public 4.440 (최고)
-- **Quality > Quantity**
+### 4. Feature Quality > Quantity
+- **754 features** → CV: 0.749 (EXP-007)
+- **30 features** → Public: 5.872 (Version 22) ✅
+- **더 많은 feature ≠ 더 좋은 성능**
+- 98개 configuration 시도 (EXP-021~035) → 개선 실패
+
+### 5. Data Leak의 미스터리 (NEW)
+- **17.396**: 리더보드에 매일 새로운 제출 발생
+- **우리 시도**: -0.260 (원본 노트북도 동일)
+- **문제**: Counter 기반 인덱싱, 139일 오차
+- **의문**: 실제 17.396 달성 방법은 여전히 불명
 
 ---
 
@@ -167,24 +192,11 @@ python submissions/submission.py
 | EXP-005 | XGBoost + Feature Eng | 0.724 | 0.627 | +64% |
 | EXP-007 | 754 features | - | 0.749 | CV only |
 | EXP-010~015 | Deep Learning | - | <0.6 | 실패 |
-| **EXP-016 v2** | **Interaction Features** | **4.440** | **0.559** | **+514%** 🏆 |
-
----
-
-## 📚 회고 문서
-
-프로젝트 전체 과정에서 얻은 인사이트와 교훈을 정리한 문서들:
-
-- [2025-10-21 회고](docs/retrospectives/2025-10-21.md) - EXP-016 v2 완전 재설계 성공
-- [2025-10-13 회고](docs/retrospectives/2025-10-13.md) - EXP-006, 007 실험 및 한계 인식
-- [전체 실험 회고](RETROSPECTIVE.md) - 종합 회고 및 결론
-
-**핵심 교훈**:
-1. 제약 조건을 먼저 파악하라 (InferenceServer)
-2. 완전 재설계의 용기 (Sunk cost 극복)
-3. Interaction features > 복잡한 features
-4. XGBoost > Deep Learning (시계열 금융)
-5. 체계적 실험 설계 (Phase별 검증)
+| EXP-016 v2 | Interaction Features | 4.440 | 0.559 | +514% |
+| **Version 22** | **EXP-020 Recovery** | **5.872** | **-** | **+1231%** 🏆 |
+| EXP-035 | MAE Loss Discovery | 2.888 | - | 실패 (overfitting) |
+| EXP-036 | Leak-safe v3 | 0.655 | - | - |
+| EXP-037 | 17.396 Attempt | -0.260 | - | Data leak 재현 실패 |
 
 ---
 
@@ -245,6 +257,7 @@ MIT License
 
 ---
 
-**Last Updated**: 2025-10-21  
-**Status**: Competition Active  
-**Best Score**: 4.440 (Public Leaderboard)
+**Last Updated**: 2025-11-05
+**Status**: Competition Active
+**Best Score**: 5.872 (Public Leaderboard)
+**Current Challenge**: 17.396 달성 방법 미스터리 해결
