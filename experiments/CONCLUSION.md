@@ -505,3 +505,16 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - ✅ **EXP-016 v2**: InferenceServer + Interaction Features
   - 완전 재설계로 6.1배 향상
   - Public Score 4.440 달성
+
+### EXP-038: Hybrid Feature Set (2025-11-25)
+**접근**: EXP-020(Quantile Regression Baseline)의 성능 한계 돌파 시도
+- **v1 (Feature Selection)**: Quantile Loss 기준 Feature 교체 → 실패 (CV 0.577)
+- **v2 (Regime-Based)**: Volatility 기준 모델 분리 → 실패 (CV 0.568)
+- **v3 (Hybrid Features)**: MSE(Trend) + Quantile(Tail) Feature 결합 → **성공** (vs EXP-016)
+- **결과**:
+  - **CV Sharpe**: **0.7025** (EXP-020 0.637 대비 **+10.3%**)
+  - **Public Score**: **4.798** (EXP-016 4.440 대비 **+8.1%**, 하지만 EXP-022 **5.86**에는 미치지 못함)
+- **의의**:
+  - Feature Augmentation의 효과로 EXP-016/020 대비 성능 향상 확인.
+  - 하지만 최고 기록인 EXP-022(5.86)를 넘어서지는 못함. 추가적인 고도화 필요.
+
