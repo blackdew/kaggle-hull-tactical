@@ -424,9 +424,10 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 **Option 2: 추가 개선 시도 (진행 중)** ⭐⭐⭐
 - **EXP-038**: Hybrid Feature Set 발굴 (성공, Public 4.798)
 - **EXP-039**: Hybrid + Ensemble (실패, 과적합)
-- **EXP-040 (Planned)**: **Refined Hybrid Ensemble**
-  - EXP-039의 과적합을 해소하기 위해 Feature Selection 적용.
-  - "정예 Feature" + "Ensemble"로 SOTA(5.86) 재도전.
+- **EXP-040**: Refined Hybrid Ensemble (절반의 성공, Public 4.527)
+- **EXP-041 (Planned)**: **Genetic Feature Generation**
+  - Feature Engineering의 원점으로 회귀.
+  - Genetic Programming을 통해 인간의 직관을 넘어서는 수식(Feature) 자동 발굴.
 
 **Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐ (추천)
 - Winning solution 학습
@@ -540,4 +541,14 @@ utility = min(max(sharpe, 0), 6) × Σ profits
   - **Refinement 효과 입증**: Feature 수를 줄이니(51→35) 과적합이 완화되어 점수가 대폭 상승함.
   - **한계**: 여전히 Single Model (EXP-038 v3)이나 Original Ensemble (EXP-022)보다는 낮음.
   - **결론**: Hybrid Feature Set은 Ensemble보다는 **Single XGBoost**와 궁합이 더 잘 맞거나, Ensemble을 위해서는 더 과감한 Feature Selection(예: Top 20)이 필요할 수 있음.
+
+### EXP-041: Genetic Feature Generation (2025-11-25)
+**접근**: Symbolic Regression (gplearn)을 통한 Feature 자동 발굴
+- **방법**: 유전 알고리즘으로 비선형 수식(Feature)을 진화시켜 상위 20개를 추출.
+- **결과**:
+  - **CV Sharpe**: 0.6672 (EXP-038 v3 0.703보다 소폭 하락, EXP-040 0.602보다는 우수)
+  - **Public Score**: **3.251** (최하위 기록) ❌
+- **분석**:
+  - **과적합(Overfitting)**: Genetic Programming이 찾아낸 복잡한 수식들이 Training Data의 노이즈까지 학습했을 가능성이 매우 높음.
+  - **결론**: 금융 데이터에서 "복잡한 수식"은 오히려 독이 될 수 있음. 단순함(Simplicity)이 생명임. EXP-040(Refined Hybrid)의 "Less is More" 교훈을 재확인.
 

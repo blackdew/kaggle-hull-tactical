@@ -1,0 +1,17 @@
+{
+    "id": "blackdew/exp-041-genetic-feature-generation-gplearn",
+    "title": "EXP-041: Genetic Feature Generation (gplearn)",
+    "code_file": "submission_exp041.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": "true",
+    "enable_gpu": "false",
+    "enable_internet": "false",
+    "dataset_sources": [
+        "blackdew/gplearn-lib"
+    ],
+    "competition_sources": [
+        "hull-tactical-market-prediction"
+    ],
+    "kernel_sources": []
+}
