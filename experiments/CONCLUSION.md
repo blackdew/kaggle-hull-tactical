@@ -425,9 +425,10 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - **EXP-038**: Hybrid Feature Set 발굴 (성공, Public 4.798)
 - **EXP-039**: Hybrid + Ensemble (실패, 과적합)
 - **EXP-040**: Refined Hybrid Ensemble (절반의 성공, Public 4.527)
-- **EXP-041 (Planned)**: **Genetic Feature Generation**
-  - Feature Engineering의 원점으로 회귀.
-  - Genetic Programming을 통해 인간의 직관을 넘어서는 수식(Feature) 자동 발굴.
+- **EXP-041**: Genetic Feature Generation (실패, Public 3.251)
+- **EXP-042 (Planned)**: **Time Series Transformer** (Deep Learning)
+  - Tree 모델의 한계 돌파 시도.
+  - Sequence Data(과거 30일)를 활용한 패턴 학습.
 
 **Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐ (추천)
 - Winning solution 학습
