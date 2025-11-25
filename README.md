@@ -36,7 +36,10 @@ kaggle/
 ├── experiments/           # 실험별 디렉토리
 │   ├── 000-007/          # 초기 실험 (Baseline, Feature Eng, k-tuning)
 │   ├── 010-015/          # 딥러닝 시도 (실패)
-│   ├── 016/              # ✨ 최고 성과 (Interaction Features)
+│   ├── 016/              # Interaction Features (Public: 4.440)
+│   ├── 020/              # ✨ 최고 성과 (Quantile Regression, Public: 5.872)
+│   ├── 021-037/          # 대규모 Feature Engineering 시도
+│   ├── 038/              # Hybrid Feature Set (CV: 0.703, Public: 4.798)
 │   └── CONCLUSION.md     # 전체 실험 회고
 ├── submissions/          # Kaggle 제출용 코드
 │   └── submission.py     # InferenceServer 구현
@@ -58,6 +61,14 @@ kaggle/
 - **Model**: XGBoost (기존 설정)
 - **결과**: Public Score **5.872** 🏆 (Baseline 대비 13.3배)
 - **문서**: [Kaggle Version 22](https://www.kaggle.com/code/sookbunlee/hull-tactical-market-prediction)
+
+### EXP-038: Hybrid Feature Set (최신 ✨)
+- **접근**: MSE(Trend) + Quantile(Tail) Feature 결합
+- **Features**: 30개 hybrid features (기존 features 조합)
+- **Model**: XGBoost + Quantile Regression
+- **결과**: CV Sharpe **0.703** (+10.3% vs EXP-020), Public Score **4.798** (+8.1% vs EXP-016)
+- **의의**: Feature Augmentation 효과 확인, 하지만 EXP-020 (5.872)에는 미달
+- **문서**: [experiments/038_hybrid_features/](experiments/038_hybrid_features/)
 
 ### EXP-037: 17.396 Data Leak 시도 (실패 ❌)
 - **접근**: scipy.optimize로 train 마지막 180일 최적화
@@ -124,7 +135,14 @@ kaggle/
 - **더 많은 feature ≠ 더 좋은 성능**
 - 98개 configuration 시도 (EXP-021~035) → 개선 실패
 
-### 5. Data Leak의 미스터리 (NEW)
+### 5. Hybrid Features의 효과 (NEW)
+- **EXP-038**: MSE + Quantile Feature 결합 전략
+- **CV Sharpe**: 0.703 (EXP-020 0.637 대비 +10.3%)
+- **Public Score**: 4.798 (EXP-016 4.440 대비 +8.1%)
+- **교훈**: Feature Augmentation은 효과적, 하지만 최고 성능(5.872)에는 미달
+- **방향**: 추가 고도화 필요
+
+### 6. Data Leak의 미스터리
 - **17.396**: 리더보드에 매일 새로운 제출 발생
 - **우리 시도**: -0.260 (원본 노트북도 동일)
 - **문제**: Counter 기반 인덱싱, 139일 오차
@@ -193,10 +211,9 @@ python submissions/submission.py
 | EXP-007 | 754 features | - | 0.749 | CV only |
 | EXP-010~015 | Deep Learning | - | <0.6 | 실패 |
 | EXP-016 v2 | Interaction Features | 4.440 | 0.559 | +514% |
-| **Version 22** | **EXP-020 Recovery** | **5.872** | **-** | **+1231%** 🏆 |
-| EXP-035 | MAE Loss Discovery | 2.888 | - | 실패 (overfitting) |
-| EXP-036 | Leak-safe v3 | 0.655 | - | - |
-| EXP-037 | 17.396 Attempt | -0.260 | - | Data leak 재현 실패 |
+| **Version 22** | **EXP-020 Recovery** | **5.872** | **0.637** | **+1231%** 🏆 |
+| EXP-021~037 | Feature Engineering | -0.260~5.872 | 0.358~0.703 | 다양한 시도 |
+| EXP-038 v3 | Hybrid Features | 4.798 | 0.703 | +8.1% (vs EXP-016) |
 
 ---
 
@@ -232,10 +249,11 @@ python submissions/submission.py
 - **Claude Code**: 코드 작성·실행, 데이터 분석, 문서화, 버그 수정
 
 ### 주요 성과
-- ✅ **12개 실험 완료** (29~35시간)
-- ✅ **Public Score 4.440** (6.1배 향상)
+- ✅ **38개 실험 완료** (EXP-000~038)
+- ✅ **Public Score 5.872** (Baseline 대비 13.3배 향상)
 - ✅ **체계적 문서화** (모든 실험 과정 기록)
 - ✅ **빠른 실험 사이클** (아이디어 → 구현 → 결과)
+- ✅ **다양한 접근법 검증** (XGBoost, Deep Learning, Quantile Regression, Hybrid Features)
 
 > **개발 가이드**: [CLAUDE.md](CLAUDE.md) - 미래 Claude Code 인스턴스를 위한 아키텍처 및 명령어
 
@@ -257,7 +275,8 @@ MIT License
 
 ---
 
-**Last Updated**: 2025-11-05
+**Last Updated**: 2025-11-25
 **Status**: Competition Active
 **Best Score**: 5.872 (Public Leaderboard)
-**Current Challenge**: 17.396 달성 방법 미스터리 해결
+**Latest Experiment**: EXP-038 Hybrid Features (CV 0.703, Public 4.798)
+**Current Challenge**: 5.872를 넘어 20점 목표 달성
