@@ -1,0 +1,15 @@
+{
+    "id": "blackdew/exp042-transformer",
+    "title": "EXP-042: Time Series Transformer (PyTorch)",
+    "code_file": "submission_exp042.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": "true",
+    "enable_gpu": "false",
+    "enable_internet": "false",
+    "dataset_sources": [],
+    "competition_sources": [
+        "hull-tactical-market-prediction"
+    ],
+    "kernel_sources": []
+}

@@ -92,6 +92,7 @@ submissions/*
 !submissions/submission_exp039.py
 !submissions/submission_exp040.py
 !submissions/submission_exp041.py
+!submissions/submission_exp042.py
 !**/kernel-metadata.json
 !gplearn_lib/dataset-metadata.json
 output/

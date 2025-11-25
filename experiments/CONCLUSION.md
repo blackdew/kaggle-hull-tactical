@@ -553,3 +553,14 @@ utility = min(max(sharpe, 0), 6) × Σ profits
   - **과적합(Overfitting)**: Genetic Programming이 찾아낸 복잡한 수식들이 Training Data의 노이즈까지 학습했을 가능성이 매우 높음.
   - **결론**: 금융 데이터에서 "복잡한 수식"은 오히려 독이 될 수 있음. 단순함(Simplicity)이 생명임. EXP-040(Refined Hybrid)의 "Less is More" 교훈을 재확인.
 
+### EXP-042: Time Series Transformer (2025-11-25)
+**접근**: Deep Learning (Transformer) 도입
+- **방법**: 과거 30일의 Sequence를 입력으로 받아 Transformer Encoder로 학습.
+- **결과**:
+  - **CV Sharpe**: 0.4190 (기존 Tree 모델 대비 매우 낮음)
+  - **Public Score**: **1.041** (역대 최악의 점수) ❌❌
+- **분석**:
+  - **Data Hunger**: 9,000개의 데이터로는 Transformer를 학습시키기에 턱없이 부족함.
+  - **Overfitting**: CV(0.41)와 Public(1.04) 모두 낮다는 것은 모델이 아예 학습을 못한 것(Underfitting)이거나, 노이즈만 학습한 것.
+  - **결론**: Deep Learning은 현재 데이터 규모에서는 시기상조. **Tree Model(XGB/LGB)**이 정답임.
+
