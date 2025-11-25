@@ -530,3 +530,14 @@ utility = min(max(sharpe, 0), 6) × Σ profits
   - **과적합(Overfitting)**: Feature 수 증가(51개)와 모델 복잡도 증가가 결합되어, Public LB(미래 데이터)에서의 일반화 성능 저하.
   - **결론**: Feature를 늘리는 것(Hybrid)과 모델을 섞는 것(Ensemble) 중 하나만 선택하거나, 더 정교한 튜닝이 필요함. 현재로서는 **EXP-038 v3 (Single Model + Hybrid Features)**나 **EXP-022 (Ensemble + Original Features)**가 더 우수함.
 
+### EXP-040: Refined Hybrid Ensemble (2025-11-25)
+**접근**: EXP-039의 과적합 해결을 위한 Feature Selection (51개 → 35개)
+- **방법**: EXP-038 v3의 Feature Importance를 기반으로 상위 35개 Feature만 선별하여 Ensemble 학습.
+- **결과**:
+  - **CV Sharpe**: 0.6023 (EXP-039 0.659보다 하락)
+  - **Public Score**: **4.527** (EXP-039 3.736 대비 **+21% 회복**, 하지만 EXP-038 v3 4.798에는 미달) ⚠️
+- **분석**:
+  - **Refinement 효과 입증**: Feature 수를 줄이니(51→35) 과적합이 완화되어 점수가 대폭 상승함.
+  - **한계**: 여전히 Single Model (EXP-038 v3)이나 Original Ensemble (EXP-022)보다는 낮음.
+  - **결론**: Hybrid Feature Set은 Ensemble보다는 **Single XGBoost**와 궁합이 더 잘 맞거나, Ensemble을 위해서는 더 과감한 Feature Selection(예: Top 20)이 필요할 수 있음.
+

@@ -1,0 +1,15 @@
+{
+    "id": "blackdew/exp040-refined-hybrid",
+    "title": "EXP-040: Refined Hybrid Ensemble (Top 35 Features)",
+    "code_file": "submission_exp040.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": "true",
+    "enable_gpu": "false",
+    "enable_internet": "false",
+    "dataset_sources": [],
+    "competition_sources": [
+        "hull-tactical-market-prediction"
+    ],
+    "kernel_sources": []
+}
