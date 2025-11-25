@@ -1,0 +1,11 @@
+{
+  "id": "blackdew/hull-003-lasso-top20",
+  "title": "Hull 003 Lasso Top20",
+  "code_file": "kaggle_inference.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": ["hull-tactical-market-prediction"]
+}

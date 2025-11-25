@@ -1,0 +1,14 @@
+{
+  "id": "sookbunlee/exp-036-leak-safe-v3-final",
+  "title": "exp-036-leak-safe-v3-final",
+  "code_file": "submission.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": ["hull-tactical-market-prediction"],
+  "kernel_sources": []
+}

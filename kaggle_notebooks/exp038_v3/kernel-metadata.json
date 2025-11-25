@@ -1,0 +1,15 @@
+{
+    "id": "blackdew/exp038-v3-hybrid-features",
+    "title": "EXP-038 v3: Hybrid Feature Set (MSE + Quantile)",
+    "code_file": "submission_exp038_v3.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": "true",
+    "enable_gpu": "false",
+    "enable_internet": "false",
+    "dataset_sources": [],
+    "competition_sources": [
+        "hull-tactical-market-prediction"
+    ],
+    "kernel_sources": []
+}
