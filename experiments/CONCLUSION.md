@@ -421,11 +421,12 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - 문서화 완료
 - 다른 대회로 이동
 
-**Option 2: 추가 개선 시도** ⭐⭐⭐
-- Interaction features 추가 탐색
-- Ensemble (여러 K 값)
-- Hyperparameter fine-tuning
-- 예상: Public Score 5~7
+**Option 2: 추가 개선 시도 (진행 중)** ⭐⭐⭐
+- **EXP-038**: Hybrid Feature Set 발굴 (성공, Public 4.798)
+- **EXP-039**: Hybrid + Ensemble (실패, 과적합)
+- **EXP-040 (Planned)**: **Refined Hybrid Ensemble**
+  - EXP-039의 과적합을 해소하기 위해 Feature Selection 적용.
+  - "정예 Feature" + "Ensemble"로 SOTA(5.86) 재도전.
 
 **Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐ (추천)
 - Winning solution 학습
@@ -517,4 +518,15 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - **의의**:
   - Feature Augmentation의 효과로 EXP-016/020 대비 성능 향상 확인.
   - 하지만 최고 기록인 EXP-022(5.86)를 넘어서지는 못함. 추가적인 고도화 필요.
+
+### EXP-039: Hybrid Ensemble (2025-11-25)
+**접근**: EXP-038(Hybrid Features) + EXP-022(Ensemble) 결합
+- **방법**: 51개 Hybrid Feature로 XGBoost, LightGBM, CatBoost 학습 후 앙상블.
+- **결과**:
+  - **CV Sharpe**: 0.6588 (EXP-038 v3 0.703보다 낮음)
+  - **Public Score**: **3.736** (EXP-038 v3 4.798보다 하락, Baseline 5.86 대비 대폭 하락) ❌
+- **분석**:
+  - **Negative Synergy**: Hybrid Feature와 Ensemble을 동시에 적용하니 오히려 성능이 급락함.
+  - **과적합(Overfitting)**: Feature 수 증가(51개)와 모델 복잡도 증가가 결합되어, Public LB(미래 데이터)에서의 일반화 성능 저하.
+  - **결론**: Feature를 늘리는 것(Hybrid)과 모델을 섞는 것(Ensemble) 중 하나만 선택하거나, 더 정교한 튜닝이 필요함. 현재로서는 **EXP-038 v3 (Single Model + Hybrid Features)**나 **EXP-022 (Ensemble + Original Features)**가 더 우수함.
 

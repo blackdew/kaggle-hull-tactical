@@ -89,6 +89,7 @@ submissions/*
 !submissions/submission_exp038.py
 !submissions/submission_exp038_v2.py
 !submissions/submission_exp038_v3.py
+!submissions/submission_exp039.py
 !**/kernel-metadata.json
 output/
 
