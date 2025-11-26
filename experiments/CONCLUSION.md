@@ -426,9 +426,10 @@ utility = min(max(sharpe, 0), 6) × Σ profits
 - **EXP-039**: Hybrid + Ensemble (실패, 과적합)
 - **EXP-040**: Refined Hybrid Ensemble (절반의 성공, Public 4.527)
 - **EXP-041**: Genetic Feature Generation (실패, Public 3.251)
-- **EXP-042 (Planned)**: **Time Series Transformer** (Deep Learning)
-  - Tree 모델의 한계 돌파 시도.
-  - Sequence Data(과거 30일)를 활용한 패턴 학습.
+- **EXP-042**: Time Series Transformer (실패, Public 1.041)
+- **EXP-044 (Planned)**: **Reinforcement Learning (PPO)**
+  - 예측(Prediction)에서 행동(Action)으로 패러다임 전환.
+  - Sharpe Ratio 직접 최적화로 10점 돌파 시도.
 
 **Option 3: 대회 종료 후 분석** ⭐⭐⭐⭐⭐ (추천)
 - Winning solution 학습

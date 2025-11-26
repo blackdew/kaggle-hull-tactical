@@ -1,0 +1,107 @@
+================================================================================
+EXP-026: XGBoost with Proper Tuning on 305 Features
+================================================================================
+
+[1] Loading data...
+   Features: 305
+   Samples: 8990
+   Ratio: 29.5 samples per feature
+
+[2] Preparing feature matrix...
+   Feature matrix: (8990, 305)
+
+[3] Training XGBoost with 5-fold CV...
+   Using PROPER regularization (fixed from EXP-024)
+
+   XGBoost parameters:
+      Key differences from EXP-024:
+      - max_depth: 6 (vs 4)
+      - learning_rate: 0.03 (vs 0.01)
+      - colsample_bytree: 0.7 (vs 0.3) ← KEY FIX!
+      - reg_lambda: 1.0 (vs 5.0)
+
+   Fold 1/5...
+      Sharpe: 0.493
+      Position: 0.989 ± 0.181
+      Pred std: 0.000724
+
+   Fold 2/5...
+      Sharpe: 0.308
+      Position: 1.032 ± 0.429
+      Pred std: 0.001876
+
+   Fold 3/5...
+      Sharpe: 0.445
+      Position: 1.012 ± 0.508
+      Pred std: 0.002414
+
+   Fold 4/5...
+      Sharpe: 0.884
+      Position: 0.932 ± 0.379
+      Pred std: 0.001827
+
+   Fold 5/5...
+      Sharpe: 0.697
+      Position: 0.997 ± 0.397
+      Pred std: 0.002147
+
+[4] Results analysis
+================================================================================
+
+📊 Cross-Validation Results:
+   CV Sharpe: 0.565 ± 0.226
+   Range: [0.308, 0.884]
+   Fold details:
+      Fold 1.0: 0.493
+      Fold 2.0: 0.308
+      Fold 3.0: 0.445
+      Fold 4.0: 0.884
+      Fold 5.0: 0.697
+
+[5] Comparison with baselines
+================================================================================
+
+   EXP-026: 0.565
+   vs EXP-016 (XGBoost) (0.559): +1.1% ✅
+   vs EXP-021 (XGBoost) (0.637): -11.3% ❌
+   vs EXP-024 (Over-regularized) (0.559): +1.1% ✅
+
+[6] Expected Public Score
+================================================================================
+
+   CV Sharpe: 0.565
+
+   Expected Public Score:
+      Using EXP-016 ratio (7.9x): 4.47
+      Using EXP-021 ratio (9.2x): 5.20
+      Average ratio (8.6x): 4.83
+      Conservative (6.0x): 3.39
+
+[7] Prediction Statistics (Sanity Check)
+================================================================================
+
+   Average prediction std: 0.001797
+   Average position std: 0.379
+   ✅ Predictions look reasonable
+   ✅ Position variance looks good
+
+[8] Saving results...
+   Saved to: experiments/026/results/cv_results.csv
+   Summary saved to: experiments/026/results/summary.csv
+
+[9] Final Assessment
+================================================================================
+
+❌ UNDERPERFORMING: CV Sharpe 0.565 < 0.6
+   Expected Public: 4.83
+   → Worse than baseline
+
+⚠️  MODERATE VARIANCE: Fold std = 0.226
+   → Some instability, acceptable
+
+❌ NO IMPROVEMENT: -11.3%
+   → New features not helpful
+
+================================================================================
+EXP-026 Complete!
+================================================================================

@@ -1,0 +1,101 @@
+================================================================================
+EXP-030: Volatility-Adjusted Position Sizing
+================================================================================
+
+[1] Loading data...
+   Loading EXP-021 features...
+   Feature matrix: (8990, 30)
+   Volatility features in top 30: ['V7*P7', 'V13²', 'V7/P7', 'V7*I2', 'V7*P5', 'V7/P8', 'V13/S2', 'V13*I2', 'V13/P7']
+
+[2] Baseline: Fixed K=250 (EXP-021 style)
+   Fold 1/5... Sharpe: 0.534
+   Fold 2/5... Sharpe: 0.255
+   Fold 3/5... Sharpe: 0.488
+   Fold 4/5... Sharpe: 1.019
+   Fold 5/5... Sharpe: 0.649
+
+   Baseline CV Sharpe: 0.589 ± 0.280
+
+[3] Strategy 1: Volatility-Adjusted (using V7)
+
+   Testing vol_scale=0.5...
+      CV Sharpe: 0.488 ± 0.385 (-17.2%) ❌
+
+   Testing vol_scale=1.0...
+      CV Sharpe: 0.483 ± 0.380 (-18.0%) ❌
+
+   Testing vol_scale=2.0...
+      CV Sharpe: 0.481 ± 0.379 (-18.4%) ❌
+
+   Testing vol_scale=3.0...
+      CV Sharpe: 0.477 ± 0.377 (-19.0%) ❌
+
+   Testing vol_scale=5.0...
+      CV Sharpe: 0.473 ± 0.375 (-19.8%) ❌
+
+[4] Strategy 2: Predicted Volatility Adjustment
+   Training volatility prediction model...
+   Fold 1/5... Traceback (most recent call last):
+  File "/Users/sookbunlee/work/kaggle/experiments/030/volatility_adjusted_positions.py", line 260, in <module>
+    model_vol.fit(X_train_scaled, vol_train, verbose=False)
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 726, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/sklearn.py", line 1081, in fit
+    train_dmatrix, evals = _wrap_evaluation_matrices(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/sklearn.py", line 596, in _wrap_evaluation_matrices
+    train_dmatrix = create_dmatrix(
+                    ^^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/sklearn.py", line 1003, in _create_dmatrix
+    return QuantileDMatrix(
+           ^^^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 726, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 1573, in __init__
+    self._init(
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 1632, in _init
+    it.reraise()
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 569, in reraise
+    raise exc  # pylint: disable=raising-bad-type
+    ^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 550, in _handle_exception
+    return fn()
+           ^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 637, in <lambda>
+    return self._handle_exception(lambda: self.next(input_data), 0)
+                                          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/data.py", line 1402, in next
+    input_data(**self.kwargs)
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 726, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 626, in input_data
+    self.proxy.set_info(
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 726, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 954, in set_info
+    self.set_label(label)
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 1092, in set_label
+    dispatch_meta_backend(self, label, "label", "float")
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/data.py", line 1338, in dispatch_meta_backend
+    _meta_from_numpy(data, name, dtype, handle)
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/data.py", line 1279, in _meta_from_numpy
+    _check_call(_LIB.XGDMatrixSetInfoFromInterface(handle, c_str(field), interface_str))
+  File "/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/xgboost/core.py", line 284, in _check_call
+    raise XGBoostError(py_str(_LIB.XGBGetLastError()))
+xgboost.core.XGBoostError: [22:14:12] /Users/runner/miniforge3/conda-bld/xgboost-split_1738395197835/work/src/data/data.cc:514: Check failed: valid: Label contains NaN, infinity or a value too large.
+Stack trace:
+  [bt] (0) 1   libxgboost.dylib                    0x0000000116e08170 dmlc::LogMessageFatal::~LogMessageFatal() + 124
+  [bt] (1) 2   libxgboost.dylib                    0x0000000116f5c778 xgboost::MetaInfo::SetInfoFromHost(xgboost::Context const&, xgboost::StringView, xgboost::Json) + 2804
+  [bt] (2) 3   libxgboost.dylib                    0x0000000116f5bb6c xgboost::MetaInfo::SetInfo(xgboost::Context const&, xgboost::StringView, xgboost::StringView) + 628
+  [bt] (3) 4   libxgboost.dylib                    0x0000000116e1ed84 XGDMatrixSetInfoFromInterface + 244
+  [bt] (4) 5   libffi.8.dylib                      0x000000010152c04c ffi_call_SYSV + 76
+  [bt] (5) 6   libffi.8.dylib                      0x0000000101529834 ffi_call_int + 1404
+  [bt] (6) 7   _ctypes.cpython-312-darwin.so       0x000000010150c958 _ctypes_callproc + 1216
+  [bt] (7) 8   _ctypes.cpython-312-darwin.so       0x000000010150647c PyCFuncPtr_call + 1208
+  [bt] (8) 9   python3.12                          0x00000001007933bc _PyObject_MakeTpCall + 316
+
+

@@ -1,0 +1,80 @@
+================================================================================
+EXP-032: Time-Based Features
+================================================================================
+
+[1] Loading data...
+   Added 12 time features:
+      - time_trend
+      - day_of_week_approx
+      - week_of_month
+      - month_of_quarter
+      - week_sin
+      - week_cos
+      - month_sin
+      - month_cos
+      - quarter_sin
+      - quarter_cos
+      - year_sin
+      - year_cos
+
+   Loading EXP-021 features...
+
+   Baseline features: (8990, 30)
+
+[2] Baseline: EXP-021 Features Only
+   Fold 1/5... Sharpe: 0.534
+   Fold 2/5... Sharpe: 0.255
+   Fold 3/5... Sharpe: 0.488
+   Fold 4/5... Sharpe: 1.019
+   Fold 5/5... Sharpe: 0.649
+
+   Baseline CV Sharpe: 0.589 ± 0.280
+
+[3] Strategy 1: EXP-021 Features + All Time Features
+   Total features: 42 (30 + 12)
+   Fold 1/5... Sharpe: 0.534
+   Fold 2/5... Sharpe: 0.323
+   Fold 3/5... Sharpe: 0.348
+   Fold 4/5... Sharpe: 0.924
+   Fold 5/5... Sharpe: 0.736
+
+   Strategy 1 CV Sharpe: 0.573 ± 0.257 (-2.7%) ❌
+
+[4] Strategy 2: Select Best Time Features
+   Training model to assess feature importance...
+
+   Time feature importance:
+      week_sin            : 0.0280
+      month_sin           : 0.0246
+      quarter_cos         : 0.0230
+      time_trend          : 0.0225
+      week_of_month       : 0.0216
+
+   Selected top 3 time features: ['week_sin', 'month_sin', 'quarter_cos']
+   Fold 1/5... Sharpe: 0.533
+   Fold 2/5... Sharpe: 0.248
+   Fold 3/5... Sharpe: 0.344
+   Fold 4/5... Sharpe: 1.022
+   Fold 5/5... Sharpe: 0.701
+
+   Strategy 2 CV Sharpe: 0.570 ± 0.307 (-3.3%) ❌
+
+[5] Results Comparison
+================================================================================
+
+📊 All Strategies:
+   Baseline (EXP-021 only)            : 0.589 (+0.0%) 🔵
+   Strategy 1 (+ All time features)   : 0.573 (-2.7%) ❌
+   Strategy 2 (+ Top 3 time features) : 0.570 (-3.3%) ❌
+
+🏆 Best Strategy: Baseline
+   CV Sharpe: 0.589
+   vs EXP-021 (0.637): -7.5%
+   Expected Public (8.6x): 5.07
+
+[6] Saving results...
+   Results saved to: experiments/032/results/
+
+================================================================================
+EXP-032 Complete!
+================================================================================

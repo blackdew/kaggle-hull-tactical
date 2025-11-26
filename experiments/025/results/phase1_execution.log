@@ -1,0 +1,80 @@
+================================================================================
+EXP-025 Phase 1: 1D ResNet Baseline
+================================================================================
+
+Device: cpu
+
+[1] Loading data...
+   Features: 305
+   Samples: 8990
+
+[2] Training 1D ResNet with 5-fold CV...
+
+--- Fold 1/5 ---
+   Epoch 10/50: Train Loss=0.000453, Val Loss=17.133543
+   Epoch 20/50: Train Loss=0.000135, Val Loss=2.343872
+   Epoch 30/50: Train Loss=0.000097, Val Loss=0.800112
+   Epoch 40/50: Train Loss=0.000082, Val Loss=0.842717
+   Epoch 50/50: Train Loss=0.000076, Val Loss=0.267295
+   Best Val Loss: 0.267295
+   Sharpe: 0.335
+   Position: 1.679 ± 0.634
+   Pred std: 0.342035
+
+--- Fold 2/5 ---
+   Epoch 10/50: Train Loss=0.000196, Val Loss=187.850935
+   Epoch 20/50: Train Loss=0.000130, Val Loss=637.690076
+   Early stopping at epoch 27
+   Best Val Loss: 0.501405
+   Sharpe: 0.034
+   Position: 0.184 ± 0.390
+   Pred std: 0.553457
+
+--- Fold 3/5 ---
+   Epoch 10/50: Train Loss=0.000268, Val Loss=0.087348
+   Epoch 20/50: Train Loss=0.000160, Val Loss=0.001122
+   Epoch 30/50: Train Loss=0.000134, Val Loss=0.001930
+   Early stopping at epoch 39
+   Best Val Loss: 0.000241
+   Sharpe: 0.556
+   Position: 0.809 ± 0.876
+   Pred std: 0.008121
+
+--- Fold 4/5 ---
+   Epoch 10/50: Train Loss=0.000190, Val Loss=0.000625
+   Epoch 20/50: Train Loss=0.000152, Val Loss=0.000183
+   Epoch 30/50: Train Loss=0.000144, Val Loss=0.000108
+   Early stopping at epoch 35
+   Best Val Loss: 0.000068
+   Sharpe: 0.949
+   Position: 0.844 ± 0.195
+   Pred std: 0.001064
+
+--- Fold 5/5 ---
+   Epoch 10/50: Train Loss=0.000145, Val Loss=0.000148
+   Epoch 20/50: Train Loss=0.000130, Val Loss=0.000131
+   Early stopping at epoch 24
+   Best Val Loss: 0.000127
+   Sharpe: 0.861
+   Position: 1.106 ± 0.135
+   Pred std: 0.000575
+
+[3] Results Analysis
+================================================================================
+
+📊 Cross-Validation Results:
+   CV Sharpe: 0.547 ± 0.377
+   Range: [0.034, 0.949]
+
+📈 Comparison:
+   vs EXP-016 (0.559): -2.1% ❌
+   vs EXP-021 (0.637): -14.1% ❌
+   vs EXP-024 (0.559): -2.1% ❌
+
+🎯 Expected Public Score: 4.70
+
+💾 Saved to: experiments/025/results/phase1_resnet_results.csv
+
+================================================================================
+Phase 1 Complete!
+================================================================================

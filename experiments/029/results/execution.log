@@ -1,0 +1,104 @@
+================================================================================
+EXP-029: Ensemble Strategy
+================================================================================
+
+[1] Loading data...
+   Loading EXP-016 features...
+   EXP-021 features: 30
+   EXP-028 features: 105
+
+[2] Preparing feature matrices...
+   X_021: (8990, 30)
+   X_028: (8990, 105)
+
+[3] Strategy 1: Multi-Seed Ensemble (5 seeds) with EXP-021 features
+
+   Fold 1/5...
+      Sharpe: 0.529
+      Position: 1.062 ± 0.123
+
+   Fold 2/5...
+      Sharpe: 0.294
+      Position: 0.876 ± 0.521
+
+   Fold 3/5...
+      Sharpe: 0.493
+      Position: 1.020 ± 0.417
+
+   Fold 4/5...
+      Sharpe: 1.081
+      Position: 0.945 ± 0.325
+
+   Fold 5/5...
+      Sharpe: 0.689
+      Position: 0.834 ± 0.445
+
+   Strategy 1 CV Sharpe: 0.617 ± 0.295
+
+[4] Strategy 2: Feature-Set Ensemble (EXP-021 + EXP-028)
+
+   Fold 1/5...
+      Sharpe: 0.562
+      Position: 1.061 ± 0.132
+
+   Fold 2/5...
+      Sharpe: 0.342
+      Position: 1.000 ± 0.412
+
+   Fold 3/5...
+      Sharpe: 0.431
+      Position: 1.032 ± 0.394
+
+   Fold 4/5...
+      Sharpe: 0.978
+      Position: 0.944 ± 0.300
+
+   Fold 5/5...
+      Sharpe: 0.675
+      Position: 0.873 ± 0.392
+
+   Strategy 2 CV Sharpe: 0.597 ± 0.248
+
+[5] Strategy 3: Model Ensemble (XGBoost + LightGBM)
+
+   Fold 1/5...
+      Sharpe: 0.549
+      Position: 1.064 ± 0.108
+
+   Fold 2/5...
+      Sharpe: 0.288
+      Position: 0.890 ± 0.505
+
+   Fold 3/5...
+      Sharpe: 0.492
+      Position: 1.028 ± 0.417
+
+   Fold 4/5...
+      Sharpe: 1.046
+      Position: 0.953 ± 0.326
+
+   Fold 5/5...
+      Sharpe: 0.720
+      Position: 0.858 ± 0.439
+
+   Strategy 3 CV Sharpe: 0.619 ± 0.284
+
+[6] Results Comparison
+================================================================================
+
+📊 All Strategies:
+   EXP-021 (Baseline)            : 0.637 (+0.0%) ❌
+   Strategy 1 (Multi-Seed)       : 0.617 (-3.1%) ❌
+   Strategy 2 (Feature Ensemble) : 0.597 (-6.2%) ❌
+   Strategy 3 (Model Ensemble)   : 0.619 (-2.8%) ❌
+
+🏆 Best Strategy: None
+   CV Sharpe: 0.637
+   Expected Public (8.6x): 5.48
+
+[7] Saving results...
+   Results saved to: experiments/029/results/
+
+================================================================================
+EXP-029 Complete!
+================================================================================

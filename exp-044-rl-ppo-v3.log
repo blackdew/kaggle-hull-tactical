@@ -1,0 +1,17 @@
+[{"stream_name":"stderr","time":11.792935645,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":11.793032445,"data":"  File \"/kaggle/src/script.py\", line 120, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":11.793867055,"data":"    server = MyServer()\n"}
+,{"stream_name":"stderr","time":11.793884557,"data":"             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":11.79388949,"data":"  File \"/kaggle/src/script.py\", line 75, in __init__\n"}
+,{"stream_name":"stderr","time":11.795030837,"data":"    super().__init__()\n"}
+,{"stream_name":"stderr","time":11.795051165,"data":"  File \"/kaggle/input/hull-tactical-market-prediction/kaggle_evaluation/core/templates.py\", line 75, in __init__\n"}
+,{"stream_name":"stderr","time":11.79564352,"data":"    self.server = kaggle_evaluation.core.relay.define_server(*endpoint_listeners)\n"}
+,{"stream_name":"stderr","time":11.795776197,"data":"                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":11.795790421,"data":"  File \"/kaggle/input/hull-tactical-market-prediction/kaggle_evaluation/core/relay.py\", line 372, in define_server\n"}
+,{"stream_name":"stderr","time":11.796672842,"data":"    raise ValueError('Must pass at least one endpoint listener, e.g. `predict`')\n"}
+,{"stream_name":"stderr","time":11.796710132,"data":"ValueError: Must pass at least one endpoint listener, e.g. `predict`\n"}
+,{"stream_name":"stderr","time":17.612365251,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":17.612431632,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":17.675310647,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":19.395551432,"data":"[NbConvertApp] Writing 355510 bytes to __results__.html\n"}
+]

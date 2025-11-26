@@ -1,0 +1,64 @@
+[INFO] Loading training data...
+[INFO] Train shape: (8990, 98)
+
+[INFO] Starting Phase 1: k-grid search
+
+================================================================================
+EXP-006 Phase 1: k Parameter Grid Search
+================================================================================
+Goal: Kaggle 17.395 (current best: 0.724)
+Testing k values: [1000.0, 2000.0, 3000.0]
+[INFO] Base features: 20
+[INFO] Total features after engineering: 234
+
+[INFO] Testing k=1000.0
+  Fold 1/5: Sharpe 0.713, Vol Ratio 1.026, Pos Std 0.758
+  Fold 2/5: Sharpe 0.696, Vol Ratio 1.580, Pos Std 0.766
+  Fold 3/5: Sharpe 0.403, Vol Ratio 1.620, Pos Std 0.705
+  Fold 4/5: Sharpe 0.996, Vol Ratio 1.324, Pos Std 0.587
+  Fold 5/5: Sharpe 0.513, Vol Ratio 1.438, Pos Std 0.710
+[RESULT] k=1000.0: Sharpe 0.664 ± 0.202, Vol Ratio 1.398, Pos Std 0.705
+[COMPARISON] vs EXP-005 k=200 (0.627): +5.9%
+
+[INFO] Testing k=2000.0
+  Fold 1/5: Sharpe 0.713, Vol Ratio 1.061, Pos Std 0.819
+  Fold 2/5: Sharpe 0.722, Vol Ratio 1.641, Pos Std 0.858
+  Fold 3/5: Sharpe 0.439, Vol Ratio 1.656, Pos Std 0.831
+  Fold 4/5: Sharpe 1.085, Vol Ratio 1.359, Pos Std 0.738
+  Fold 5/5: Sharpe 0.489, Vol Ratio 1.474, Pos Std 0.823
+[RESULT] k=2000.0: Sharpe 0.690 ± 0.228, Vol Ratio 1.438, Pos Std 0.814
+[COMPARISON] vs EXP-005 k=200 (0.627): +10.0%
+
+[INFO] Testing k=3000.0
+  Fold 1/5: Sharpe 0.732, Vol Ratio 1.072, Pos Std 0.840
+  Fold 2/5: Sharpe 0.711, Vol Ratio 1.666, Pos Std 0.889
+  Fold 3/5: Sharpe 0.473, Vol Ratio 1.671, Pos Std 0.886
+  Fold 4/5: Sharpe 1.105, Vol Ratio 1.377, Pos Std 0.809
+  Fold 5/5: Sharpe 0.474, Vol Ratio 1.489, Pos Std 0.861
+[RESULT] k=3000.0: Sharpe 0.699 ± 0.231, Vol Ratio 1.455, Pos Std 0.857
+[COMPARISON] vs EXP-005 k=200 (0.627): +11.4%
+
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/006/results/phase1_k_grid.csv
+
+================================================================================
+PHASE 1 SUMMARY - k Parameter Grid Search
+================================================================================
+        sharpe         vol_ratio         pos_std             mse
+          mean     std      mean     std    mean     std    mean
+k                                                               
+1000.0  0.6642  0.2258    1.3976  0.2384  0.7051  0.0716  0.0001
+2000.0  0.6896  0.2553    1.4379  0.2442  0.8137  0.0450  0.0001
+3000.0  0.6988  0.2588    1.4551  0.2476  0.8570  0.0336  0.0001
+
+[BEST] k=3000.0: Sharpe 0.699
+[BASELINE] EXP-005 k=200: Sharpe 0.627
+[IMPROVEMENT] +11.4%
+
+[DECISION] 📊 Moderate improvement. Suggest:
+  1. Submit k=3000.0 to Kaggle (expect 1.0-2.5)
+  2. Move to Phase 2 (Vol Scaling)
+
+[SAVED] /Users/sookbunlee/work/kaggle/experiments/006/results/summary.csv
+
+[DONE] EXP-006 Phase 1 completed!
+[NEXT] Review results in /Users/sookbunlee/work/kaggle/experiments/006/results/

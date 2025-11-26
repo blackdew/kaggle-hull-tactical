@@ -1,0 +1,10 @@
+[{"stream_name":"stderr","time":10.575805601999999,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":10.57588683,"data":"  File \"/kaggle/src/script.py\", line 112, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":10.576795695,"data":"    server = MyServer()\n"}
+,{"stream_name":"stderr","time":10.576815151,"data":"             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":10.57681925,"data":"TypeError: Can't instantiate abstract class MyServer with abstract method _get_gateway_for_test\n"}
+,{"stream_name":"stderr","time":15.903781315,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":15.903868158,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":15.958367143,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":17.439347831,"data":"[NbConvertApp] Writing 354262 bytes to __results__.html\n"}
+]

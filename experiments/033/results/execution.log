@@ -1,0 +1,74 @@
+================================================================================
+EXP-033: Direct Sharpe Ratio Optimization
+================================================================================
+
+[1] Loading data...
+   Loading EXP-021 features...
+   Feature matrix: (8990, 30)
+
+[2] Baseline: Standard MSE Loss
+   Fold 1/5... Sharpe: 0.534
+   Fold 2/5... Sharpe: 0.255
+   Fold 3/5... Sharpe: 0.488
+   Fold 4/5... Sharpe: 1.019
+   Fold 5/5... Sharpe: 0.649
+
+   Baseline CV Sharpe: 0.589 ± 0.280
+
+[3] Strategy 1: Sharpe-Weighted Loss
+   Fold 1/5... Sharpe: 0.497
+   Fold 2/5... Sharpe: 0.235
+   Fold 3/5... Sharpe: 0.335
+   Fold 4/5... Sharpe: 0.996
+   Fold 5/5... Sharpe: 0.716
+
+   Strategy 1 CV Sharpe: 0.556 ± 0.306 (-5.7%) ❌
+
+[4] Strategy 2: Quantile Regression (alpha=0.5)
+   Fold 1/5... Sharpe: 0.532
+   Fold 2/5... Sharpe: 0.328
+   Fold 3/5... Sharpe: 0.449
+   Fold 4/5... Sharpe: 0.938
+   Fold 5/5... Sharpe: 0.775
+
+   Strategy 2 CV Sharpe: 0.605 ± 0.248 (+2.6%) ✅
+
+[5] Strategy 3: Huber Loss (robust regression)
+   Fold 1/5... Sharpe: 0.535
+   Fold 2/5... Sharpe: 0.296
+   Fold 3/5... Sharpe: 0.458
+   Fold 4/5... Sharpe: 0.995
+   Fold 5/5... Sharpe: 0.687
+
+   Strategy 3 CV Sharpe: 0.594 ± 0.265 (+0.8%) ✅
+
+[6] Strategy 4: MAE Loss (L1 regression)
+   Fold 1/5... Sharpe: 0.507
+   Fold 2/5... Sharpe: 0.357
+   Fold 3/5... Sharpe: 0.599
+   Fold 4/5... Sharpe: 0.984
+   Fold 5/5... Sharpe: 0.805
+
+   Strategy 4 CV Sharpe: 0.650 ± 0.247 (+10.4%) ✅
+
+[7] Results Comparison
+================================================================================
+
+📊 All Strategies:
+   Baseline (MSE)                : 0.589 (+0.0%) 🔵
+   Strategy 1 (Sharpe-Weighted)  : 0.556 (-5.7%) ❌
+   Strategy 2 (Quantile α=0.5)   : 0.605 (+2.6%) ✅
+   Strategy 3 (Huber)            : 0.594 (+0.8%) ✅
+   Strategy 4 (MAE/L1)           : 0.650 (+10.4%) ✅
+
+🏆 Best Strategy: Strategy 4 (MAE/L1)
+   CV Sharpe: 0.650
+   vs EXP-021 (0.637): +2.1%
+   Expected Public (8.6x): 5.59
+
+[8] Saving results...
+   Results saved to: experiments/033/results/
+
+================================================================================
+EXP-033 Complete!
+================================================================================

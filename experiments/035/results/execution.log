@@ -1,0 +1,65 @@
+================================================================================
+EXP-035: Hyperparameter Tuning
+================================================================================
+
+[1] Loading data...
+   Loading EXP-028 features (105)...
+   Feature matrix: (8990, 105)
+
+[2] Baseline: EXP-034 Best Config
+   (105 features + MAE + Rank, lr=0.03, depth=5, K=250)
+   Baseline CV Sharpe: 0.669 ± 0.229
+
+[3] Grid Search: Learning Rate & Max Depth
+   Testing 16 configurations...
+   lr=0.01, depth=4... CV Sharpe: 0.597
+   lr=0.01, depth=5... CV Sharpe: 0.598
+   lr=0.01, depth=6... CV Sharpe: 0.587
+   lr=0.01, depth=7... CV Sharpe: 0.609
+   lr=0.02, depth=4... CV Sharpe: 0.634
+   lr=0.02, depth=5... CV Sharpe: 0.620
+   lr=0.02, depth=6... CV Sharpe: 0.600
+   lr=0.02, depth=7... CV Sharpe: 0.597
+   lr=0.03, depth=4... CV Sharpe: 0.662
+   lr=0.03, depth=5... CV Sharpe: 0.669
+   lr=0.03, depth=6... CV Sharpe: 0.647
+   lr=0.03, depth=7... CV Sharpe: 0.633
+   lr=0.05, depth=4... CV Sharpe: 0.740
+   lr=0.05, depth=5... CV Sharpe: 0.625
+   lr=0.05, depth=6... CV Sharpe: 0.688
+   lr=0.05, depth=7... CV Sharpe: 0.567
+
+   Best: lr=0.05, depth=4 → CV Sharpe: 0.740
+   Improvement: +10.7%
+
+[4] Tuning K (Position Sizing)
+   Testing K values: [150, 200, 250, 300, 350, 400]
+   K=150... CV Sharpe: 0.684
+   K=200... CV Sharpe: 0.711
+   K=250... CV Sharpe: 0.740
+   K=300... CV Sharpe: 0.771
+   K=350... CV Sharpe: 0.793
+   K=400... CV Sharpe: 0.809
+
+   Best K: 400 → CV Sharpe: 0.809
+   Improvement: +9.3%
+
+[5] Final Best Configuration
+================================================================================
+
+📊 Best Hyperparameters:
+   learning_rate: 0.05
+   max_depth: 4
+   K: 400
+
+   CV Sharpe: 0.809
+   vs Baseline (0.669): +21.0%
+   vs EXP-021 (0.637): +27.1%
+   Expected Public (8.6x): 6.96
+
+[6] Saving results...
+   Results saved to: experiments/035/results/
+
+================================================================================
+EXP-035 Complete!
+================================================================================

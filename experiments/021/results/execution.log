@@ -1,0 +1,263 @@
+================================================================================
+EXP-021: Quantile Regression Grid Search
+================================================================================
+
+[1] Loading data...
+[2] Loading features...
+[3] Creating features...
+   Features: (8990, 30)
+
+[4] Defining grid search space...
+   Quantile configs: 7
+   Scaling configs: 14
+   Total combinations: 98
+
+[5] Running grid search...
+
+[1/98] Testing: Wide (0.05-0.95) + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (4.8s)
+[2/98] Testing: Wide (0.05-0.95) + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (4.9s)
+[3/98] Testing: Wide (0.05-0.95) + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (4.8s)
+[4/98] Testing: Wide (0.05-0.95) + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (5.7s)
+[5/98] Testing: Wide (0.05-0.95) + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (5.0s)
+[6/98] Testing: Wide (0.05-0.95) + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (5.1s)
+[7/98] Testing: Wide (0.05-0.95) + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (4.7s)
+[8/98] Testing: Wide (0.05-0.95) + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (4.7s)
+[9/98] Testing: Wide (0.05-0.95) + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (4.8s)
+[10/98] Testing: Wide (0.05-0.95) + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (4.9s)
+[11/98] Testing: Wide (0.05-0.95) + Defensive
+   Sharpe: 0.6297 ± 0.2721 (4.7s)
+[12/98] Testing: Wide (0.05-0.95) + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (4.7s)
+[13/98] Testing: Wide (0.05-0.95) + Bearish
+   Sharpe: 0.6292 ± 0.2162 (4.7s)
+[14/98] Testing: Wide (0.05-0.95) + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (4.7s)
+[15/98] Testing: EXP-020 (0.1-0.9) + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (4.8s)
+[16/98] Testing: EXP-020 (0.1-0.9) + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (5.3s)
+[17/98] Testing: EXP-020 (0.1-0.9) + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (4.9s)
+[18/98] Testing: EXP-020 (0.1-0.9) + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (4.7s)
+[19/98] Testing: EXP-020 (0.1-0.9) + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (4.8s)
+[20/98] Testing: EXP-020 (0.1-0.9) + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (4.8s)
+[21/98] Testing: EXP-020 (0.1-0.9) + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (4.7s)
+[22/98] Testing: EXP-020 (0.1-0.9) + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (4.8s)
+[23/98] Testing: EXP-020 (0.1-0.9) + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (4.8s)
+[24/98] Testing: EXP-020 (0.1-0.9) + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (4.8s)
+[25/98] Testing: EXP-020 (0.1-0.9) + Defensive
+   Sharpe: 0.6297 ± 0.2721 (4.8s)
+[26/98] Testing: EXP-020 (0.1-0.9) + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (4.8s)
+[27/98] Testing: EXP-020 (0.1-0.9) + Bearish
+   Sharpe: 0.6292 ± 0.2162 (4.8s)
+[28/98] Testing: EXP-020 (0.1-0.9) + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (4.7s)
+[29/98] Testing: Moderate (0.15-0.85) + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (5.1s)
+[30/98] Testing: Moderate (0.15-0.85) + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (4.8s)
+[31/98] Testing: Moderate (0.15-0.85) + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (4.8s)
+[32/98] Testing: Moderate (0.15-0.85) + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (4.8s)
+[33/98] Testing: Moderate (0.15-0.85) + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (4.8s)
+[34/98] Testing: Moderate (0.15-0.85) + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (4.8s)
+[35/98] Testing: Moderate (0.15-0.85) + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (4.7s)
+[36/98] Testing: Moderate (0.15-0.85) + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (4.8s)
+[37/98] Testing: Moderate (0.15-0.85) + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (4.8s)
+[38/98] Testing: Moderate (0.15-0.85) + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (4.9s)
+[39/98] Testing: Moderate (0.15-0.85) + Defensive
+   Sharpe: 0.6297 ± 0.2721 (4.9s)
+[40/98] Testing: Moderate (0.15-0.85) + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (4.9s)
+[41/98] Testing: Moderate (0.15-0.85) + Bearish
+   Sharpe: 0.6292 ± 0.2162 (5.2s)
+[42/98] Testing: Moderate (0.15-0.85) + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (4.8s)
+[43/98] Testing: Narrow (0.2-0.8) + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (5.0s)
+[44/98] Testing: Narrow (0.2-0.8) + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (4.9s)
+[45/98] Testing: Narrow (0.2-0.8) + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (5.0s)
+[46/98] Testing: Narrow (0.2-0.8) + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (5.1s)
+[47/98] Testing: Narrow (0.2-0.8) + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (4.9s)
+[48/98] Testing: Narrow (0.2-0.8) + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (4.9s)
+[49/98] Testing: Narrow (0.2-0.8) + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (4.9s)
+[50/98] Testing: Narrow (0.2-0.8) + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (4.9s)
+[51/98] Testing: Narrow (0.2-0.8) + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (4.9s)
+[52/98] Testing: Narrow (0.2-0.8) + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (5.0s)
+[53/98] Testing: Narrow (0.2-0.8) + Defensive
+   Sharpe: 0.6297 ± 0.2721 (5.6s)
+[54/98] Testing: Narrow (0.2-0.8) + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (4.9s)
+[55/98] Testing: Narrow (0.2-0.8) + Bearish
+   Sharpe: 0.6292 ± 0.2162 (4.9s)
+[56/98] Testing: Narrow (0.2-0.8) + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (5.0s)
+[57/98] Testing: 5Q-Wide + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (8.1s)
+[58/98] Testing: 5Q-Wide + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (8.1s)
+[59/98] Testing: 5Q-Wide + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (8.1s)
+[60/98] Testing: 5Q-Wide + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (8.1s)
+[61/98] Testing: 5Q-Wide + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (8.1s)
+[62/98] Testing: 5Q-Wide + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (8.5s)
+[63/98] Testing: 5Q-Wide + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (8.2s)
+[64/98] Testing: 5Q-Wide + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (8.0s)
+[65/98] Testing: 5Q-Wide + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (8.0s)
+[66/98] Testing: 5Q-Wide + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (8.0s)
+[67/98] Testing: 5Q-Wide + Defensive
+   Sharpe: 0.6297 ± 0.2721 (8.0s)
+[68/98] Testing: 5Q-Wide + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (8.0s)
+[69/98] Testing: 5Q-Wide + Bearish
+   Sharpe: 0.6292 ± 0.2162 (8.3s)
+[70/98] Testing: 5Q-Wide + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (8.0s)
+[71/98] Testing: 5Q-Moderate + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (7.9s)
+[72/98] Testing: 5Q-Moderate + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (8.0s)
+[73/98] Testing: 5Q-Moderate + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (8.0s)
+[74/98] Testing: 5Q-Moderate + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (8.1s)
+[75/98] Testing: 5Q-Moderate + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (8.1s)
+[76/98] Testing: 5Q-Moderate + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (8.0s)
+[77/98] Testing: 5Q-Moderate + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (8.3s)
+[78/98] Testing: 5Q-Moderate + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (8.1s)
+[79/98] Testing: 5Q-Moderate + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (8.1s)
+[80/98] Testing: 5Q-Moderate + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (8.0s)
+[81/98] Testing: 5Q-Moderate + Defensive
+   Sharpe: 0.6297 ± 0.2721 (8.1s)
+[82/98] Testing: 5Q-Moderate + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (8.1s)
+[83/98] Testing: 5Q-Moderate + Bearish
+   Sharpe: 0.6292 ± 0.2162 (8.2s)
+[84/98] Testing: 5Q-Moderate + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (8.3s)
+[85/98] Testing: IQR (0.25-0.75) + No-scale (x1)
+   Sharpe: 0.6262 ± 0.2151 (4.9s)
+[86/98] Testing: IQR (0.25-0.75) + Conservative (x2)
+   Sharpe: 0.6333 ± 0.2446 (5.0s)
+[87/98] Testing: IQR (0.25-0.75) + Moderate (x3)
+   Sharpe: 0.6262 ± 0.2589 (4.9s)
+[88/98] Testing: IQR (0.25-0.75) + EXP-020 (x5)
+   Sharpe: 0.6368 ± 0.2834 (4.8s)
+[89/98] Testing: IQR (0.25-0.75) + Aggressive (x7)
+   Sharpe: 0.6337 ± 0.2969 (4.9s)
+[90/98] Testing: IQR (0.25-0.75) + VeryAggr (x10)
+   Sharpe: 0.6177 ± 0.3045 (5.0s)
+[91/98] Testing: IQR (0.25-0.75) + Asym-Conservative
+   Sharpe: 0.6315 ± 0.2423 (4.9s)
+[92/98] Testing: IQR (0.25-0.75) + Asym-Moderate
+   Sharpe: 0.6335 ± 0.2699 (4.9s)
+[93/98] Testing: IQR (0.25-0.75) + Asym-Aggressive
+   Sharpe: 0.6342 ± 0.2894 (4.9s)
+[94/98] Testing: IQR (0.25-0.75) + Asym-VeryAggr
+   Sharpe: 0.6290 ± 0.2867 (5.0s)
+[95/98] Testing: IQR (0.25-0.75) + Defensive
+   Sharpe: 0.6297 ± 0.2721 (5.0s)
+[96/98] Testing: IQR (0.25-0.75) + RiskAverse
+   Sharpe: 0.6363 ± 0.2908 (5.6s)
+[97/98] Testing: IQR (0.25-0.75) + Bearish
+   Sharpe: 0.6292 ± 0.2162 (4.8s)
+[98/98] Testing: IQR (0.25-0.75) + ModBearish
+   Sharpe: 0.6292 ± 0.2474 (4.9s)
+
+================================================================================
+Grid Search Complete!
+================================================================================
+
+[6] Top 10 configurations:
+
+ 88. IQR (0.25-0.75)      + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 18. EXP-020 (0.1-0.9)    + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+  4. Wide (0.05-0.95)     + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 60. 5Q-Wide              + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 32. Moderate (0.15-0.85) + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 74. 5Q-Moderate          + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 46. Narrow (0.2-0.8)     + EXP-020 (x5)        
+     Sharpe: 0.6368 ± 0.2834
+
+ 68. 5Q-Wide              + RiskAverse          
+     Sharpe: 0.6363 ± 0.2908
+
+ 96. IQR (0.25-0.75)      + RiskAverse          
+     Sharpe: 0.6363 ± 0.2908
+
+ 54. Narrow (0.2-0.8)     + RiskAverse          
+     Sharpe: 0.6363 ± 0.2908
+
+================================================================================
+BEST CONFIGURATION:
+================================================================================
+Quantile: IQR (0.25-0.75) [0.25, 0.5, 0.75]
+Scaling: EXP-020 (x5) (5.0)
+Sharpe: 0.6368 ± 0.2834
+
+Improvement vs EXP-020 (0.6368): -0.01%
+
+Expected Public Score: 5.87 (EXP-020 ratio 9.22x)
+
+Results saved to: experiments/021/results/grid_search_results.csv
+
+Next: Create submission with best configuration

@@ -1,0 +1,9 @@
+[{"stream_name":"stderr","time":8.901227675,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":8.901304888,"data":"  File \"/kaggle/src/script.py\", line 66, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":8.902132974,"data":"    import kaggle_evaluation.hull_tactical_market_prediction.inference_server as inference_server\n"}
+,{"stream_name":"stderr","time":8.902166013,"data":"ModuleNotFoundError: No module named 'kaggle_evaluation.hull_tactical_market_prediction'\n"}
+,{"stream_name":"stderr","time":13.940261975,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":13.940302567,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":13.988429416,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15.41123417,"data":"[NbConvertApp] Writing 354381 bytes to __results__.html\n"}
+]

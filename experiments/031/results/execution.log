@@ -1,0 +1,65 @@
+================================================================================
+EXP-031: Rank-Based Target Engineering
+================================================================================
+
+[1] Loading data...
+   Loading EXP-021 features...
+   Feature matrix: (8990, 30)
+   Target range: [-0.0406, 0.0406]
+
+[2] Baseline: Raw Value Prediction (EXP-021 style)
+   Fold 1/5... Sharpe: 0.534
+   Fold 2/5... Sharpe: 0.255
+   Fold 3/5... Sharpe: 0.488
+   Fold 4/5... Sharpe: 1.019
+   Fold 5/5... Sharpe: 0.649
+
+   Baseline CV Sharpe: 0.589 ± 0.280
+
+[3] Strategy 1: Rank-Based Prediction (Percentile Transform)
+   Fold 1/5... Sharpe: 0.469
+   Fold 2/5... Sharpe: 0.320
+   Fold 3/5... Sharpe: 0.425
+   Fold 4/5... Sharpe: 1.014
+   Fold 5/5... Sharpe: 0.750
+
+   Strategy 1 CV Sharpe: 0.595 ± 0.283 (+1.0%) ✅
+
+[4] Strategy 2: Direct Quantile Mapping
+   Fold 1/5... Sharpe: 0.466
+   Fold 2/5... Sharpe: 0.296
+   Fold 3/5... Sharpe: 0.432
+   Fold 4/5... Sharpe: 0.957
+   Fold 5/5... Sharpe: 0.803
+
+   Strategy 2 CV Sharpe: 0.591 ± 0.277 (+0.3%) ✅
+
+[5] Strategy 3: Log-Transformed Target
+   Fold 1/5... Sharpe: 0.193
+   Fold 2/5... Sharpe: 0.116
+   Fold 3/5... Sharpe: 0.122
+   Fold 4/5... Sharpe: 0.909
+   Fold 5/5... Sharpe: 0.865
+
+   Strategy 3 CV Sharpe: 0.441 ± 0.409 (-25.2%) ❌
+
+[6] Results Comparison
+================================================================================
+
+📊 All Strategies:
+   Baseline (Raw)                : 0.589 (+0.0%) 🔵
+   Strategy 1 (Rank-Percentile)  : 0.595 (+1.0%) ✅
+   Strategy 2 (Rank-Quantile)    : 0.591 (+0.3%) ✅
+   Strategy 3 (Log-Transform)    : 0.441 (-25.2%) ❌
+
+🏆 Best Strategy: Strategy 1 (Rank-Percentile)
+   CV Sharpe: 0.595
+   vs EXP-021 (0.637): -6.5%
+   Expected Public (8.6x): 5.12
+
+[7] Saving results...
+   Results saved to: experiments/031/results/
+
+================================================================================
+EXP-031 Complete!
+================================================================================

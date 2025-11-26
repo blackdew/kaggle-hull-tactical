@@ -1,0 +1,122 @@
+================================================================================
+EXP-022: Ensemble Models Grid Search
+================================================================================
+
+[1] Loading data...
+[2] Loading features...
+[3] Creating features...
+   Features: (8990, 30)
+
+[4] Training base models (5-fold CV)...
+
+[Fold 1/5] Training base models...
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+   Completed in 1.4s
+[Fold 2/5] Training base models...
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+   Completed in 2.0s
+[Fold 3/5] Training base models...
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+   Completed in 2.3s
+[Fold 4/5] Training base models...
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+   Completed in 2.5s
+[Fold 5/5] Training base models...
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+/Users/sookbunlee/miniconda3/lib/python3.12/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+   Completed in 2.6s
+
+================================================================================
+Base Models Trained! Starting Ensemble Grid Search...
+================================================================================
+
+[1/9] Testing: XGB-only + Equal-Avg
+   Sharpe: 0.6368 ± 0.2834 (0.0s)
+[2/9] Testing: XGB-only + Weighted-CV
+   Sharpe: 0.6368 ± 0.2834 (0.0s)
+[3/9] Testing: XGB-only + Best-q50
+   Sharpe: 0.6368 ± 0.2834 (0.0s)
+[4/9] Testing: LGB-only + Equal-Avg
+   Sharpe: 0.4498 ± 0.3246 (0.0s)
+[5/9] Testing: LGB-only + Weighted-CV
+   Sharpe: 0.4498 ± 0.3246 (0.0s)
+[6/9] Testing: LGB-only + Best-q50
+   Sharpe: 0.4498 ± 0.3246 (0.0s)
+[7/9] Testing: XGB+LGB + Equal-Avg
+   Sharpe: 0.6361 ± 0.2402 (0.0s)
+[8/9] Testing: XGB+LGB + Weighted-CV
+   Sharpe: 0.6363 ± 0.2404 (0.0s)
+[9/9] Testing: XGB+LGB + Best-q50
+   Sharpe: 0.5072 ± 0.4029 (0.0s)
+
+================================================================================
+Ensemble Grid Search Complete!
+================================================================================
+
+[5] Top 10 configurations:
+
+  1. XGB-only        + Equal-Avg      
+     Sharpe: 0.6368 ± 0.2834
+
+  2. XGB-only        + Weighted-CV    
+     Sharpe: 0.6368 ± 0.2834
+
+  3. XGB-only        + Best-q50       
+     Sharpe: 0.6368 ± 0.2834
+
+  8. XGB+LGB         + Weighted-CV    
+     Sharpe: 0.6363 ± 0.2404
+
+  7. XGB+LGB         + Equal-Avg      
+     Sharpe: 0.6361 ± 0.2402
+
+  9. XGB+LGB         + Best-q50       
+     Sharpe: 0.5072 ± 0.4029
+
+  4. LGB-only        + Equal-Avg      
+     Sharpe: 0.4498 ± 0.3246
+
+  5. LGB-only        + Weighted-CV    
+     Sharpe: 0.4498 ± 0.3246
+
+  6. LGB-only        + Best-q50       
+     Sharpe: 0.4498 ± 0.3246
+
+================================================================================
+BEST CONFIGURATION:
+================================================================================
+Models: XGB-only
+Ensemble: Equal-Avg
+Sharpe: 0.6368 ± 0.2834
+
+Improvement vs EXP-020 (0.6368): -0.01%
+
+Expected Public Score: 5.87 (EXP-020 ratio 9.22x)
+
+Results saved to: experiments/022/results/ensemble_results.csv
+
+Next: Create submission with best ensemble configuration

@@ -1,0 +1,145 @@
+================================================================================
+EXP-023 Phase 2: Position Amplification
+================================================================================
+
+[1] Loading data...
+
+[2] Creating features...
+   Features: 30, Samples: 8990
+
+[3] Testing position strategies...
+
+--- Baseline ---
+   Sharpe: 0.215 ± 0.278
+   Pos: 1.046 (std: 0.498)
+   Extremes: 22.8%
+   Profit proxy: 641.5
+
+--- Sigmoid-5 ---
+   Sharpe: 0.251 ± 0.296
+   Pos: 1.021 (std: 0.632)
+   Extremes: 41.0%
+   Profit proxy: 901.0
+
+--- Sigmoid-10 ---
+   Sharpe: 0.269 ± 0.309
+   Pos: 1.001 (std: 0.748)
+   Extremes: 59.5%
+   Profit proxy: 1111.2
+
+--- Sigmoid-15 ---
+   Sharpe: 0.274 ± 0.315
+   Pos: 0.991 (std: 0.801)
+   Extremes: 69.1%
+   Profit proxy: 1211.0
+
+--- Sigmoid-20 ---
+   Sharpe: 0.275 ± 0.320
+   Pos: 0.984 (std: 0.832)
+   Extremes: 75.1%
+   Profit proxy: 1270.8
+
+--- Quantile-80 ---
+   Sharpe: 0.233 ± 0.295
+   Pos: 1.041 (std: 0.533)
+   Extremes: 26.4%
+   Profit proxy: 670.5
+
+--- Quantile-85 ---
+   Sharpe: 0.213 ± 0.276
+   Pos: 1.043 (std: 0.517)
+   Extremes: 24.7%
+   Profit proxy: 655.6
+
+--- Quantile-90 ---
+   Sharpe: 0.212 ± 0.275
+   Pos: 1.045 (std: 0.506)
+   Extremes: 23.7%
+   Profit proxy: 646.5
+
+--- Quantile-95 ---
+   Sharpe: 0.215 ± 0.278
+   Pos: 1.046 (std: 0.498)
+   Extremes: 22.8%
+   Profit proxy: 641.6
+
+--- Threshold-0.2-1.5x ---
+   Sharpe: 0.243 ± 0.284
+   Pos: 1.033 (std: 0.585)
+   Extremes: 35.2%
+   Profit proxy: 773.1
+
+--- Threshold-0.2-2.0x ---
+   Sharpe: 0.253 ± 0.293
+   Pos: 1.026 (std: 0.638)
+   Extremes: 43.4%
+   Profit proxy: 852.0
+
+--- Threshold-0.3-1.5x ---
+   Sharpe: 0.239 ± 0.282
+   Pos: 1.035 (std: 0.578)
+   Extremes: 35.2%
+   Profit proxy: 753.6
+
+--- Threshold-0.3-2.0x ---
+   Sharpe: 0.246 ± 0.290
+   Pos: 1.030 (std: 0.623)
+   Extremes: 43.4%
+   Profit proxy: 813.1
+
+--- Threshold-0.5-2.0x ---
+   Sharpe: 0.213 ± 0.271
+   Pos: 1.035 (std: 0.572)
+   Extremes: 37.2%
+   Profit proxy: 729.2
+
+[4] Saving results...
+   Saved to: experiments/023/results/phase2_position_strategies.csv
+
+[5] Best Strategy Selection
+================================================================================
+
+📊 Baseline:
+   Sharpe: 0.215
+   Pos std: 0.498
+   Extremes: 22.8%
+   Profit proxy: 641.5
+
+🏆 Top 5 by Profit Proxy:
+
+   5. Sigmoid-20
+      Sharpe: 0.275 (+28.1%)
+      Pos std: 0.832
+      Extremes: 75.1%
+      Profit: 1270.8 (+98.1%)
+
+   4. Sigmoid-15
+      Sharpe: 0.274 (+27.2%)
+      Pos std: 0.801
+      Extremes: 69.1%
+      Profit: 1211.0 (+88.8%)
+
+   3. Sigmoid-10
+      Sharpe: 0.269 (+25.3%)
+      Pos std: 0.748
+      Extremes: 59.5%
+      Profit: 1111.2 (+73.2%)
+
+   2. Sigmoid-5
+      Sharpe: 0.251 (+16.9%)
+      Pos std: 0.632
+      Extremes: 41.0%
+      Profit: 901.0 (+40.5%)
+
+   11. Threshold-0.2-2.0x
+      Sharpe: 0.253 (+17.6%)
+      Pos std: 0.638
+      Extremes: 43.4%
+      Profit: 852.0 (+32.8%)
+
+⚠️  No strategy with Sharpe >= 0.5
+   Consider less aggressive parameters
+
+================================================================================
+Phase 2 Complete! Next: phase3_regime_detection.py
+================================================================================

@@ -1,0 +1,69 @@
+================================================================================
+EXP-034: MAE Loss + Combined Improvements
+================================================================================
+
+[1] Loading data...
+
+[2] Preparing feature sets...
+   Loading EXP-021 features (30)...
+   Loading EXP-028 features (105)...
+   X_021: (8990, 30)
+   X_028: (8990, 105)
+
+[3] Baseline: EXP-021 (30 features) + MAE Loss
+   Fold 1/5... Sharpe: 0.507
+   Fold 2/5... Sharpe: 0.357
+   Fold 3/5... Sharpe: 0.599
+   Fold 4/5... Sharpe: 0.984
+   Fold 5/5... Sharpe: 0.805
+
+   Baseline CV Sharpe: 0.650 ± 0.247
+
+[4] Strategy 1: EXP-028 (105 features) + MAE Loss
+   Fold 1/5... Sharpe: 0.602
+   Fold 2/5... Sharpe: 0.453
+   Fold 3/5... Sharpe: 0.371
+   Fold 4/5... Sharpe: 0.923
+   Fold 5/5... Sharpe: 0.761
+
+   Strategy 1 CV Sharpe: 0.622 ± 0.224 (-4.4%) ❌
+
+[5] Strategy 2: EXP-021 (30 features) + MAE + Rank-Based Target
+   Fold 1/5... Sharpe: 0.505
+   Fold 2/5... Sharpe: 0.270
+   Fold 3/5... Sharpe: 0.394
+   Fold 4/5... Sharpe: 0.965
+   Fold 5/5... Sharpe: 0.898
+
+   Strategy 2 CV Sharpe: 0.606 ± 0.309 (-6.8%) ❌
+
+[6] Strategy 3: EXP-028 (105 features) + MAE + Rank-Based Target
+   Fold 1/5... Sharpe: 0.677
+   Fold 2/5... Sharpe: 0.431
+   Fold 3/5... Sharpe: 0.468
+   Fold 4/5... Sharpe: 0.985
+   Fold 5/5... Sharpe: 0.782
+
+   Strategy 3 CV Sharpe: 0.669 ± 0.229 (+2.8%) ✅
+
+[7] Results Comparison
+================================================================================
+
+📊 All Strategies:
+   Baseline (021+MAE)            : 0.650 (+0.0%) 🔵
+   Strategy 1 (028+MAE)          : 0.622 (-4.4%) ❌
+   Strategy 2 (021+MAE+Rank)     : 0.606 (-6.8%) ❌
+   Strategy 3 (028+MAE+Rank)     : 0.669 (+2.8%) ✅
+
+🏆 Best Strategy: Strategy 3 (028+MAE+Rank)
+   CV Sharpe: 0.669
+   vs EXP-021 (0.637): +5.0%
+   vs EXP-033 MAE (0.650): +2.9%
+   Expected Public (8.6x): 5.75
+
+[8] Saving results...
+   Results saved to: experiments/034/results/
+
+================================================================================
+EXP-034 Complete!
+================================================================================

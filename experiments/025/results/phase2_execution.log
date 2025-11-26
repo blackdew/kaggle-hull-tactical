@@ -1,0 +1,14 @@
+================================================================================
+EXP-025 Phase 2: 1D U-Net with Skip Connections
+================================================================================
+
+Device: cpu
+
+[1] Loading data...
+   Features: 305
+   Samples: 8990
+
+[2] Training 1D U-Net with 5-fold CV...
+
+--- Fold 1/5 ---
+   Epoch 10/50: Train Loss=0.000335, Val Loss=654285759146.666626

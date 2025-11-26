@@ -1,0 +1,95 @@
+================================================================================
+EXP-025 Phase 3: Simple MLP with Strong Regularization
+================================================================================
+
+Device: cpu
+
+[1] Loading data...
+   Features: 305
+   Samples: 8990
+
+[2] Training Simple MLP with 5-fold CV...
+   Architecture: 305 → 128 → 64 → 1
+   Dropout: 0.5 (strong regularization)
+   Learning rate: 0.0001 (conservative)
+   Weight decay: 1e-3
+
+--- Fold 1/5 ---
+   Epoch 20/100: Train Loss=0.040416, Val Loss=77379483818.666672
+   Epoch 40/100: Train Loss=0.012215, Val Loss=116447043.125000
+   Epoch 60/100: Train Loss=0.004037, Val Loss=840154.305705
+   Epoch 80/100: Train Loss=0.001098, Val Loss=214.826838
+   Epoch 100/100: Train Loss=0.000343, Val Loss=6.544633
+   Best Val Loss: 6.544633
+   Sharpe: -0.325
+   Position: 0.217 ± 0.599
+   Pred std: 1.659754
+
+--- Fold 2/5 ---
+   Epoch 20/100: Train Loss=0.026193, Val Loss=103692375.000000
+   Epoch 40/100: Train Loss=0.003369, Val Loss=409918.566952
+   Epoch 60/100: Train Loss=0.000533, Val Loss=120332.772782
+   Epoch 80/100: Train Loss=0.000149, Val Loss=33438.723757
+   Epoch 100/100: Train Loss=0.000106, Val Loss=5579.985535
+   Best Val Loss: 5579.985535
+   Sharpe: 0.215
+   Position: 0.910 ± 0.898
+   Pred std: 58.114979
+
+--- Fold 3/5 ---
+   Epoch 20/100: Train Loss=0.004918, Val Loss=2.683909
+   Epoch 40/100: Train Loss=0.000244, Val Loss=0.255253
+   Epoch 60/100: Train Loss=0.000103, Val Loss=0.009047
+   Epoch 80/100: Train Loss=0.000099, Val Loss=0.001015
+   Epoch 100/100: Train Loss=0.000098, Val Loss=0.001869
+   Best Val Loss: 0.000184
+   Sharpe: 0.334
+   Position: 0.651 ± 0.553
+   Pred std: 0.002597
+
+--- Fold 4/5 ---
+   Epoch 20/100: Train Loss=0.003348, Val Loss=0.001549
+   Epoch 40/100: Train Loss=0.000315, Val Loss=0.001129
+   Epoch 60/100: Train Loss=0.000128, Val Loss=0.000216
+   Epoch 80/100: Train Loss=0.000119, Val Loss=0.000081
+   Early stopping at epoch 88
+   Best Val Loss: 0.000068
+   Sharpe: 0.815
+   Position: 1.147 ± 0.105
+   Pred std: 0.000822
+
+--- Fold 5/5 ---
+   Epoch 20/100: Train Loss=0.000795, Val Loss=0.000363
+   Epoch 40/100: Train Loss=0.000109, Val Loss=0.000128
+   Epoch 60/100: Train Loss=0.000108, Val Loss=0.000128
+   Epoch 80/100: Train Loss=0.000107, Val Loss=0.000130
+   Early stopping at epoch 89
+   Best Val Loss: 0.000126
+   Sharpe: 0.751
+   Position: 0.980 ± 0.226
+   Pred std: 0.001345
+
+[3] Results Analysis
+================================================================================
+
+📊 Cross-Validation Results:
+   CV Sharpe: 0.358 ± 0.461
+   Range: [-0.325, 0.815]
+
+📈 Comparison:
+   vs EXP-016 (XGBoost) (0.559): -36.0% ❌
+   vs EXP-021 (XGBoost) (0.637): -43.8% ❌
+   vs EXP-024 (XGBoost over-reg) (0.559): -36.0% ❌
+   vs Phase 1 (ResNet) (0.547): -34.6% ❌
+
+🎯 Expected Public Score: 3.08
+
+🔍 Stability Analysis:
+   Fold std: 0.461
+   → ⚠️  High variance
+
+💾 Saved to: experiments/025/results/phase3_simple_mlp_results.csv
+
+================================================================================
+Phase 3 Complete!
+================================================================================
