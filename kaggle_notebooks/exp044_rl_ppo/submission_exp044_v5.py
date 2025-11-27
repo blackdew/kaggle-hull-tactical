@@ -76,14 +76,14 @@ class MyServer(InferenceServer):
             return MyServer.predict(self, batch)
         super().__init__(predict)
         self.model = load_model()
+
+    def _get_gateway_for_test(self, data_paths=None, file_share_dir=None, *args, **kwargs):
+        return DefaultGateway(data_paths)
         self.current_position = 0.0
         self.features = [
             'M4', 'V13', 'M1', 'S5', 'S2', 'D1', 'D2', 'M2', 'V10', 'E7',
             'P7', 'P2', 'E1', 'V6', 'V1', 'E16', 'E2', 'P4', 'V5', 'V4'
         ]
-
-    def _get_gateway_for_test(self, data_paths=None, file_share_dir=None, *args, **kwargs):
-        return DefaultGateway(data_paths)
 
     def predict(self, data: pd.DataFrame) -> pd.DataFrame:
         # Extract features

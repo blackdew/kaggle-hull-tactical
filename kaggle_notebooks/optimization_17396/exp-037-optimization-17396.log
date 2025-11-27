@@ -1,0 +1,40 @@
+[{"stream_name":"stdout","time":5.710891953,"data":"[START] Kaggle Hull Tactical Submission - EXP-037 (Optimization 17.396)\n"}
+,{"stream_name":"stdout","time":5.710959495,"data":"[INFO] Current directory: /kaggle/working\n"}
+,{"stream_name":"stdout","time":5.710965025,"data":"[INFO] KAGGLE_IS_COMPETITION_RERUN: None\n"}
+,{"stream_name":"stdout","time":5.710968226,"data":"[INFO] Running in NOTEBOOK mode - generating submission.parquet\n"}
+,{"stream_name":"stdout","time":5.8210588869999995,"data":"[INFO] Found test.csv at: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":5.821095701,"data":"[INFO] Running gateway with data_paths: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":6.064897397,"data":"[INFO] Loading train data and optimizing positions...\n"}
+,{"stream_name":"stdout","time":6.417933147,"data":"[INFO] Optimizing on last 180 days\n"}
+,{"stream_name":"stdout","time":6.420818879,"data":"[INFO] Date range: 8841 to 9020\n"}
+,{"stream_name":"stdout","time":6.420866001,"data":"[INFO] Running scipy.optimize.minimize (Powell method)...\n"}
+,{"stream_name":"stdout","time":204.15115327,"data":"[SUCCESS] Optimization converged! Score: 17.269112\n"}
+,{"stream_name":"stdout","time":204.151454198,"data":"[INFO] Optimal positions - Mean: 0.1790, Std: 0.4064\n"}
+,{"stream_name":"stdout","time":204.151468567,"data":"[INFO] Optimal positions - Range: [0.0000, 2.0000]\n"}
+,{"stream_name":"stdout","time":204.151938311,"data":"[0] Prediction: 0.11560972\n"}
+,{"stream_name":"stdout","time":204.161130887,"data":"[1] Prediction: 1.29186379\n"}
+,{"stream_name":"stdout","time":204.169502955,"data":"[2] Prediction: 0.00000001\n"}
+,{"stream_name":"stdout","time":204.177592909,"data":"[3] Prediction: 0.07370156\n"}
+,{"stream_name":"stdout","time":204.185562453,"data":"[4] Prediction: 0.00000001\n"}
+,{"stream_name":"stdout","time":204.193434113,"data":"[5] Prediction: 0.27678754\n"}
+,{"stream_name":"stdout","time":204.202394335,"data":"[6] Prediction: 0.35028868\n"}
+,{"stream_name":"stdout","time":204.21111851,"data":"[7] Prediction: 0.00000001\n"}
+,{"stream_name":"stdout","time":204.219663389,"data":"[8] Prediction: 0.00000001\n"}
+,{"stream_name":"stdout","time":204.228107758,"data":"[9] Prediction: 0.00000001\n"}
+,{"stream_name":"stdout","time":204.449548916,"data":"[SUCCESS] submission.parquet created! Shape: (10, 2)\n"}
+,{"stream_name":"stdout","time":204.449866724,"data":"[INFO] Prediction stats - Mean: 0.2108, Std: 0.4004\n"}
+,{"stream_name":"stdout","time":204.449938336,"data":"[INFO] Prediction range: [0.0000, 1.2919]\n"}
+,{"stream_name":"stdout","time":204.44995746,"data":"\n"}
+,{"stream_name":"stdout","time":204.4499641,"data":"[INFO] First 5 predictions:\n"}
+,{"stream_name":"stdout","time":204.459256962,"data":"   date_id    prediction\n"}
+,{"stream_name":"stdout","time":204.459293898,"data":"0     8980  1.156097e-01\n"}
+,{"stream_name":"stdout","time":204.459302167,"data":"1     8981  1.291864e+00\n"}
+,{"stream_name":"stdout","time":204.459308298,"data":"2     8982  5.401778e-09\n"}
+,{"stream_name":"stdout","time":204.459314149,"data":"3     8983  7.370156e-02\n"}
+,{"stream_name":"stdout","time":204.459322528,"data":"4     8984  5.401778e-09\n"}
+,{"stream_name":"stdout","time":204.459731836,"data":"[END] Script complete\n"}
+,{"stream_name":"stderr","time":210.053132636,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":210.053220959,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":210.118397374,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":211.658835526,"data":"[NbConvertApp] Writing 308784 bytes to __results__.html\n"}
+]

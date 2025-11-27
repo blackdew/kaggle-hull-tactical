@@ -1,0 +1,23 @@
+[{"stream_name":"stdout","time":5.758170486,"data":"[START] Kaggle Hull Tactical Submission - EXP-020\n"}
+,{"stream_name":"stdout","time":5.758276482,"data":"[INFO] Current directory: /kaggle/working\n"}
+,{"stream_name":"stdout","time":5.758284301,"data":"[INFO] KAGGLE_IS_COMPETITION_RERUN: None\n"}
+,{"stream_name":"stdout","time":5.758289815,"data":"[INFO] Running in NOTEBOOK mode - generating submission.parquet\n"}
+,{"stream_name":"stdout","time":8.252720076,"data":"[INFO] Found test.csv at: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":8.252780523,"data":"[INFO] Running gateway with data_paths: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":12.91434177,"data":"[SUCCESS] submission.parquet created! Shape: (10, 2)\n"}
+,{"stream_name":"stdout","time":12.914729897,"data":"[INFO] Prediction stats - Mean: 0.9929, Std: 0.6524\n"}
+,{"stream_name":"stdout","time":12.914824929,"data":"[INFO] Prediction range: [0.0941, 2.0000]\n"}
+,{"stream_name":"stdout","time":12.914834915,"data":"\n"}
+,{"stream_name":"stdout","time":12.91483951,"data":"[INFO] First 5 predictions:\n"}
+,{"stream_name":"stdout","time":12.923368212,"data":"   date_id  prediction\n"}
+,{"stream_name":"stdout","time":12.923408133,"data":"0     8980    0.570421\n"}
+,{"stream_name":"stdout","time":12.923413898,"data":"1     8981    0.342571\n"}
+,{"stream_name":"stdout","time":12.923418066,"data":"2     8982    1.630075\n"}
+,{"stream_name":"stdout","time":12.923422135,"data":"3     8983    0.880992\n"}
+,{"stream_name":"stdout","time":12.923426201,"data":"4     8984    0.094136\n"}
+,{"stream_name":"stdout","time":12.924229175,"data":"[END] Script complete\n"}
+,{"stream_name":"stderr","time":19.640898138,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":19.640963975,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":19.704541923,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":21.618857721,"data":"[NbConvertApp] Writing 315701 bytes to __results__.html\n"}
+]

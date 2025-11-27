@@ -1,0 +1,8 @@
+[{"stream_name":"stdout","time":6.167434865,"data":"[TEST] Constant Position = 2.0\n"}
+,{"stream_name":"stdout","time":6.957740317,"data":"[SUCCESS] Shape: (10, 2)\n"}
+,{"stream_name":"stdout","time":6.9646431490000005,"data":"All predictions = 2.0: True\n"}
+,{"stream_name":"stderr","time":13.77407321,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":13.774138848,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":13.839740438,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15.554688963,"data":"[NbConvertApp] Writing 281060 bytes to __results__.html\n"}
+]

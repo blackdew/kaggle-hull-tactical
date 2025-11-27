@@ -1,0 +1,51 @@
+[{"stream_name":"stdout","time":5.096706735,"data":"[START] Kaggle Hull Tactical Submission - EXP-036 (Leak-Safe Baseline)\n"}
+,{"stream_name":"stdout","time":5.096787226,"data":"[INFO] Current directory: /kaggle/working\n"}
+,{"stream_name":"stdout","time":5.096794615,"data":"[INFO] KAGGLE_IS_COMPETITION_RERUN: None\n"}
+,{"stream_name":"stdout","time":5.096799153,"data":"[INFO] Running in NOTEBOOK mode - generating submission.parquet\n"}
+,{"stream_name":"stdout","time":6.868423803,"data":"[INFO] Found test.csv at: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":6.868508218,"data":"[INFO] Running gateway with data_paths: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":7.490991577,"data":"[INFO] Total data rows: 2021\n"}
+,{"stream_name":"stdout","time":7.491042107,"data":"[INFO] Training rows (excluding last 180 days): 1841\n"}
+,{"stream_name":"stdout","time":7.491049374,"data":"[INFO] Max train date_id: 8809\n"}
+,{"stream_name":"stdout","time":7.491295909,"data":"[INFO] Optimal c parameter: 0.000883\n"}
+,{"stream_name":"stdout","time":7.491447636,"data":"[INFO] Target stats - Mean: 0.2100, Std: 0.4347\n"}
+,{"stream_name":"stdout","time":7.500042002,"data":"[INFO] Training ElasticNetCV to find optimal alpha...\n"}
+,{"stream_name":"stdout","time":7.751995723,"data":"[INFO] Best alpha found: 0.023101\n"}
+,{"stream_name":"stdout","time":7.75388469,"data":"[INFO] Training R2 score: 0.0173\n"}
+,{"stream_name":"stderr","time":7.776610363,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.77666536,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.793050366,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.793090222,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.807967465,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.808008025,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.823229384,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.823279211,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.838223879,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.838267057,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.853508855,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.85355155,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.869382902,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.869425971,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.8857310609999995,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.885771647,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.902248768,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.902290917,"data":"  warnings.warn(\n"}
+,{"stream_name":"stderr","time":7.91795298,"data":"/usr/local/lib/python3.11/dist-packages/sklearn/base.py:432: UserWarning: X has feature names, but StandardScaler was fitted without feature names\n"}
+,{"stream_name":"stderr","time":7.91799536,"data":"  warnings.warn(\n"}
+,{"stream_name":"stdout","time":8.088849407,"data":"[SUCCESS] submission.parquet created! Shape: (10, 2)\n"}
+,{"stream_name":"stdout","time":8.089252166,"data":"[INFO] Prediction stats - Mean: 0.2102, Std: 0.0081\n"}
+,{"stream_name":"stdout","time":8.089270017,"data":"[INFO] Prediction range: [0.1982, 0.2226]\n"}
+,{"stream_name":"stdout","time":8.089275663,"data":"\n"}
+,{"stream_name":"stdout","time":8.089279815,"data":"[INFO] First 5 predictions:\n"}
+,{"stream_name":"stdout","time":8.097033485,"data":"   date_id  prediction\n"}
+,{"stream_name":"stdout","time":8.097077958,"data":"0     8980    0.215674\n"}
+,{"stream_name":"stdout","time":8.09708434,"data":"1     8981    0.221255\n"}
+,{"stream_name":"stdout","time":8.097088644,"data":"2     8982    0.222566\n"}
+,{"stream_name":"stdout","time":8.097094647,"data":"3     8983    0.210150\n"}
+,{"stream_name":"stdout","time":8.09709937,"data":"4     8984    0.206834\n"}
+,{"stream_name":"stdout","time":8.097675682,"data":"[END] Script complete\n"}
+,{"stream_name":"stderr","time":13.790443226,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":13.790510465,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":13.845983249,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15.355762049,"data":"[NbConvertApp] Writing 308015 bytes to __results__.html\n"}
+]
