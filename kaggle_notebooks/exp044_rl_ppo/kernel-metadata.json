@@ -1,7 +1,7 @@
 {
-    "id": "blackdew/exp044-rl-ppo-v4",
-    "title": "EXP-044 RL PPO V4",
-    "code_file": "submission_exp044.py",
+    "id": "blackdew/exp044-rl-ppo-v8-fix",
+    "title": "EXP-044 RL PPO V8 (Fix)",
+    "code_file": "submission_exp044_v3.py",
     "language": "python",
     "kernel_type": "script",
     "is_private": "true",

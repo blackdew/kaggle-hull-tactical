@@ -1,0 +1,5 @@
+[{"stream_name":"stderr","time":15.696488826,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":15.696550965,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":15.749772538,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":17.325452891,"data":"[NbConvertApp] Writing 463623 bytes to __results__.html\n"}
+]

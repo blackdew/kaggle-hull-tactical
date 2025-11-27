@@ -1,0 +1,56 @@
+[{"stream_name":"stdout","time":0.700296461,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":0.700349466,"data":"DEBUG SCRIPT STARTED\n"}
+,{"stream_name":"stdout","time":0.700356754,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":0.700361456,"data":"\n"}
+,{"stream_name":"stdout","time":0.700364798,"data":"[1] Checking File System:\n"}
+,{"stream_name":"stdout","time":0.700368846,"data":"CWD: /kaggle/working\n"}
+,{"stream_name":"stdout","time":0.700372745,"data":"/kaggle/input exists. Listing contents:\n"}
+,{"stream_name":"stdout","time":0.700376544,"data":"  /kaggle/input\n"}
+,{"stream_name":"stdout","time":0.701024847,"data":"  /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":0.701040152,"data":"    train.csv\n"}
+,{"stream_name":"stdout","time":0.701043364,"data":"    test.csv\n"}
+,{"stream_name":"stdout","time":0.704728835,"data":"  /kaggle/input/hull-tactical-market-prediction/kaggle_evaluation\n"}
+,{"stream_name":"stdout","time":0.704763933,"data":"    default_inference_server.py\n"}
+,{"stream_name":"stdout","time":0.704768842,"data":"    default_gateway.py\n"}
+,{"stream_name":"stdout","time":0.704772147,"data":"    __init__.py\n"}
+,{"stream_name":"stdout","time":0.707711577,"data":"  /kaggle/input/hull-tactical-market-prediction/kaggle_evaluation/core\n"}
+,{"stream_name":"stdout","time":0.707744513,"data":"    templates.py\n"}
+,{"stream_name":"stdout","time":0.707750258,"data":"    base_gateway.py\n"}
+,{"stream_name":"stdout","time":0.707753058,"data":"    relay.py\n"}
+,{"stream_name":"stdout","time":0.707755571,"data":"    kaggle_evaluation.proto\n"}
+,{"stream_name":"stdout","time":0.707758079,"data":"    __init__.py\n"}
+,{"stream_name":"stdout","time":0.710926227,"data":"  /kaggle/input/hull-tactical-market-prediction/kaggle_evaluation/core/generated\n"}
+,{"stream_name":"stdout","time":0.710962135,"data":"    kaggle_evaluation_pb2.py\n"}
+,{"stream_name":"stdout","time":0.710968319,"data":"    kaggle_evaluation_pb2_grpc.py\n"}
+,{"stream_name":"stdout","time":0.710972147,"data":"    __init__.py\n"}
+,{"stream_name":"stdout","time":0.710975962,"data":"\n"}
+,{"stream_name":"stdout","time":0.71097946,"data":"[2] Checking Environment Variables:\n"}
+,{"stream_name":"stdout","time":0.710984045,"data":"  KAGGLE_DATA_PROXY_TOKEN: eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.q49OcCD_mn78u9yyUvT5bBM4nzgh445ZyxaQfYScLIofYMOUnuoHJw.41Vwx0CLpVF-24KOuYEQGA.3DDrz8qXHPcDEYST8CCVqWZruvUNfoZjlJ4oCZ-7mrUVRXWQTUn3DgOOfVPwpudOVBhyxIlyxYI07qKGkJa-OF7O6V7b_Qj6GpTGeO1v9h83CAbjFUR3rD7Nt6ZBBwE5T91kwGMDwNEyR9yhD958o3Ls7OeF40eeJ23JzVbhAyP5_ZQu4g85HEZA2yiLMGvN5eBDY-utrlbPp4oNHLAtBlyMSLdWflqddClddlnuMBdufAnkc8OcXI7itT7sRhve9dQskOp9ZgTpGZr6bw3yHJ-0jPoxPzRhZDieGBoPbHV23IEHo__AnSTtWXU5tFOa.mJLrN7HHeNAq3PhcDF29Mw\n"}
+,{"stream_name":"stdout","time":0.710994946,"data":"  KAGGLE_URL_BASE: https://www.kaggle.com\n"}
+,{"stream_name":"stdout","time":0.710999013,"data":"  KAGGLE_DOCKER_IMAGE: gcr.io/kaggle-images/python@sha256:bf0b407a5ed73626191ae2259063a0090ae36666c8f00ffdfae3fb543eae750d\n"}
+,{"stream_name":"stdout","time":0.711003193,"data":"  KAGGLE_KERNEL_INTEGRATIONS: \n"}
+,{"stream_name":"stdout","time":0.711038438,"data":"  KAGGLE_DATA_PROXY_PROJECT: kaggle-161607\n"}
+,{"stream_name":"stdout","time":0.711059911,"data":"  KAGGLE_USER_SECRETS_TOKEN: eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..jyoJrZEZe54NaNmJfn683w.Bi0x2nmRbdu_rKR6GuKBJHjt4yiWxB_8E_xZSeBqpLiLwxlFiyZ3HxZfe8v6NbBQkaFeeIIYjumTMpD2iQqM3Lc4LFICMuC3qjB_vOQmt9L6LtEy2Gr679zQ2s7llTv5KZNi-PQIDJYBOWlL8wgTAQ.XCRebMqZJBkiy6UcmAvf9Q\n"}
+,{"stream_name":"stdout","time":0.711085819,"data":"  KAGGLE_KERNEL_RUN_TYPE: Batch\n"}
+,{"stream_name":"stdout","time":0.711110283,"data":"  KAGGLE_GCP_ZONE: asia-east1-c\n"}
+,{"stream_name":"stdout","time":0.711119632,"data":"  KAGGLE_CONTAINER_NAME: kaggle_uRulEMoQf3dE3idBY7oFMhAjQ28US1EIbbfIcQndQ-282086755-webtier\n"}
+,{"stream_name":"stdout","time":0.711145011,"data":"  KAGGLE_API_V1_TOKEN: /etc/secrets/kaggle/api-v1-token\n"}
+,{"stream_name":"stdout","time":0.711157533,"data":"  KAGGLE_GRPC_DATA_PROXY_URL: dp.kaggle.net:443\n"}
+,{"stream_name":"stdout","time":0.711162616,"data":"  KAGGLE_DATA_PROXY_URL: https://dp.kaggle.net\n"}
+,{"stream_name":"stdout","time":0.711166368,"data":"\n"}
+,{"stream_name":"stdout","time":0.711169638,"data":"[3] Checking Imports:\n"}
+,{"stream_name":"stdout","time":3.616796518,"data":"  [OK] pandas\n"}
+,{"stream_name":"stdout","time":3.616828883,"data":"  [OK] numpy\n"}
+,{"stream_name":"stdout","time":8.606978554,"data":"  [OK] torch\n"}
+,{"stream_name":"stdout","time":10.573303329,"data":"  [OK] xgboost\n"}
+,{"stream_name":"stdout","time":17.932197022,"data":"  [OK] lightgbm\n"}
+,{"stream_name":"stdout","time":19.139206798,"data":"  [OK] catboost\n"}
+,{"stream_name":"stdout","time":19.149284542,"data":"  [OK] kaggle_evaluation\n"}
+,{"stream_name":"stdout","time":20.283199649,"data":"  [OK] kaggle_evaluation.core.templates\n"}
+,{"stream_name":"stdout","time":20.283237011,"data":"\n"}
+,{"stream_name":"stdout","time":20.283241736,"data":"DEBUG SCRIPT FINISHED\n"}
+,{"stream_name":"stderr","time":25.863644734,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":25.863699802,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":25.916722855,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":26.870217526,"data":"[NbConvertApp] Writing 279419 bytes to __results__.html\n"}
+]
