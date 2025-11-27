@@ -1,0 +1,10 @@
+[{"stream_name":"stdout","time":34.949884926,"data":"[START] Kaggle Hull Tactical Submission - EXP-044 v3 (Hybrid Ensemble)\n"}
+,{"stream_name":"stdout","time":34.949973671,"data":"[INFO] Running in NOTEBOOK mode - generating submission.parquet\n"}
+,{"stream_name":"stdout","time":35.201106174,"data":"[INFO] Found test.csv at: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":35.201159064,"data":"[INFO] Running gateway with data_paths: /kaggle/input/hull-tactical-market-prediction\n"}
+,{"stream_name":"stdout","time":47.41303006,"data":"[SUCCESS] submission.parquet created!\n"}
+,{"stream_name":"stderr","time":54.470970779,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":54.471066253,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":54.564883332,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":55.661925319,"data":"[NbConvertApp] Writing 500504 bytes to __results__.html\n"}
+]
