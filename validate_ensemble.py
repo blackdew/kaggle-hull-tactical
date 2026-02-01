@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+# Import LightGBM before Torch to avoid OpenMP conflict on macOS
+from lightgbm import LGBMRegressor
 import torch
 import torch.nn as nn
 import base64
@@ -7,7 +9,6 @@ import io
 from collections import deque
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
-from lightgbm import LGBMRegressor
 from catboost import CatBoostRegressor
 import warnings
 
@@ -15,9 +16,11 @@ warnings.filterwarnings('ignore')
 
 # Load Base64 Weights (from file)
 with open("experiments/044_rl_ppo/weights_v2_b64.txt", "r") as f:
-    content = f.read()
-    # Extract the string inside quotes
-    BASE64_WEIGHTS = content.split('=')[1].strip().strip("'").strip('"')
+    content = f.read().strip()
+    # Extract the string inside quotes if present
+    if "=" in content and "BASE64_WEIGHTS" in content:
+        content = content.split('=')[1].strip().strip("'").strip('"')
+    BASE64_WEIGHTS = content
 
 # --- RL Model ---
 class ActorCriticLSTM(nn.Module):
