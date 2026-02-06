@@ -109,3 +109,6 @@ secrets.json
 # Temporary files
 tmp/
 temp/
+
+# Claude Code settings
+.claude/
